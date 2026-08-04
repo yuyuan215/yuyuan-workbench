@@ -9,7 +9,7 @@ var ModLibrary = (function () {
     { book: '认知觉醒', author: '周岭', why: '通用成长类首选，适合任何想自我提升的热点' },
     { book: '纳瓦尔宝典', author: '埃里克·乔根森', why: '财富与幸福底层逻辑，万能补充书单' }
   ];
-  var ST = { todo: { label: '待读', cls: '' }, reading: { label: '在读', cls: 'info' }, done: { label: '已读完', cls: 'ok' } };
+  var ST = { todo: { label: '想读', cls: '' }, reading: { label: '在读', cls: 'info' }, done: { label: '已读', cls: 'ok' } };
 
   function add() {
     var title = document.getElementById('bkTitle').value.trim();
@@ -29,6 +29,48 @@ var ModLibrary = (function () {
     document.getElementById('bkTitle').value = '';
     document.getElementById('bkAuthor').value = '';
     Toast.show('已加入书库并自动归档到「' + ST[status].label + '」', 'ok');
+    render();
+  }
+
+  /* ---------------- 批量导入书单 ---------------- */
+  function parseLine(line) {
+    var title = '', author = '';
+    var parts = line.split(/\s*[-–—/|,:]\s*/);
+    if (parts.length > 1) {
+      title = parts[0].trim();
+      author = parts.slice(1).join(' ').trim();
+    } else {
+      var sp = line.split(/\s+/);
+      if (sp.length > 1) { title = sp[0]; author = sp.slice(1).join(' '); }
+      else title = line;
+    }
+    return { title: (title || '').trim(), author: (author || '').trim() };
+  }
+
+  function batchAdd() {
+    var raw = (document.getElementById('bkBatchText').value || '').trim();
+    if (!raw) { Toast.show('请先粘贴书单内容', 'warn'); return; }
+    var status = document.getElementById('bkBatchStatus').value;
+    var lines = raw.split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+    var existing = DB.all('books').map(function (b) { return (b.title || '').trim(); });
+    var added = 0, skipped = 0;
+    lines.forEach(function (line) {
+      var p = parseLine(line);
+      if (!p.title) return;
+      if (existing.indexOf(p.title) >= 0) { skipped++; return; }
+      existing.push(p.title);
+      DB.insert('books', {
+        title: p.title, author: p.author, cat: '其他', status: status, rate: 0,
+        note: '来自批量导入', highlights: [],
+        startAt: status === 'reading' ? Util.today() : '',
+        finishAt: status === 'done' ? Util.today() : ''
+      });
+      added++;
+    });
+    var msg = '已导入 ' + added + ' 本' + (skipped ? '，跳过重复 ' + skipped + ' 本' : '');
+    var m = document.getElementById('bkBatchMsg');
+    if (m) m.textContent = msg;
+    Toast.show('批量导入完成：新增 ' + added + ' 本', 'ok');
     render();
   }
 
@@ -184,7 +226,7 @@ var ModLibrary = (function () {
       title: title, author: author || '', cat: cat || '其他', status: 'todo', rate: 0,
       note: '来自抖音热点荐书：' + (topic || ''), highlights: [], startAt: '', finishAt: ''
     });
-    Toast.show('已加入书库并归档到「待读」', 'ok');
+    Toast.show('已加入书库并归档到「想读」', 'ok');
     render();
   }
 
@@ -240,6 +282,16 @@ var ModLibrary = (function () {
   }
 
   function init() {
+    var bToggle = document.getElementById('bkBatchToggle');
+    if (bToggle) bToggle.addEventListener('click', function () {
+      var box = document.getElementById('bkBatchBox');
+      var show = box.style.display === 'none';
+      box.style.display = show ? 'block' : 'none';
+      bToggle.textContent = show ? '收起' : '展开';
+    });
+    var bBatch = document.getElementById('bkBatchAdd');
+    if (bBatch) bBatch.addEventListener('click', batchAdd);
+
     document.getElementById('bkAdd').addEventListener('click', add);
     document.getElementById('bkTitle').addEventListener('keydown', function (e) { if (e.key === 'Enter') add(); });
     document.getElementById('bkSearch').addEventListener('input', Util.debounce(function (e) { kw = e.target.value.trim(); render(); }, 200));

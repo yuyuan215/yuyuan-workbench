@@ -2,7 +2,7 @@
  * Service Worker —— 让工作台可「安装为 App」且离线可用
  * 策略：HTML 走网络优先（保证内容最新），静态资源走缓存优先
  * ============================================================ */
-const CACHE = 'wb-shell-v1';
+const CACHE = 'wb-shell-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -11,6 +11,9 @@ const ASSETS = [
   './assets/css/style.css',
   './assets/js/core.js',
   './assets/js/data/content.js',
+  './assets/js/data/extra.js',
+  './assets/js/data/scripts.js',
+  './assets/js/data/v2.js',
   './assets/js/app.js',
   './assets/js/modules/todo.js',
   './assets/js/modules/invest.js',
@@ -19,7 +22,8 @@ const ASSETS = [
   './assets/js/modules/library.js',
   './assets/js/modules/ideas.js',
   './assets/js/modules/settings.js',
-  './assets/icons/icon.svg'
+  './assets/js/modules/quotes.js',
+  './assets/icons/icon-512.png'
 ];
 
 self.addEventListener('install', function (e) {

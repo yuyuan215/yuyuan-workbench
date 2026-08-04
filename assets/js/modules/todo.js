@@ -121,8 +121,9 @@ var ModTodo = (function () {
       '<div class="item-meta">' + meta.join('') + '</div>' +
       (t.note ? '<div class="item-note">' + Util.esc(t.note) + '</div>' : '') +
       '<div class="item-actions">' +
-      '<button class="btn btn-sm" data-act="st" data-st="doing" data-id="' + t.id + '">进行中</button>' +
-      '<button class="btn btn-sm" data-act="st" data-st="done" data-id="' + t.id + '">已完成</button>' +
+      (t.status === 'done'
+        ? '<button class="btn btn-sm" data-act="st" data-st="doing" data-id="' + t.id + '">↺ 重做</button>'
+        : '<button class="btn btn-sm btn-primary" data-act="st" data-st="done" data-id="' + t.id + '">✓ 标记完成</button>') +
       '<button class="btn btn-sm" data-act="st" data-st="delay" data-id="' + t.id + '">延期</button>' +
       '<button class="btn btn-sm" data-act="edit" data-id="' + t.id + '">编辑</button>' +
       '<button class="btn btn-sm btn-danger" data-act="del" data-id="' + t.id + '">删除</button>' +

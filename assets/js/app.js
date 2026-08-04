@@ -5,11 +5,12 @@
 var App = (function () {
   var VIEWS = {
     todo: { title: '今日待办', sub: '工作项目 · 重要节点 · 老板私人事务统筹', mod: 'ModTodo' },
-    invest: { title: '投资学习', sub: '每日财经资讯 · 市场观点 · 投资干货 · 书籍摘要', mod: 'ModInvest' },
-    lang: { title: '每日语言训练', sub: '英语 10 分钟 + 中文 10 分钟 · 打卡与进度台账', mod: 'ModLang' },
+    invest: { title: '建立财商', sub: '每日商业人物视频 · 投资名词深度 · 创业案例长文', mod: 'ModInvest' },
+    lang: { title: '英语学习', sub: '影子跟读法 · 每日英文视频 · 关键词与金句收藏', mod: 'ModLang' },
     sport: { title: '每日运动打卡', sub: '30 分钟运动计划 · 打卡录入 · 周统计报表', mod: 'ModSport' },
-    library: { title: '个人图书馆', sub: '书籍管理 · 读书笔记 · 重点标注 · 全库检索', mod: 'ModLibrary' },
-    ideas: { title: '个人账号运营', sub: '心理学 / 教育育儿 / 职场 · 每日选题与长期储备', mod: 'ModIdeas' },
+    library: { title: '亮灯自习室', sub: '热点荐书 · 读书笔记 · 重点标注 · 全库检索', mod: 'ModLibrary' },
+    ideas: { title: '个人账号运营', sub: '儿童教育 / 心理学 / 财商 · 每日选题与长期储备', mod: 'ModIdeas' },
+    quotes: { title: '金句收藏夹', sub: '跨板块金句沉淀 · 自定义收藏夹整理', mod: 'ModQuotes' },
     settings: { title: '设置中心', sub: '账号权限 · 云端同步 · 数据备份 · 外观偏好', mod: 'ModSettings' }
   };
   var current = 'todo';
@@ -33,7 +34,7 @@ var App = (function () {
   }
 
   function refreshAll() {
-    ['ModTodo', 'ModInvest', 'ModLang', 'ModSport', 'ModLibrary', 'ModIdeas', 'ModSettings'].forEach(function (n) {
+    ['ModTodo', 'ModInvest', 'ModLang', 'ModSport', 'ModLibrary', 'ModIdeas', 'ModQuotes', 'ModSettings'].forEach(function (n) {
       var m = mod(n);
       if (m && m.render) { try { m.render(); } catch (e) {} }
     });
@@ -95,7 +96,7 @@ var App = (function () {
 
     // 模块初始化
     ModTodo.init(); ModInvest.init(); ModLang.init();
-    ModSport.init(); ModLibrary.init(); ModIdeas.init(); ModSettings.init();
+    ModSport.init(); ModLibrary.init(); ModIdeas.init(); ModQuotes.init(); ModSettings.init();
 
     // 导航
     document.getElementById('nav').addEventListener('click', function (e) {
@@ -104,6 +105,11 @@ var App = (function () {
     });
     document.getElementById('menuBtn').addEventListener('click', openMenu);
     document.getElementById('backdrop').addEventListener('click', closeMenu);
+
+    var modalX = document.getElementById('modalX');
+    if (modalX) modalX.addEventListener('click', closeModal);
+    var appModal = document.getElementById('appModal');
+    if (appModal) appModal.addEventListener('click', function (e) { if (e.target === this) closeModal(); });
 
     document.getElementById('btnTheme').addEventListener('click', function () {
       var m = Theme.toggle();
@@ -133,13 +139,50 @@ var App = (function () {
     // 键盘快捷键：1~6 快速切板块
     document.addEventListener('keydown', function (e) {
       if (e.target.matches('input, textarea, select')) return;
-      var keys = ['todo', 'invest', 'lang', 'sport', 'library', 'ideas'];
+      var keys = ['todo', 'invest', 'lang', 'sport', 'library', 'ideas', 'quotes'];
       var n = parseInt(e.key, 10);
       if (n >= 1 && n <= 6) go(keys[n - 1]);
     });
   }
 
-  return { init: init, go: go, refreshAll: refreshAll, updateSyncChip: updateSyncChip };
+  /* 通用弹窗：文章详情、收藏夹选择等 */
+  function openModal(title, bodyHtml, actions) {
+    var mask = document.getElementById('appModal');
+    if (!mask) return;
+    mask.querySelector('.modal-title').textContent = title || '';
+    mask.querySelector('.modal-body').innerHTML = bodyHtml || '';
+    var foot = mask.querySelector('.modal-foot');
+    foot.innerHTML = '';
+    (actions || []).forEach(function (a) {
+      var b = document.createElement('button');
+      b.className = 'btn btn-sm ' + (a.primary ? 'btn-primary' : '');
+      b.textContent = a.label;
+      b.addEventListener('click', function () { if (a.onClick) a.onClick(); });
+      foot.appendChild(b);
+    });
+    mask.classList.add('show');
+  }
+  function closeModal() { var m = document.getElementById('appModal'); if (m) m.classList.remove('show'); }
+
+  /* 选择金句归入哪个收藏夹 */
+  function pickFolder(def, cb) {
+    var cols = ['文学', '心理学', '教育', '财经'];
+    var html = '<p class="small muted">选择这条金句归入哪个收藏夹：</p>' +
+      '<div class="chips" style="margin-top:8px">' +
+      cols.map(function (c) { return '<button class="chip folder-pick" data-c="' + c + '">' + c + '</button>'; }).join('') + '</div>' +
+      '<div class="row" style="margin-top:10px"><input class="grow" id="folderCustom" placeholder="或输入自定义收藏夹名" /></div>';
+    openModal('归入收藏夹', html, [{ label: '取消', onClick: closeModal }]);
+    var box = document.getElementById('appModal');
+    box.querySelectorAll('.folder-pick').forEach(function (b) {
+      b.addEventListener('click', function () { closeModal(); cb(b.dataset.c); });
+    });
+    var inp = box.querySelector('#folderCustom');
+    if (inp) inp.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && this.value.trim()) { closeModal(); cb(this.value.trim()); }
+    });
+  }
+
+  return { init: init, go: go, refreshAll: refreshAll, updateSyncChip: updateSyncChip, openModal: openModal, closeModal: closeModal, pickFolder: pickFolder };
 })();
 
 document.addEventListener('DOMContentLoaded', App.init);
