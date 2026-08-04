@@ -4,7 +4,7 @@
  * ============================================================ */
 var ModIdeas = (function () {
   var OFF_KEY = 'paw.idea.offset';
-  var TRACK = { psychology: '心理学', parenting: '教育育儿', career: '职场' };
+  var TRACK = { psychology: '心理学', parenting: '儿童教育', career: '财商' };
   var dailyTrack = 'all', libFilter = 'all', kw = '';
 
   function offset() { try { return parseInt(sessionStorage.getItem(OFF_KEY) || '0', 10) || 0; } catch (e) { return 0; } }
@@ -18,7 +18,7 @@ var ModIdeas = (function () {
         out.push({ track: k, t: x.t, dir: x.dir, aud: x.aud, form: x.form });
       });
     });
-    return out;
+    return out.slice(0, 5);
   }
 
   function exists(title) { return DB.all('ideas').some(function (i) { return i.title === title; }); }
@@ -71,7 +71,7 @@ var ModIdeas = (function () {
       '</div></div>';
   }
 
-  var SCRIPT_TRACKS = [['psychology', '心理学'], ['parenting', '教育育儿'], ['career', '职场']];
+  var SCRIPT_TRACKS = [['psychology', '心理学'], ['parenting', '儿童教育'], ['career', '财商']];
 
   function scriptInLib(track, title) {
     return DB.all('ideas').some(function (i) { return i.title === title && i.track === track; });
@@ -139,7 +139,7 @@ var ModIdeas = (function () {
     }).join('');
 
     var chips = [['all', '全部'], ['todo', '待创作'], ['done', '已完成'], ['fav', '已收藏'],
-      ['psychology', '心理学'], ['parenting', '教育育儿'], ['career', '职场']];
+      ['psychology', '心理学'], ['parenting', '儿童教育'], ['career', '财商']];
     document.getElementById('idFilters').innerHTML = chips.map(function (c) {
       return '<button class="chip' + (libFilter === c[0] ? ' on' : '') + '" data-v="' + c[0] + '">' + c[1] + ' ' + (counts[c[0]] || 0) + '</button>';
     }).join('');

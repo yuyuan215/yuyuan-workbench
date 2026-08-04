@@ -7,8 +7,10 @@ var App = (function () {
     todo: { title: '今日待办', sub: '工作项目 · 重要节点 · 老板私人事务统筹', mod: 'ModTodo' },
     invest: { title: '建立财商', sub: '每日商业人物视频 · 投资名词深度 · 创业案例长文', mod: 'ModInvest' },
     lang: { title: '英语学习', sub: '影子跟读法 · 每日英文视频 · 关键词与金句收藏', mod: 'ModLang' },
+    express: { title: '表达练习', sub: '中文影子跟读 · 央视新闻 / 百家讲坛 · 好句收藏', mod: 'ModExpress' },
     sport: { title: '每日运动打卡', sub: '30 分钟运动计划 · 打卡录入 · 周统计报表', mod: 'ModSport' },
     library: { title: '亮灯自习室', sub: '热点荐书 · 读书笔记 · 重点标注 · 全库检索', mod: 'ModLibrary' },
+    beauty: { title: '美商提升', sub: '抖音妆容 / 穿搭 / 护肤 / 发型教程收藏', mod: 'ModBeauty' },
     ideas: { title: '个人账号运营', sub: '儿童教育 / 心理学 / 财商 · 每日选题与长期储备', mod: 'ModIdeas' },
     quotes: { title: '金句收藏夹', sub: '跨板块金句沉淀 · 自定义收藏夹整理', mod: 'ModQuotes' },
     settings: { title: '设置中心', sub: '账号权限 · 云端同步 · 数据备份 · 外观偏好', mod: 'ModSettings' }
@@ -34,7 +36,7 @@ var App = (function () {
   }
 
   function refreshAll() {
-    ['ModTodo', 'ModInvest', 'ModLang', 'ModSport', 'ModLibrary', 'ModIdeas', 'ModQuotes', 'ModSettings'].forEach(function (n) {
+    ['ModTodo', 'ModInvest', 'ModLang', 'ModExpress', 'ModSport', 'ModLibrary', 'ModBeauty', 'ModIdeas', 'ModQuotes', 'ModSettings'].forEach(function (n) {
       var m = mod(n);
       if (m && m.render) { try { m.render(); } catch (e) {} }
     });
@@ -95,8 +97,8 @@ var App = (function () {
     document.getElementById('userChip').textContent = sess ? sess.u : '—';
 
     // 模块初始化
-    ModTodo.init(); ModInvest.init(); ModLang.init();
-    ModSport.init(); ModLibrary.init(); ModIdeas.init(); ModQuotes.init(); ModSettings.init();
+    ModTodo.init(); ModInvest.init(); ModLang.init(); ModExpress.init();
+    ModSport.init(); ModLibrary.init(); ModBeauty.init(); ModIdeas.init(); ModQuotes.init(); ModSettings.init();
 
     // 导航
     document.getElementById('nav').addEventListener('click', function (e) {
@@ -139,9 +141,9 @@ var App = (function () {
     // 键盘快捷键：1~6 快速切板块
     document.addEventListener('keydown', function (e) {
       if (e.target.matches('input, textarea, select')) return;
-      var keys = ['todo', 'invest', 'lang', 'sport', 'library', 'ideas', 'quotes'];
+      var keys = ['todo', 'invest', 'lang', 'express', 'library', 'beauty', 'sport', 'ideas'];
       var n = parseInt(e.key, 10);
-      if (n >= 1 && n <= 6) go(keys[n - 1]);
+      if (n >= 1 && n <= 8) go(keys[n - 1]);
     });
   }
 
