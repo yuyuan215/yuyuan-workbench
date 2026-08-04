@@ -11,7 +11,7 @@ var App = (function () {
     sport: { title: '每日运动打卡', sub: '30 分钟运动计划 · 打卡录入 · 周统计报表', mod: 'ModSport' },
     library: { title: '亮灯自习室', sub: '热点荐书 · 读书笔记 · 重点标注 · 全库检索', mod: 'ModLibrary' },
     beauty: { title: '美商提升', sub: '抖音妆容 / 穿搭 / 护肤 / 发型教程收藏', mod: 'ModBeauty' },
-    ideas: { title: '个人账号运营', sub: '儿童教育 / 心理学 / 财商 · 每日选题与长期储备', mod: 'ModIdeas' },
+    ideas: { title: '账号运营', sub: '职场成长 / 副业变现 / 个人提升 · 每日选题与长期储备', mod: 'ModIdeas' },
     quotes: { title: '金句收藏夹', sub: '跨板块金句沉淀 · 自定义收藏夹整理', mod: 'ModQuotes' },
     settings: { title: '设置中心', sub: '账号权限 · 云端同步 · 数据备份 · 外观偏好', mod: 'ModSettings' }
   };

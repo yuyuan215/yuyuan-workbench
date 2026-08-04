@@ -4,17 +4,17 @@
  * ============================================================ */
 
 :root {
-  --bg: #f1f6fb;
-  --bg-soft: #e4eef8;
+  --bg: #f5f1fb;
+  --bg-soft: #ece4f8;
   --panel: #ffffff;
-  --panel-2: #f7faff;
-  --border: #d8e5f2;
-  --border-strong: #c2d6ec;
-  --text: #1f2d3a;
-  --text-2: #4a5d70;
-  --text-3: #7c8da0;
-  --accent: #3f8fd6;
-  --accent-soft: #e6f1fc;
+  --panel-2: #faf7ff;
+  --border: #e7ddf3;
+  --border-strong: #d6c6ec;
+  --text: #2a2238;
+  --text-2: #5a4f70;
+  --text-3: #8a7fa0;
+  --accent: #9b6fd4;
+  --accent-soft: #efe6fb;
   --accent-text: #ffffff;
   --ok: #3f9d6b;
   --ok-soft: #e4f4ec;
@@ -22,9 +22,9 @@
   --warn-soft: #f8f0e1;
   --err: #c25a52;
   --err-soft: #f8ebe9;
-  --info: #4f93c4;
-  --info-soft: #e7f2fb;
-  --shadow: 0 1px 2px rgba(38, 88, 140, .06), 0 6px 20px rgba(38, 88, 140, .07);
+  --info: #6f86cf;
+  --info-soft: #eceefb;
+  --shadow: 0 1px 2px rgba(96, 56, 150, .06), 0 6px 20px rgba(96, 56, 150, .07);
   --radius: 10px;
   --radius-sm: 7px;
   --sidebar-w: 232px;
@@ -33,27 +33,27 @@
 }
 
 [data-theme="dark"] {
-  --bg: #101a26;
-  --bg-soft: #15212f;
-  --panel: #16222f;
-  --panel-2: #1b2836;
-  --border: #243343;
-  --border-strong: #32465a;
-  --text: #dde8f2;
-  --text-2: #9fb2c4;
-  --text-3: #6f8094;
-  --accent: #5aa6e6;
-  --accent-soft: #16314a;
-  --accent-text: #08121c;
+  --bg: #16111f;
+  --bg-soft: #1e182b;
+  --panel: #1c1626;
+  --panel-2: #221a30;
+  --border: #2c2440;
+  --border-strong: #3a2f55;
+  --text: #ece6f5;
+  --text-2: #b6a8cc;
+  --text-3: #857a9c;
+  --accent: #b389e8;
+  --accent-soft: #2a2042;
+  --accent-text: #1a1230;
   --ok: #6fc090;
   --ok-soft: #16301f;
   --warn: #d6a85e;
   --warn-soft: #2c261a;
   --err: #e08a82;
   --err-soft: #2c201f;
-  --info: #7fb6e0;
-  --info-soft: #142634;
-  --shadow: 0 1px 2px rgba(0, 0, 0, .32), 0 6px 20px rgba(0, 0, 0, .28);
+  --info: #9ab6e8;
+  --info-soft: #1a2238;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .34), 0 6px 20px rgba(0, 0, 0, .30);
 }
 
 * { box-sizing: border-box; }
@@ -466,3 +466,21 @@ details.acc .body { margin-top: 10px; padding-top: 10px; border-top: 1px dashed 
 /* ---- 收藏夹选择 chips ---- */
 .folder-pick { cursor: pointer; }
 .folder-pick:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ===== 芋圆装饰（淡紫软萌风） ===== */
+.deco { position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow: hidden; }
+.taro-float { position: absolute; filter: drop-shadow(0 4px 8px rgba(96, 56, 150, .12)); animation: taroFloat 9s ease-in-out infinite; }
+.deco .t1 { top: 11%; right: 2.5%; width: 54px; opacity: .55; }
+.deco .t2 { bottom: 9%; right: 3.5%; width: 72px; opacity: .5; animation-delay: -3s; }
+.deco .t3 { bottom: 34%; right: 1%; width: 40px; opacity: .45; animation-delay: -6s; }
+@keyframes taroFloat {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-16px) rotate(6deg); }
+}
+.taro-mark { overflow: hidden; background: linear-gradient(140deg, #c9a7e8, #9b6fd4) !important; }
+.taro-face { width: 100%; height: 100%; display: block; }
+@media (max-width: 720px) {
+  .deco .t3 { display: none; }
+  .deco .t1 { width: 42px; }
+  .deco .t2 { width: 56px; }
+}

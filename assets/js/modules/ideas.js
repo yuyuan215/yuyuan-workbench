@@ -1,10 +1,10 @@
 /* ============================================================
- * 板块6：个人账号运营（自媒体选题库）
- * 心理学 / 教育育儿 / 职场 三大赛道 · 每日热点选题 + 长期储备库
+ * 板块6：账号运营（自媒体选题库）
+ * 职场成长 / 副业变现 / 个人提升 三大赛道 · 每日热点选题 + 长期储备库
  * ============================================================ */
 var ModIdeas = (function () {
   var OFF_KEY = 'paw.idea.offset';
-  var TRACK = { psychology: '心理学', parenting: '儿童教育', career: '财商' };
+  var TRACK = { psychology: '职场成长', parenting: '副业变现', career: '个人提升' };
   var dailyTrack = 'all', libFilter = 'all', kw = '';
 
   function offset() { try { return parseInt(sessionStorage.getItem(OFF_KEY) || '0', 10) || 0; } catch (e) { return 0; } }
@@ -71,7 +71,7 @@ var ModIdeas = (function () {
       '</div></div>';
   }
 
-  var SCRIPT_TRACKS = [['psychology', '心理学'], ['parenting', '儿童教育'], ['career', '财商']];
+  var SCRIPT_TRACKS = [['psychology', '职场成长'], ['parenting', '副业变现'], ['career', '个人提升']];
 
   function scriptInLib(track, title) {
     return DB.all('ideas').some(function (i) { return i.title === title && i.track === track; });
@@ -139,7 +139,7 @@ var ModIdeas = (function () {
     }).join('');
 
     var chips = [['all', '全部'], ['todo', '待创作'], ['done', '已完成'], ['fav', '已收藏'],
-      ['psychology', '心理学'], ['parenting', '儿童教育'], ['career', '财商']];
+      ['psychology', '职场成长'], ['parenting', '副业变现'], ['career', '个人提升']];
     document.getElementById('idFilters').innerHTML = chips.map(function (c) {
       return '<button class="chip' + (libFilter === c[0] ? ' on' : '') + '" data-v="' + c[0] + '">' + c[1] + ' ' + (counts[c[0]] || 0) + '</button>';
     }).join('');
