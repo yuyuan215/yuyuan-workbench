@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#3f8fd6" />
+<title>芋圆工作台 · 登录</title>
+<link rel="manifest" href="./manifest.json" />
+<link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png" />
+<link rel="apple-touch-icon" href="./assets/icons/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="芋圆" />
+<link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body class="login-body">
+
+<div class="login-wrap">
+  <div class="login-brand">
+    <div class="brand-mark">W</div>
+    <div>
+      <h1>私人AI综合工作台</h1>
+      <p>Personal AI Workbench · 待办 / 投资 / 语言 / 运动 / 阅读 / 选题</p>
+    </div>
+  </div>
+
+  <div class="login-card">
+    <h2>账号登录</h2>
+    <p class="login-sub">请输入授权账号，未授权访问将被拒绝</p>
+
+    <form id="loginForm" autocomplete="on" novalidate>
+      <label class="field">
+        <span>账号</span>
+        <input id="username" name="username" type="text" placeholder="请输入账号" autocomplete="username" required />
+      </label>
+
+      <label class="field">
+        <span>密码</span>
+        <span class="pwd-box">
+          <input id="password" name="password" type="password" placeholder="请输入密码" autocomplete="current-password" required />
+          <button type="button" class="pwd-toggle" id="pwdToggle" aria-label="显示密码">显示</button>
+        </span>
+      </label>
+
+      <label class="check-line">
+        <input type="checkbox" id="remember" checked />
+        <span>7 天内免登录（本设备）</span>
+      </label>
+
+      <div class="login-msg" id="loginMsg" role="alert"></div>
+
+      <button class="btn btn-primary btn-block" type="submit" id="loginBtn">登 录</button>
+    </form>
+
+    <div class="login-foot">
+      <span>默认账号：<b>admin</b> / 密码：<b>admin888</b>（登录后请立即在「设置」中修改）</span>
+      <button type="button" class="linkbtn" id="themeToggle">切换深色 / 浅色</button>
+    </div>
+  </div>
+
+  <p class="login-copy">数据本地加密缓存 + 云端同步 · 支持内网与公网访问</p>
+</div>
+
+<script src="./assets/js/core.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  Theme.init();
+  $('themeToggle').addEventListener('click', function () { Theme.toggle(); });
+
+  $('pwdToggle').addEventListener('click', function () {
+    var p = $('password');
+    var show = p.type === 'password';
+    p.type = show ? 'text' : 'password';
+    this.textContent = show ? '隐藏' : '显示';
+  });
+
+  // 已登录直接跳转
+  if (Auth.isLogged()) { location.replace('./app.html'); return; }
+
+  var msg = $('loginMsg');
+  function showMsg(text, ok) {
+    msg.textContent = text;
+    msg.className = 'login-msg ' + (ok ? 'ok' : 'err') + ' show';
+  }
+
+  $('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var u = $('username').value.trim();
+    var p = $('password').value;
+    if (!u || !p) { showMsg('请输入账号与密码', false); return; }
+
+    var btn = $('loginBtn');
+    btn.disabled = true; btn.textContent = '校验中…';
+
+    Auth.login(u, p, $('remember').checked).then(function (res) {
+      if (res.ok) {
+        showMsg('登录成功，正在进入工作台…', true);
+        setTimeout(function () { location.replace('./app.html'); }, 350);
+      } else {
+        showMsg(res.msg || '账号或密码错误', false);
+        btn.disabled = false; btn.textContent = '登 录';
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

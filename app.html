@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#3f8fd6" />
+<title>芋圆工作台</title>
+<link rel="manifest" href="./manifest.json" />
+<link rel="icon" type="image/svg+xml" href="./assets/icons/icon.svg" />
+<link rel="apple-touch-icon" href="./assets/icons/icon.svg" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="芋圆工作台" />
+<link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+
+<div class="app">
+  <!-- ============ 左侧导航 ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="side-head">
+      <div class="brand-mark">W</div>
+      <div>
+        <div class="t">芋圆工作台</div>
+        <div class="s" id="sideDate">—</div>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <div class="nav-label">核心板块</div>
+      <button class="nav-item active" data-view="todo">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span>今日待办</span><span class="badge" id="badgeTodo">0</span>
+      </button>
+      <button class="nav-item" data-view="invest">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg>
+        <span>投资学习</span><span class="badge" id="badgeInvest">0</span>
+      </button>
+      <button class="nav-item" data-view="lang">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5h7v14H4z"/><path d="M13 5h7v14h-7z"/><path d="M7 9h1M16 9h1"/></svg>
+        <span>每日语言训练</span><span class="badge" id="badgeLang">0</span>
+      </button>
+      <button class="nav-item" data-view="sport">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12"/></svg>
+        <span>每日运动打卡</span><span class="badge" id="badgeSport">0</span>
+      </button>
+      <button class="nav-item" data-view="library">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6.5A2.5 2.5 0 0 0 4 19.5z"/><path d="M8 7h8M8 11h6"/></svg>
+        <span>个人图书馆</span><span class="badge" id="badgeLib">0</span>
+      </button>
+      <button class="nav-item" data-view="ideas">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
+        <span>个人账号运营</span><span class="badge" id="badgeIdeas">0</span>
+      </button>
+
+      <div class="nav-label" style="margin-top:10px">系统</div>
+      <button class="nav-item" data-view="settings">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 7 19.4a1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0-1.2-2.9H1a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 2.6 7a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 2.9-1.2V1a2 2 0 1 1 4 0v.1A1.7 1.7 0 0 0 17 2.6a1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0 1.2 2.9H23a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1.7z" transform="scale(.92) translate(1,1)"/></svg>
+        <span>设置中心</span>
+      </button>
+    </nav>
+
+    <div class="side-foot">
+      <div class="sync-chip"><span class="dot" id="syncDot"></span><span id="syncText">本地存储</span></div>
+      <div class="row" style="gap:6px">
+        <button class="btn btn-sm grow" id="btnSyncNow">立即同步</button>
+        <button class="btn btn-sm" id="btnLogout">退出</button>
+      </div>
+    </div>
+  </aside>
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- ============ 右侧主区 ============ -->
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="菜单">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+      <div>
+        <div class="page-title" id="pageTitle">今日待办</div>
+        <div class="page-sub" id="pageSub">工作项目 · 重要节点 · 老板私人事务统筹</div>
+      </div>
+      <div class="top-actions">
+        <button class="icon-btn" id="btnTheme" title="浅色 / 深色">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+        <span class="tag accent" id="userChip">—</span>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- ========== 板块1：今日待办 ========== -->
+      <section class="view active" id="view-todo">
+        <div class="grid g4" id="todoStats"></div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head"><h3>新增待办</h3><span class="sub">回车即可快速添加</span></div>
+          <div class="inline-form">
+            <div class="full"><input id="tdTitle" type="text" placeholder="待办内容，例如：整理下周董事会材料" /></div>
+            <label class="field" style="margin:0"><span>分类</span>
+              <select id="tdCat"><option value="work">工作事项</option><option value="private">老板私人事务</option></select>
+            </label>
+            <label class="field" style="margin:0"><span>优先级</span>
+              <select id="tdPri"><option value="high">高</option><option value="mid" selected>中</option><option value="low">低</option></select>
+            </label>
+            <label class="field" style="margin:0"><span>截止日期</span><input id="tdDue" type="date" /></label>
+            <label class="field" style="margin:0"><span>状态</span>
+              <select id="tdStatus"><option value="doing">进行中</option><option value="delay">延期</option><option value="done">已完成</option></select>
+            </label>
+            <div class="full"><input id="tdNote" type="text" placeholder="备注补充（选填）" /></div>
+            <div class="full row">
+              <button class="btn btn-primary" id="tdAdd">添加待办</button>
+              <button class="btn" id="tdClearDone">一键清除已完成</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>待办清单 <span class="sub" id="todoCount"></span></h3>
+            <div class="row">
+              <input type="search" id="tdSearch" placeholder="搜索待办…" style="width:180px" />
+            </div>
+          </div>
+          <div class="chips" id="tdFilters"></div>
+          <div class="divider"></div>
+          <div id="todoList"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>当日汇总</h3><span class="sub" id="todoDateLabel"></span></div>
+          <div id="todoSummary"></div>
+        </div>
+      </section>
+
+      <!-- ========== 板块2：投资学习 ========== -->
+      <section class="view" id="view-invest">
+        <div class="card" style="margin-top:0">
+          <div class="card-head"><h3>今日学习进度 <span class="sub">收藏越多，知识库越厚</span></h3><span class="sub" id="invProgPct"></span></div>
+          <div class="progress"><div class="bar" id="invProgBar"></div></div>
+          <div class="small muted" id="invProgText" style="margin-top:8px"></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head">
+            <h3>今日财经资讯 <span class="sub" id="invDate"></span></h3>
+            <div class="row">
+              <button class="btn btn-sm" id="invReadMode">快速阅读模式</button>
+              <button class="btn btn-sm" id="invRefresh">换一批</button>
+              <button class="btn btn-sm" id="invFetch">联网抓取</button>
+            </div>
+          </div>
+          <div id="invNews"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>每日 5 大投资关键词 <span class="sub">每日更新 · 含详细解读</span></h3></div>
+          <div id="invTerms" class="term-grid"></div>
+        </div>
+
+        <div class="grid g2" style="margin-top:14px">
+          <div class="card" style="margin:0">
+            <div class="card-head"><h3>今日市场观点</h3></div>
+            <div id="invViews"></div>
+          </div>
+          <div class="card" style="margin:0">
+            <div class="card-head"><h3>投资理财干货</h3></div>
+            <div id="invTips"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>每日 15 条投资知识 + 创业案例 <span class="sub">热门知识 · 真实案例</span></h3></div>
+          <div id="invCases" class="case-grid"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>每日书籍核心摘要</h3><span class="sub">精选投资经典 · 每日更新</span></div>
+          <div id="invBook"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>个人投资知识库 <span class="sub" id="favCount"></span></h3>
+            <div class="row">
+              <input type="search" id="favSearch" placeholder="检索收藏内容…" style="width:190px" />
+              <button class="btn btn-sm" id="favExport">导出知识库</button>
+            </div>
+          </div>
+          <div class="chips" id="favFilters"></div>
+          <div class="divider"></div>
+          <div id="favList"></div>
+        </div>
+      </section>
+
+      <!-- ========== 板块3：每日语言训练 ========== -->
+      <section class="view" id="view-lang">
+        <div class="grid g4" id="langStats"></div>
+
+        <div class="card streak-card" id="langStreak" style="margin-top:14px"></div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head">
+            <h3>每日 TED 演讲（英文 10 分钟） <span class="sub" id="enTheme"></span></h3>
+            <div class="row">
+              <button class="btn btn-sm" id="enZoom">快速阅读模式</button>
+              <button class="btn btn-sm btn-primary" id="enCheck">英语打卡</button>
+            </div>
+          </div>
+          <div id="enBody"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>名著经典段落精选（中文 10 分钟） <span class="sub" id="cnTitle"></span></h3>
+            <div class="row">
+              <button class="btn btn-sm" id="cnZoom">快速阅读模式</button>
+              <button class="btn btn-sm" id="cnFav">收藏至知识库</button>
+              <button class="btn btn-sm btn-primary" id="cnCheck">中文打卡</button>
+            </div>
+          </div>
+          <div id="cnBody"></div>
+        </div>
+
+        <div class="grid g2">
+          <div class="card" style="margin:0">
+            <div class="card-head"><h3>近 28 天打卡日历</h3></div>
+            <div class="calendar" id="langCal"></div>
+            <p class="small muted" style="margin-top:10px">深色格 = 当日已打卡（英语或中文任一完成即记录）</p>
+          </div>
+          <div class="card" style="margin:0">
+            <div class="card-head"><h3>学习进度台账</h3><button class="btn btn-sm" id="langExport">导出记录</button></div>
+            <div class="tablewrap"><table class="tb" id="langTable"></table></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== 板块4：每日运动打卡 ========== -->
+      <section class="view" id="view-sport">
+        <div class="grid g4" id="sportStats"></div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head">
+            <h3>今日运动计划（30 分钟）<span class="sub" id="spPlanName"></span></h3>
+            <button class="btn btn-sm" id="spRefresh">换一套计划</button>
+          </div>
+          <div id="spPlan"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>运动打卡录入</h3><span class="sub" id="spTodayState"></span></div>
+          <div class="inline-form">
+            <label class="field" style="margin:0"><span>日期</span><input type="date" id="spDate" /></label>
+            <label class="field" style="margin:0"><span>运动类型</span>
+              <select id="spType">
+                <option>力量训练</option><option>有氧快走</option><option>跑步</option><option>骑行</option>
+                <option>瑜伽拉伸</option><option>HIIT 间歇</option><option>球类运动</option><option>游泳</option><option>其他</option>
+              </select>
+            </label>
+            <label class="field" style="margin:0"><span>实际时长（分钟）</span><input type="number" id="spMin" min="1" max="600" value="30" /></label>
+            <label class="field" style="margin:0"><span>强度感受</span>
+              <select id="spLevel"><option>轻松</option><option selected>适中</option><option>较累</option><option>力竭</option></select>
+            </label>
+            <div class="full"><input type="text" id="spNote" placeholder="备注（选填）：例如 完成计划的 80%" /></div>
+            <div class="full"><button class="btn btn-primary" id="spAdd">提交打卡</button></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>本周运动统计报表</h3><span class="sub" id="spWeekRange"></span></div>
+          <div class="grid g4" id="spWeekStats"></div>
+          <div class="bar-wrap" id="spChart"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>本月运动打卡日历 <span class="sub" id="spMonthInfo"></span></h3></div>
+          <div id="spMonth"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>历史运动记录（永久保存）</h3>
+            <div class="row"><input type="search" id="spSearch" placeholder="按类型/备注检索…" style="width:170px" /><button class="btn btn-sm" id="spExport">导出</button></div>
+          </div>
+          <div class="tablewrap"><table class="tb" id="spTable"></table></div>
+        </div>
+      </section>
+
+      <!-- ========== 板块5：个人图书馆 ========== -->
+      <section class="view" id="view-library">
+        <div class="grid g4" id="libStats"></div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head"><h3>录入书籍</h3></div>
+          <div class="inline-form">
+            <div class="full"><input type="text" id="bkTitle" placeholder="书名（必填）" /></div>
+            <label class="field" style="margin:0"><span>作者</span><input type="text" id="bkAuthor" placeholder="作者" /></label>
+            <label class="field" style="margin:0"><span>分类</span>
+              <select id="bkCat"><option>投资理财</option><option>管理经营</option><option>心理学</option><option>教育育儿</option><option>职场成长</option><option>人文历史</option><option>文学小说</option><option>其他</option></select>
+            </label>
+            <label class="field" style="margin:0"><span>阅读状态</span>
+              <select id="bkStatus"><option value="todo">待读</option><option value="reading">在读</option><option value="done">已读完</option></select>
+            </label>
+            <label class="field" style="margin:0"><span>评分</span>
+              <select id="bkRate"><option value="0">未评分</option><option value="5">★★★★★</option><option value="4">★★★★</option><option value="3">★★★</option><option value="2">★★</option><option value="1">★</option></select>
+            </label>
+            <div class="full"><button class="btn btn-primary" id="bkAdd">加入书库</button></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>📢 抖音热点荐书 <span class="sub" id="libRecoNote"></span></h3>
+            <div class="row" style="gap:8px">
+              <button class="btn btn-sm" id="libRecoLive">联网实时热点</button>
+              <button class="btn btn-sm" id="libRecoShuffle">换一批</button>
+            </div>
+          </div>
+          <div class="small muted" style="margin-bottom:10px">基于当前抖音热点话题，为你匹配契合主题的书籍；点击「加入书库」即归档到「待读」，可随时补充笔记与重点标注。</div>
+          <div id="libReco"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>书籍清单 <span class="sub" id="bkCount"></span></h3>
+            <input type="search" id="bkSearch" placeholder="检索书名 / 作者 / 笔记关键词…" style="width:230px" />
+          </div>
+          <div class="chips" id="bkFilters"></div>
+          <div class="divider"></div>
+          <div id="bkList"></div>
+        </div>
+      </section>
+
+      <!-- ========== 板块6：个人账号运营 ========== -->
+      <section class="view" id="view-ideas">
+        <div class="grid g4" id="ideaStats"></div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head">
+            <h3>今日热点选题推送 <span class="sub" id="ideaDate"></span></h3>
+            <div class="row">
+              <button class="btn btn-sm" id="ideaRefresh">换一批选题</button>
+              <button class="btn btn-sm" id="ideaSaveAll">全部存入储备库</button>
+            </div>
+          </div>
+          <div class="chips" id="ideaTrackFilter"></div>
+          <div class="divider"></div>
+          <div id="ideaDaily"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>每日脚本文案 <span class="sub" id="scriptDate"></span></h3><span class="sub">三赛道各一篇 · 可直接拍摄 / 口播</span></div>
+          <div id="ideaScripts"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>手动新增选题</h3></div>
+          <div class="inline-form">
+            <div class="full"><input type="text" id="idTitle" placeholder="选题标题" /></div>
+            <label class="field" style="margin:0"><span>赛道</span>
+              <select id="idTrack"><option value="psychology">心理学</option><option value="parenting">教育育儿</option><option value="career">职场</option></select>
+            </label>
+            <label class="field" style="margin:0"><span>形式</span>
+              <select id="idForm"><option>短视频</option><option>图文</option><option>长文</option><option>直播</option><option>系列专栏</option></select>
+            </label>
+            <label class="field" style="margin:0"><span>状态</span>
+              <select id="idStatus"><option value="todo">待创作</option><option value="done">已完成</option></select>
+            </label>
+            <div class="full"><input type="text" id="idDir" placeholder="内容方向建议" /></div>
+            <div class="full"><input type="text" id="idAud" placeholder="受众切入点参考" /></div>
+            <div class="full"><button class="btn btn-primary" id="idAdd">加入选题储备库</button></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h3>长期选题储备库 <span class="sub" id="idCount"></span></h3>
+            <div class="row">
+              <input type="search" id="idSearch" placeholder="检索选题…" style="width:190px" />
+              <button class="btn btn-sm" id="idExport">导出选题</button>
+            </div>
+          </div>
+          <div class="chips" id="idFilters"></div>
+          <div class="divider"></div>
+          <div id="idList"></div>
+        </div>
+      </section>
+
+      <!-- ========== 设置中心 ========== -->
+      <section class="view" id="view-settings">
+        <div class="card">
+          <div class="card-head"><h3>账号与权限</h3><span class="sub">支持自定义账号 + 密码，多账号共用工作台</span></div>
+          <div id="userList"></div>
+          <div class="divider"></div>
+          <div class="inline-form">
+            <label class="field" style="margin:0"><span>新增账号</span><input type="text" id="nuUser" placeholder="账号" /></label>
+            <label class="field" style="margin:0"><span>密码</span><input type="password" id="nuPwd" placeholder="密码（≥6 位）" /></label>
+            <label class="field" style="margin:0"><span>备注</span><input type="text" id="nuNote" placeholder="例如：老板本人 / 助理" /></label>
+            <div><button class="btn btn-primary" id="nuAdd">创建账号</button></div>
+          </div>
+          <div class="divider"></div>
+          <div class="inline-form">
+            <label class="field" style="margin:0"><span>修改当前账号密码 · 原密码</span><input type="password" id="cpOld" /></label>
+            <label class="field" style="margin:0"><span>新密码</span><input type="password" id="cpNew" /></label>
+            <div><button class="btn" id="cpBtn">更新密码</button></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>云端同步</h3><span class="sub">离线本地保存，联网自动同步；不配置则纯本地运行</span></div>
+          <div class="inline-form">
+            <label class="field" style="margin:0"><span>同步方式</span>
+              <select id="syMode">
+                <option value="off">不启用（仅本机）</option>
+                <option value="jsonbin">JSONBin.io（零后端，推荐）</option>
+                <option value="custom">自定义 REST 接口</option>
+              </select>
+            </label>
+            <label class="field" style="margin:0"><span>自动同步</span>
+              <select id="syAuto"><option value="1">开启（变更后自动上传）</option><option value="0">关闭（手动同步）</option></select>
+            </label>
+            <label class="field jsonbin-only" style="margin:0"><span>Bin ID</span><input type="text" id="syBin" placeholder="例如 65f1a2b3c4d5e6f7" /></label>
+            <label class="field jsonbin-only" style="margin:0"><span>Master Key</span><input type="password" id="syKey" placeholder="X-Master-Key" /></label>
+            <label class="field custom-only" style="margin:0"><span>接口地址</span><input type="text" id="syUrl" placeholder="https://your-api.com/workbench-data" /></label>
+            <label class="field custom-only" style="margin:0"><span>访问令牌</span><input type="password" id="syToken" placeholder="Bearer Token（选填）" /></label>
+            <div class="full row">
+              <button class="btn btn-primary" id="syySave">保存配置</button>
+              <button class="btn" id="syTest">测试连接</button>
+              <button class="btn" id="syNow">立即同步</button>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div id="syInfo" class="small muted"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>数据管理</h3><span class="sub">结构化 JSON，可备份可迁移</span></div>
+          <div class="row">
+            <button class="btn" id="dtExport">导出全部数据</button>
+            <button class="btn" id="dtImport">导入数据（合并）</button>
+            <button class="btn" id="dtImportReplace">导入数据（覆盖）</button>
+            <button class="btn btn-danger" id="dtClear">清空本机缓存</button>
+            <input type="file" id="dtFile" accept="application/json" class="hidden" />
+          </div>
+          <div class="divider"></div>
+          <div class="grid g4" id="dbStats"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>外观与偏好</h3></div>
+          <div class="inline-form">
+            <label class="field" style="margin:0"><span>主题模式</span>
+              <select id="stTheme"><option value="light">浅色（默认）</option><option value="dark">深色</option></select>
+            </label>
+            <label class="field" style="margin:0"><span>使用者称呼</span><input type="text" id="stOwner" placeholder="例如：陈总助理" /></label>
+            <div><button class="btn btn-primary" id="stSave">保存偏好</button></div>
+          </div>
+          <div class="divider"></div>
+          <p class="small muted">版本 v1.0 · 纯静态部署，无服务器依赖 · 数据默认保存在本机浏览器，配置云端同步后可多端共用。</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script src="./assets/js/core.js"></script>
+<script src="./assets/js/data/content.js"></script>
+<script src="./assets/js/data/extra.js"></script>
+<script src="./assets/js/data/scripts.js"></script>
+<script src="./assets/js/modules/todo.js"></script>
+<script src="./assets/js/modules/invest.js"></script>
+<script src="./assets/js/modules/lang.js"></script>
+<script src="./assets/js/modules/sport.js"></script>
+<script src="./assets/js/modules/library.js"></script>
+<script src="./assets/js/modules/ideas.js"></script>
+<script src="./assets/js/modules/settings.js"></script>
+<script src="./assets/js/app.js"></script>
+</body>
+</html>
