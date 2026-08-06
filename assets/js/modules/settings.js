@@ -26,10 +26,17 @@ var ModSettings = (function () {
     document.getElementById('syKey').value = s.key || '';
     document.getElementById('syUrl').value = s.url || '';
     document.getElementById('syToken').value = s.token || '';
+    document.getElementById('syOwner').value = s.owner || '';
+    document.getElementById('syRepo').value = s.repo || '';
+    document.getElementById('syPath').value = s.path || 'sync-data.json';
+    document.getElementById('syBranch').value = s.branch || 'main';
+    document.getElementById('syGhToken').value = s.ghToken || '';
+    document.getElementById('syPass').value = s.pass || '';
     toggleSyncFields();
     var last = DB.settings().lastSyncAt;
+    var modeText = (s.mode === 'jsonbin') ? 'JSONBin.io' : (s.mode === 'github') ? 'GitHub 仓库（加密）' : (s.mode === 'custom') ? '自定义接口' : '';
     document.getElementById('syInfo').innerHTML =
-      '当前状态：' + (s.mode && s.mode !== 'off' ? '<b>已启用（' + (s.mode === 'jsonbin' ? 'JSONBin.io' : '自定义接口') + '）</b>' : '未启用，数据仅保存在本机浏览器') +
+      '当前状态：' + (s.mode && s.mode !== 'off' ? '<b>已启用（' + modeText + '）</b>' : '未启用，数据仅保存在本机浏览器') +
       '　|　上次同步：' + (last ? Util.shortTime(last) : '从未同步') +
       '　|　网络：' + (navigator.onLine ? '在线' : '离线') +
       '<br/>说明：同步采用「按记录时间戳合并」策略，多设备可同时使用；删除操作以墓碑方式传播，不会被旧数据复活。';
@@ -39,6 +46,7 @@ var ModSettings = (function () {
     var m = document.getElementById('syMode').value;
     document.querySelectorAll('.jsonbin-only').forEach(function (el) { el.classList.toggle('hidden', m !== 'jsonbin'); });
     document.querySelectorAll('.custom-only').forEach(function (el) { el.classList.toggle('hidden', m !== 'custom'); });
+    document.querySelectorAll('.github-only').forEach(function (el) { el.classList.toggle('hidden', m !== 'github'); });
   }
 
   function renderDbStats() {
@@ -98,7 +106,13 @@ var ModSettings = (function () {
           binId: document.getElementById('syBin').value.trim(),
           key: document.getElementById('syKey').value.trim(),
           url: document.getElementById('syUrl').value.trim(),
-          token: document.getElementById('syToken').value.trim()
+          token: document.getElementById('syToken').value.trim(),
+          owner: document.getElementById('syOwner').value.trim(),
+          repo: document.getElementById('syRepo').value.trim(),
+          path: document.getElementById('syPath').value.trim() || 'sync-data.json',
+          branch: document.getElementById('syBranch').value.trim() || 'main',
+          ghToken: document.getElementById('syGhToken').value.trim(),
+          pass: document.getElementById('syPass').value.trim()
         }
       });
       Toast.show('同步配置已保存', 'ok');
@@ -110,6 +124,25 @@ var ModSettings = (function () {
       Sync.test();
     });
     document.getElementById('syNow').addEventListener('click', function () { Sync.now(true).then(renderSync); });
+    document.getElementById('syGenCode').addEventListener('click', function () {
+      if (document.getElementById('syMode').value === 'off') { Toast.show('请先选择同步方式并保存配置', 'warn'); return; }
+      var code = Sync.makeCode();
+      if (!code) { Toast.show('生成同步码失败', 'err'); return; }
+      document.getElementById('syCode').value = code;
+      document.getElementById('syCode').select();
+      try { document.execCommand('copy'); Toast.show('同步码已生成并复制，去手机端粘贴即可', 'ok'); }
+      catch (e) { Toast.show('同步码已生成，请手动复制', 'ok'); }
+    });
+    document.getElementById('syApplyCode').addEventListener('click', function () {
+      var code = document.getElementById('syCode').value.trim();
+      if (!code) { Toast.show('请先粘贴同步码', 'warn'); return; }
+      if (Sync.applyCode(code)) {
+        Toast.show('同步码已应用，云端配置已配好', 'ok');
+        renderSync();
+        if (window.App) App.updateSyncChip();
+        Sync.now(true).then(renderSync);
+      } else { Toast.show('同步码无效或格式错误', 'err'); }
+    });
 
     document.getElementById('dtExport').addEventListener('click', function () {
       Util.download('工作台数据备份_' + Util.today() + '.json', DB.exportJSON());

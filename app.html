@@ -109,6 +109,8 @@
         <div class="page-sub" id="pageSub">工作项目 · 重要节点 · 老板私人事务统筹</div>
       </div>
       <div class="top-actions">
+        <button class="btn btn-sm install-cta hidden" id="btnInstall">安装到本机</button>
+        <button class="icon-btn" id="btnInstallHelp" title="如何安装为 App">?</button>
         <button class="icon-btn" id="btnTheme" title="浅色 / 深色">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
         </button>
@@ -541,6 +543,7 @@
             <label class="field" style="margin:0"><span>同步方式</span>
               <select id="syMode">
                 <option value="off">不启用（仅本机）</option>
+                <option value="github">GitHub 仓库（加密，最永久）</option>
                 <option value="jsonbin">JSONBin.io（零后端，推荐）</option>
                 <option value="custom">自定义 REST 接口</option>
               </select>
@@ -552,6 +555,12 @@
             <label class="field jsonbin-only" style="margin:0"><span>Master Key</span><input type="password" id="syKey" placeholder="X-Master-Key" /></label>
             <label class="field custom-only" style="margin:0"><span>接口地址</span><input type="text" id="syUrl" placeholder="https://your-api.com/workbench-data" /></label>
             <label class="field custom-only" style="margin:0"><span>访问令牌</span><input type="password" id="syToken" placeholder="Bearer Token（选填）" /></label>
+            <label class="field github-only" style="margin:0"><span>仓库所有者</span><input type="text" id="syOwner" placeholder="GitHub 用户名，如 yuyuan215" /></label>
+            <label class="field github-only" style="margin:0"><span>仓库名</span><input type="text" id="syRepo" placeholder="如 yuyuan-workbench" /></label>
+            <label class="field github-only" style="margin:0"><span>文件路径</span><input type="text" id="syPath" placeholder="sync-data.json" /></label>
+            <label class="field github-only" style="margin:0"><span>分支</span><input type="text" id="syBranch" placeholder="main" /></label>
+            <label class="field github-only" style="margin:0"><span>GitHub Token（细粒度 PAT）</span><input type="password" id="syGhToken" placeholder="github_pat_xxx（需该仓库 contents:read+write）" /></label>
+            <label class="field github-only" style="margin:0"><span>同步密码（用于加密）</span><input type="password" id="syPass" placeholder="自设一个密码，电脑与手机需一致" /></label>
             <div class="full row">
               <button class="btn btn-primary" id="syySave">保存配置</button>
               <button class="btn" id="syTest">测试连接</button>
@@ -560,6 +569,16 @@
           </div>
           <div class="divider"></div>
           <div id="syInfo" class="small muted"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>跨设备同步码</h3><span class="sub">在电脑上配好云端后点「生成同步码」，手机端粘贴即自动配好，无需手抄密钥</span></div>
+          <div class="row">
+            <button class="btn" id="syGenCode">生成同步码</button>
+            <button class="btn" id="syApplyCode">应用同步码</button>
+          </div>
+          <textarea id="syCode" class="code-area" placeholder="点击「生成同步码」后会显示一串码；或在此粘贴另一端生成的同步码后点「应用同步码」"></textarea>
+          <div class="small muted">同步码包含你的云端密钥与加密密码，仅在你自己的设备间传递，请勿发给他人。</div>
         </div>
 
         <div class="card">

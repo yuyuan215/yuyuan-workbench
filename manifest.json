@@ -1,6 +1,7 @@
 {
   "name": "芋圆工作台",
   "short_name": "芋圆",
+  "id": "yuyuan-workbench-pwa",
   "description": "芋圆工作台：今日待办、建立财商、英语学习、运动打卡、亮灯自习室、美商提升、金句收藏、账号运营，多板块云端同步。",
   "lang": "zh-CN",
   "dir": "ltr",

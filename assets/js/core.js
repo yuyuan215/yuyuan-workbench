@@ -195,7 +195,7 @@ var DB = (function () {
       settings: {
         ownerName: '老板助理',
         autoClearDone: false,
-        sync: { mode: 'off', url: '', token: '', binId: '', key: '', auto: true },
+        sync: { mode: 'off', auto: true, url: '', token: '', binId: '', key: '', owner: '', repo: '', path: 'sync-data.json', branch: 'main', ghToken: '', pass: '' },
         lastSyncAt: 0,
         updatedAt: Date.now()
       }
@@ -331,6 +331,44 @@ var DB = (function () {
   };
 })();
 
+/* ---------------- 客户端加密（AES-GCM，用于 GitHub 同步加密） ---------------- */
+var Cipher = (function () {
+  function b64e(buf) {
+    var b = new Uint8Array(buf), s = '';
+    for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+    return btoa(s);
+  }
+  function b64d(str) {
+    var s = atob(str), b = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i);
+    return b.buffer;
+  }
+  function derive(pass) {
+    return crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey'])
+      .then(function (base) {
+        return crypto.subtle.deriveKey(
+          { name: 'PBKDF2', salt: new TextEncoder().encode('yuyuan-workbench-sync-v1'), iterations: 100000, hash: 'SHA-256' },
+          base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+      });
+  }
+  function encrypt(obj, pass) {
+    if (!crypto || !crypto.subtle) return Promise.reject(new Error('当前环境不支持加密（需 HTTPS 或 localhost）'));
+    return derive(pass).then(function (key) {
+      var iv = crypto.getRandomValues(new Uint8Array(12));
+      return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, new TextEncoder().encode(JSON.stringify(obj)))
+        .then(function (ct) { return { iv: b64e(iv), ct: b64e(ct) }; });
+    });
+  }
+  function decrypt(pkg, pass) {
+    if (!crypto || !crypto.subtle) return Promise.reject(new Error('当前环境不支持加密（需 HTTPS 或 localhost）'));
+    return derive(pass).then(function (key) {
+      return crypto.subtle.decrypt({ name: 'AES-GCM', iv: new Uint8Array(b64d(pkg.iv)) }, key, b64d(pkg.ct))
+        .then(function (pt) { return JSON.parse(new TextDecoder().decode(pt)); });
+    });
+  }
+  return { encrypt: encrypt, decrypt: decrypt };
+})();
+
 /* ---------------- 云端同步引擎 ---------------- */
 var Sync = (function () {
   var timer = null, running = false;
@@ -346,6 +384,12 @@ var Sync = (function () {
 
   function endpoints() {
     var c = cfg();
+    if (c.mode === 'github') {
+      var ghPath = c.path || 'sync-data.json';
+      var ghBase = 'https://api.github.com/repos/' + encodeURIComponent(c.owner || '') + '/' + encodeURIComponent(c.repo || '') + '/contents/' + ghPath;
+      var ghH = { 'Authorization': 'Bearer ' + (c.ghToken || ''), 'Accept': 'application/vnd.github+json' };
+      return { get: { url: ghBase, headers: ghH }, put: { url: ghBase, headers: Object.assign({ 'Content-Type': 'application/json' }, ghH) } };
+    }
     if (c.mode === 'jsonbin') {
       return {
         get: { url: 'https://api.jsonbin.io/v3/b/' + c.binId + '/latest', headers: { 'X-Master-Key': c.key, 'X-Bin-Meta': 'false' } },
@@ -359,6 +403,8 @@ var Sync = (function () {
   }
 
   function pull() {
+    var c = cfg();
+    if (c.mode === 'github') return pullGitHub(c);
     var e = endpoints();
     return fetch(e.get.url, { method: 'GET', headers: e.get.headers, cache: 'no-store' })
       .then(function (r) {
@@ -375,6 +421,8 @@ var Sync = (function () {
   }
 
   function push(payload) {
+    var c = cfg();
+    if (c.mode === 'github') return pushGitHub(c, payload);
     var e = endpoints();
     return fetch(e.put.url, { method: 'PUT', headers: e.put.headers, body: JSON.stringify(payload) })
       .then(function (r) {
@@ -434,6 +482,55 @@ var Sync = (function () {
     });
   }
 
+  /* ---- GitHub 加密同步：仓库存密文，客户端 AES-GCM 解密，无需第三方服务 ---- */
+  var _ghSha = '';
+  function b64u(str) { return btoa(unescape(encodeURIComponent(str))); }
+  function pullGitHub(c) {
+    var e = endpoints();
+    return fetch(e.get.url, { method: 'GET', headers: e.get.headers, cache: 'no-store' })
+      .then(function (r) {
+        if (r.status === 404) return null;
+        if (!r.ok) throw new Error('拉取失败 HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (data) {
+        if (!data) return null;
+        _ghSha = data.sha || '';
+        try {
+          var raw = atob((data.content || '').replace(/[\s]/g, ''));
+          var pkg = JSON.parse(raw);
+          return Cipher.decrypt(pkg, c.pass).then(function (state) { return state && state.v ? state : null; });
+        } catch (err2) { throw new Error('解密失败：请确认同步密码与配置一致'); }
+      });
+  }
+  function pushGitHub(c, payload, depth) {
+    depth = depth || 0;
+    var e = endpoints();
+    return Cipher.encrypt(payload, c.pass).then(function (pkg) {
+      var body = { message: 'workbench sync ' + new Date().toISOString(), content: b64u(JSON.stringify(pkg)), branch: c.branch || 'main' };
+      if (_ghSha) body.sha = _ghSha;
+      return fetch(e.put.url, { method: 'PUT', headers: e.put.headers, body: JSON.stringify(body) })
+        .then(function (r) {
+          if (r.status === 409 && depth < 2) { return pullGitHub(c).then(function () { return pushGitHub(c, payload, depth + 1); }); }
+          if (!r.ok) throw new Error('上传失败 HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function (d) { if (d && d.content && d.content.sha) _ghSha = d.content.sha; return true; });
+    });
+  }
+
+  /* ---- 跨设备同步码：把云端配置编码成一串码，手机端粘贴即配好 ---- */
+  function makeCode() {
+    try { return b64u(JSON.stringify(cfg())); } catch (e) { return ''; }
+  }
+  function applyCode(code) {
+    try {
+      var c = JSON.parse(decodeURIComponent(escape(atob((code || '').trim()))));
+      DB.saveSettings({ sync: c });
+      return true;
+    } catch (e) { return false; }
+  }
+
   function init() {
     window.addEventListener('online', function () { emit('pending', '待同步'); now(false); });
     window.addEventListener('offline', function () { emit('offline', '离线'); });
@@ -441,7 +538,7 @@ var Sync = (function () {
     setInterval(function () { if (enabled() && cfg().auto !== false) now(false); }, 10 * 60 * 1000);
   }
 
-  return { now: now, schedule: schedule, test: test, init: init, onStatus: onStatus, enabled: enabled };
+  return { now: now, schedule: schedule, test: test, init: init, onStatus: onStatus, enabled: enabled, makeCode: makeCode, applyCode: applyCode };
 })();
 
 /* ---------------- 登录鉴权 ---------------- */
