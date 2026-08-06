@@ -568,3 +568,10 @@ details.acc .body { margin-top: 10px; padding-top: 10px; border-top: 1px dashed 
 .note-excerpt { font-size: 13.5px; color: var(--text-2); line-height: 1.6; border-left: 2px solid var(--accent); padding-left: 8px; }
 .note-thought { margin-top: 5px; font-size: 13px; color: var(--text-1); line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
 .note-meta { margin-top: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+
+/* 内联「添加笔记」编辑区（每个展开笔记本卡片底部，可直接记录） */
+.nb-add { margin-top: 10px; padding: 10px; background: var(--bg-soft-2, #faf7ff); border: 1px dashed var(--accent, #9b6fd4); border-radius: var(--radius); display: flex; flex-direction: column; gap: 6px; }
+.nb-add-hd { font-size: 12.5px; font-weight: 600; color: var(--accent, #9b6fd4); }
+.nb-add textarea { width: 100%; resize: vertical; font: inherit; padding: 7px 9px; border: 1px solid var(--border); border-radius: 8px; background: #fff; color: var(--text-1); box-sizing: border-box; }
+.nb-add textarea:focus { outline: 2px solid var(--accent, #9b6fd4); outline-offset: -1px; border-color: transparent; }
+.nb-add .row { align-items: center; }
