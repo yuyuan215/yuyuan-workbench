@@ -1,36 +1,76 @@
 /* ============================================================
- * 板块：读书笔记（原金句收藏夹改造）
- * 从图书馆摘录书中精华片段 + 写思考，归入商业/文学/中医/亲子教育等笔记本
- * 英语学习、表达练习里的好句也可一键存为笔记
- * 数据存 DB('notes')，随 JSONBin 同步多端
+ * 板块：读书笔记
+ * 以「笔记本」为主轴：每个笔记本对应一本书（书名 + 作者 + 分类），
+ * 里面可存放多条笔记（摘录 + 思考 + 页码）。
+ * 既可以从「图书馆」的书一键添加，也可以手动「新建笔记本」自由记录
+ * （不限于图书馆的书，任何书 / 资料都能建笔记本）。
+ * 数据：DB('notebooks') 主轴；DB('notes') 笔记条目（含 notebookId）。
+ * 旧版扁平笔记会在首次打开时按书名自动归并到笔记本，数据不丢失。
+ * 全部随 JSONBin 同步多端。
  * ============================================================ */
 var ModNotes = (function () {
-  var filter = { cat: 'all', kw: '' };
+  var filter = { cat: 'all', kw: '', open: {} };
   var CATS = ['商业', '文学', '中医', '亲子教育', '其他'];
 
-  function all() { return DB.all('notes'); }
-  function has(key) { return all().some(function (n) { return n.key === key; }); }
+  function nbs() { return DB.all('notebooks'); }
+  function notes() { return DB.all('notes'); }
+  function nbNotes(id) { return notes().filter(function (n) { return n.notebookId === id; }); }
+  function lastNote(id) {
+    var arr = nbNotes(id).slice().sort(function (a, b) { return b.createdAt - a.createdAt; });
+    return arr[0] || null;
+  }
 
-  /* 直接添加一条笔记（英语/中文好句一键存） */
+  /* 兼容旧数据：把没有 notebookId 的旧笔记按书名归并到自动创建的笔记本 */
+  function migrate() {
+    var orphan = notes().filter(function (n) { return !n.notebookId; });
+    if (!orphan.length) return;
+    var map = {};
+    orphan.forEach(function (n) {
+      var name = n.book || '—';
+      if (!map[name]) {
+        var nb = DB.insert('notebooks', {
+          name: name, author: n.author || '',
+          cat: n.cat || '其他', createdAt: n.createdAt || Date.now()
+        });
+        map[name] = nb.id;
+      }
+      DB.update('notes', n.id, { notebookId: map[name] });
+    });
+  }
+
+  /* 按书名定位或新建笔记本 */
+  function findOrCreateNotebook(name, opts) {
+    name = (name || '').trim() || '未命名笔记本';
+    var hit = nbs().filter(function (x) { return x.name === name; })[0];
+    if (hit) return hit;
+    return DB.insert('notebooks', {
+      name: name,
+      author: (opts && opts.author) || '',
+      cat: (opts && opts.cat) || '其他'
+    });
+  }
+
+  function touch(id) { var nb = DB.find('notebooks', id); if (nb) DB.update('notebooks', id, {}); }
+
+  /* 兼容接口：英语 / 中文好句一键存（p: {book, excerpt, note, cat, source, key}） */
   function add(p) {
     p = p || {};
     var key = p.key || ('note-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7));
-    if (has(key)) { Toast.show('这条已在笔记中', 'info'); return false; }
+    if (notes().some(function (n) { return n.key === key; })) { Toast.show('这条已在笔记中', 'info'); return false; }
+    var nb = findOrCreateNotebook(p.book || '—', { cat: p.cat || '其他' });
     DB.insert('notes', {
-      key: key,
-      book: p.book || '—',
-      excerpt: p.excerpt || '',
-      note: p.note || '',
-      cat: p.cat || '其他',
-      source: p.source || '',
-      createdAt: Date.now()
+      key: key, notebookId: nb.id, book: p.book || nb.name,
+      excerpt: p.excerpt || '', note: p.note || '',
+      cat: p.cat || nb.cat || '其他', source: p.source || '',
+      page: p.page || '', createdAt: Date.now()
     });
+    touch(nb.id);
     Toast.show('已存入读书笔记', 'ok');
     render();
     return true;
   }
 
-  /* 从图书馆某本书添加：弹窗填写摘录 + 感想 */
+  /* 兼容接口：从图书馆某本书添加（弹窗：摘录 + 思考 + 分类） */
   function addForBook(book) {
     if (!book) return;
     var opts = CATS.map(function (c) {
@@ -40,7 +80,8 @@ var ModNotes = (function () {
       '<p class="small muted">为《' + Util.esc(book.title) + '》添加一条读书笔记。把书里打动你的片段粘贴到「摘录」，再写下你的思考。</p>' +
       '<div class="full" style="margin-top:8px"><textarea id="ntExcerpt" rows="4" placeholder="粘贴/摘抄书中精华片段…" style="width:100%"></textarea></div>' +
       '<div class="full" style="margin-top:8px"><textarea id="ntNote" rows="3" placeholder="你的思考、联想、行动计划…" style="width:100%"></textarea></div>' +
-      '<div class="row" style="margin-top:8px"><label class="field" style="margin:0"><span>归入笔记本</span><select id="ntCat">' + opts + '</select></label></div>';
+      '<div class="row" style="margin-top:8px"><label class="field" style="margin:0"><span>归入分类</span><select id="ntCat">' + opts + '</select></label>' +
+      '<label class="field" style="margin:0"><span>页码（选填）</span><input id="ntPage" style="width:90px" placeholder="如 P88" /></label></div>';
     if (window.App && App.openModal) {
       App.openModal('添加读书笔记', html, [
         { label: '取消', onClick: function () { App.closeModal(); } },
@@ -48,11 +89,14 @@ var ModNotes = (function () {
           var ex = document.getElementById('ntExcerpt').value.trim();
           var no = document.getElementById('ntNote').value.trim();
           if (!ex && !no) { Toast.show('摘录和感想至少填一项', 'warn'); return; }
+          var nb = findOrCreateNotebook(book.title, { cat: document.getElementById('ntCat').value });
           DB.insert('notes', {
             key: 'note-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
-            book: book.title, excerpt: ex, note: no,
-            cat: document.getElementById('ntCat').value, source: '', createdAt: Date.now()
+            notebookId: nb.id, book: book.title, excerpt: ex, note: no,
+            cat: nb.cat, source: '', page: document.getElementById('ntPage').value.trim(),
+            createdAt: Date.now()
           });
+          touch(nb.id);
           App.closeModal();
           Toast.show('已保存读书笔记', 'ok');
           render();
@@ -61,61 +105,172 @@ var ModNotes = (function () {
     }
   }
 
-  function del(id) { DB.remove('notes', id); Toast.show('已移除', 'info'); render(); }
+  /* 新建笔记本弹窗 */
+  function newNotebook() {
+    var opts = CATS.map(function (c) { return '<option' + (c === '其他' ? ' selected' : '') + '>' + c + '</option>'; }).join('');
+    var html =
+      '<p class="small muted">新建一个笔记本——可以是你正在读的任何书，也可以是某个主题的资料夹。建好后就能往里添加笔记。</p>' +
+      '<div class="full" style="margin-top:8px"><label class="field" style="margin:0"><span>书名 / 主题 *</span><input id="nbName" placeholder="如：《被讨厌的勇气》" /></label></div>' +
+      '<div class="full" style="margin-top:8px"><label class="field" style="margin:0"><span>作者（选填）</span><input id="nbAuthor" placeholder="如：岸见一郎 / 古贺史健" /></label></div>' +
+      '<div class="row" style="margin-top:8px"><label class="field" style="margin:0"><span>分类</span><select id="nbCat">' + opts + '</select></label></div>';
+    if (window.App && App.openModal) {
+      App.openModal('新建笔记本', html, [
+        { label: '取消', onClick: function () { App.closeModal(); } },
+        { label: '创建并添加首条笔记', primary: true, onClick: function () {
+          var name = document.getElementById('nbName').value.trim();
+          if (!name) { Toast.show('请填写书名 / 主题', 'warn'); return; }
+          var nb = DB.insert('notebooks', {
+            name: name, author: document.getElementById('nbAuthor').value.trim(),
+            cat: document.getElementById('nbCat').value, createdAt: Date.now()
+          });
+          App.closeModal();
+          addNote(nb.id, true);
+        } }
+      ]);
+    }
+  }
+
+  /* 添加一条笔记到指定笔记本 */
+  function addNote(notebookId, focus) {
+    var html =
+      '<div class="full" style="margin-top:8px"><textarea id="ntExcerpt" rows="4" placeholder="摘录 / 原文关键句…" style="width:100%"></textarea></div>' +
+      '<div class="full" style="margin-top:8px"><textarea id="ntNote" rows="3" placeholder="你的思考、联想、行动计划…" style="width:100%"></textarea></div>' +
+      '<div class="row" style="margin-top:8px"><label class="field" style="margin:0"><span>页码（选填）</span><input id="ntPage" style="width:90px" placeholder="如 P88" /></label></div>';
+    if (window.App && App.openModal) {
+      App.openModal('添加笔记', html, [
+        { label: '取消', onClick: function () { App.closeModal(); render(); } },
+        { label: '保存笔记', primary: true, onClick: function () {
+          var ex = document.getElementById('ntExcerpt').value.trim();
+          var no = document.getElementById('ntNote').value.trim();
+          if (!ex && !no) { Toast.show('摘录和感想至少填一项', 'warn'); return; }
+          var nb = DB.find('notebooks', notebookId);
+          DB.insert('notes', {
+            key: 'note-' + Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+            notebookId: notebookId, book: nb ? nb.name : '',
+            excerpt: ex, note: no, cat: nb ? nb.cat : '其他',
+            source: '', page: document.getElementById('ntPage').value.trim(),
+            createdAt: Date.now()
+          });
+          touch(notebookId);
+          App.closeModal();
+          Toast.show('已保存笔记', 'ok');
+          render();
+        } }
+      ]);
+    }
+  }
+
+  function delNote(id) {
+    var n = DB.find('notes', id);
+    DB.remove('notes', id);
+    if (n && n.notebookId) touch(n.notebookId);
+    Toast.show('已删除该条笔记', 'info');
+    render();
+  }
+
+  function delNotebook(id) {
+    nbNotes(id).forEach(function (n) { DB.remove('notes', n.id); });
+    DB.remove('notebooks', id);
+    delete filter.open[id];
+    Toast.show('笔记本及其笔记已删除', 'info');
+    render();
+  }
 
   function collections() {
     var got = {};
-    all().forEach(function (n) { if (n.cat) got[n.cat] = 1; });
+    nbs().forEach(function (n) { if (n.cat) got[n.cat] = 1; });
     return CATS.concat(Object.keys(got).filter(function (c) { return CATS.indexOf(c) < 0; }));
   }
 
-  function itemHTML(n) {
-    var opts = collections().map(function (c) {
-      return '<option' + (n.cat === c ? ' selected' : '') + '>' + c + '</option>';
-    }).join('');
-    return '<div class="item">' +
-      '<div class="item-meta"><span class="tag accent">' + Util.esc(n.book || '—') + '</span>' +
-      '<span class="small muted">' + Util.dateKey(n.createdAt) + '</span></div>' +
-      (n.excerpt ? '<div class="item-note" style="border-left:3px solid var(--accent);padding-left:10px;margin:6px 0">' + Util.esc(n.excerpt) + '</div>' : '') +
-      (n.note ? '<div style="margin-top:4px">' + Util.esc(n.note) + '</div>' : '') +
-      '<div class="item-actions">' +
-      '<label class="field" style="margin:0"><span>笔记本</span><select class="n-cat" data-id="' + n.id + '">' + opts + '</select></label>' +
-      '<button class="btn btn-sm btn-danger" data-act="del" data-id="' + n.id + '">删除</button>' +
-      '</div></div>';
+  function escapePreview(s, len) {
+    s = (s || '').replace(/\s+/g, ' ').trim();
+    if (s.length > len) s = s.slice(0, len) + '…';
+    return Util.esc(s);
+  }
+
+  function noteItemHTML(n) {
+    return '<div class="note-item">' +
+      (n.excerpt ? '<div class="note-excerpt">“' + escapePreview(n.excerpt, 140) + '”</div>' : '') +
+      (n.note ? '<div class="note-thought">' + escapePreview(n.note, 140) + '</div>' : '') +
+      '<div class="note-meta"><span class="small muted">' + Util.dateKey(n.createdAt) + (n.page ? ' · ' + Util.esc(n.page) : '') + '</span>' +
+      '<button class="btn btn-sm btn-danger" data-del-note="' + n.id + '">删除</button></div></div>';
+  }
+
+  function cardHTML(nb) {
+    var ns = nbNotes(nb.id);
+    var last = lastNote(nb.id);
+    var isOpen = !!filter.open[nb.id];
+    var meta = '<span class="tag accent">' + Util.esc(nb.cat || '其他') + '</span>' +
+      (nb.author ? '<span class="small muted">' + Util.esc(nb.author) + '</span>' : '') +
+      '<span class="small muted">' + ns.length + ' 条笔记</span>' +
+      '<span class="small muted">' + Util.dateKey(nb.updatedAt) + ' 更新</span>';
+    var preview = last
+      ? '<div class="nb-preview">' + (last.excerpt ? '“' + escapePreview(last.excerpt, 80) + '”' : escapePreview(last.note, 80)) + '</div>'
+      : '<div class="nb-preview muted">还没有笔记，点「+ 笔记」写下第一条</div>';
+    var detail = isOpen
+      ? '<div class="nb-detail">' + (ns.length ? ns.slice().sort(function (a, b) { return b.createdAt - a.createdAt; }).map(noteItemHTML).join('') : '<div class="empty small">还没有笔记</div>') + '</div>'
+      : '';
+    return '<div class="item nb-card" data-nb="' + nb.id + '">' +
+      '<div class="nb-head">' +
+        '<div class="nb-info"><div class="nb-title">📒 ' + Util.esc(nb.name) + '</div>' + meta + '</div>' +
+        '<div class="nb-actions">' +
+          '<button class="btn btn-sm" data-toggle="' + nb.id + '">' + (isOpen ? '收起' : '查看') + '</button>' +
+          '<button class="btn btn-sm btn-primary" data-add="' + nb.id + '">+ 笔记</button>' +
+          '<button class="btn btn-sm btn-danger" data-del-nb="' + nb.id + '">删除</button>' +
+        '</div>' +
+      '</div>' +
+      preview + detail +
+      '</div>';
   }
 
   function render() {
-    var allN = all();
+    migrate();
+    var allN = nbs();
     var cols = collections();
     var chips = [['all', '全部']].concat(cols.map(function (c) { return [c, c]; })).map(function (c) {
       return '<button class="chip' + (filter.cat === c[0] ? ' on' : '') + '" data-cat="' + c[0] + '">' + c[1] + '</button>';
     }).join('');
-    document.getElementById('ntFilters').innerHTML = chips;
-    document.getElementById('ntCount').textContent = '共 ' + allN.length + ' 条';
+    var filtersEl = document.getElementById('ntFilters');
+    if (filtersEl) filtersEl.innerHTML = chips;
 
     var kw = (filter.kw || '').toLowerCase();
-    var list = allN.filter(function (n) {
-      if (filter.cat !== 'all' && n.cat !== filter.cat) return false;
-      if (kw && (n.book + ' ' + n.excerpt + ' ' + n.note).toLowerCase().indexOf(kw) < 0) return false;
+    var list = allN.filter(function (nb) {
+      if (filter.cat !== 'all' && nb.cat !== filter.cat) return false;
+      if (kw) {
+        var hay = (nb.name + ' ' + (nb.author || '') + ' ' + nbNotes(nb.id).map(function (n) { return n.excerpt + ' ' + n.note; }).join(' ')).toLowerCase();
+        if (hay.indexOf(kw) < 0) return false;
+      }
       return true;
-    }).sort(function (a, b) { return b.createdAt - a.createdAt; });
+    }).sort(function (a, b) { return b.updatedAt - a.updatedAt; });
 
-    document.getElementById('ntList').innerHTML = list.length
-      ? list.map(itemHTML).join('')
-      : '<div class="empty">还没有读书笔记。去「图书馆」打开一本书 →「➕ 添加精选读书笔记」，或在英语/中文练习里把金句一键存进来。</div>';
+    var countEl = document.getElementById('ntCount');
+    if (countEl) countEl.textContent = '共 ' + allN.length + ' 本笔记本 / ' + notes().length + ' 条笔记';
+
+    var listEl = document.getElementById('ntList');
+    if (listEl) listEl.innerHTML = list.length
+      ? list.map(cardHTML).join('')
+      : '<div class="empty">还没有笔记本。点右上角「+ 新建笔记本」，把任何一本书或主题的资料夹建进来；也可以从「图书馆」打开书 →「➕ 添加精选读书笔记」，英语 / 中文练习里的好句也能一键存进来。</div>';
 
     var badge = document.getElementById('badgeNotes');
-    if (badge) badge.textContent = allN.length;
+    if (badge) badge.textContent = notes().length;
   }
 
   function exportNotes() {
-    var rows = all().map(function (n) {
-      return '【' + (n.cat || '其他') + '】' + n.book + '\n' + (n.excerpt ? '摘录：' + n.excerpt + '\n' : '') + (n.note ? '感想：' + n.note + '\n' : '') + '时间：' + Util.shortTime(n.createdAt) + '\n';
-    }).join('\n');
+    var rows = nbs().map(function (nb) {
+      var ns = nbNotes(nb.id).sort(function (a, b) { return a.createdAt - b.createdAt; });
+      var head = '【笔记本】' + nb.name + (nb.author ? '（' + nb.author + '）' : '') + ' · ' + (nb.cat || '其他') + ' · ' + ns.length + ' 条';
+      var body = ns.map(function (n) {
+        return (n.excerpt ? '摘录：' + n.excerpt + '\n' : '') + (n.note ? '感想：' + n.note + '\n' : '') + (n.page ? '页码：' + n.page + '\n' : '') + '时间：' + Util.shortTime(n.createdAt) + '\n';
+      }).join('\n');
+      return head + '\n' + body;
+    }).join('\n\n');
     Util.download('芋圆读书笔记.txt', rows || '（暂无笔记）');
   }
 
   function init() {
+    migrate();
+    var nbBtn = document.getElementById('ntNewBook');
+    if (nbBtn) nbBtn.addEventListener('click', newNotebook);
     var ex = document.getElementById('ntExport');
     if (ex) ex.addEventListener('click', exportNotes);
     var f = document.getElementById('ntSearch');
@@ -127,8 +282,17 @@ var ModNotes = (function () {
     });
     var l = document.getElementById('ntList');
     if (l) {
-      l.addEventListener('change', function (e) { var s = e.target.closest('.n-cat'); if (s) { DB.update('notes', s.dataset.id, { cat: s.value }); Toast.show('已归入「' + s.value + '」笔记本', 'ok'); render(); } });
-      l.addEventListener('click', function (e) { var b = e.target.closest('button[data-act="del"]'); if (b) del(b.dataset.id); });
+      l.addEventListener('click', function (e) {
+        var t = e.target;
+        var tg = t.closest('[data-toggle]');
+        if (tg) { var id = tg.dataset.toggle; if (filter.open[id]) delete filter.open[id]; else filter.open[id] = 1; render(); return; }
+        var ad = t.closest('[data-add]');
+        if (ad) { addNote(ad.dataset.add); return; }
+        var dnb = t.closest('[data-del-nb]');
+        if (dnb) { if (window.confirm('删除该笔记本及其全部笔记？')) delNotebook(dnb.dataset.delNb); return; }
+        var dn = t.closest('[data-del-note]');
+        if (dn) { delNote(dn.dataset.delNote); return; }
+      });
     }
   }
 

@@ -170,7 +170,7 @@ var Toast = (function () {
 /* ---------------- 结构化本地存储 ---------------- */
 var DB = (function () {
   var KEY = 'paw.data.v1';
-  var COLLECTIONS = ['users', 'todos', 'favs', 'langLogs', 'sportLogs', 'sportFavs', 'books', 'quotes', 'expLogs', 'beautyItems', 'notes', 'parentVideos'];
+  var COLLECTIONS = ['users', 'todos', 'favs', 'langLogs', 'sportLogs', 'sportFavs', 'books', 'quotes', 'expLogs', 'beautyItems', 'notes', 'parentVideos', 'notebooks'];
   var listeners = [];
   var state = null;
 
@@ -190,6 +190,7 @@ var DB = (function () {
       expLogs: [],
       beautyItems: [],
       notes: [],
+      notebooks: [],
       parentVideos: [],
       settings: {
         ownerName: '老板助理',

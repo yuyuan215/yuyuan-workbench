@@ -555,3 +555,16 @@ details.acc .body { margin-top: 10px; padding-top: 10px; border-top: 1px dashed 
 .prow .pval { width: 60px; flex: none; text-align: right; font-size: 12.5px; color: var(--text-3); }
 .rv-ul { margin: 6px 0 0; padding-left: 20px; font-size: 13.5px; color: var(--text-2); line-height: 1.85; }
 .rv-ul li { margin: 2px 0; }
+
+/* ===== 读书笔记 · 笔记本 ===== */
+.nb-card .nb-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.nb-info { min-width: 0; }
+.nb-title { font-size: 15px; font-weight: 640; color: var(--text-1); margin-bottom: 4px; word-break: break-all; }
+.nb-actions { display: flex; gap: 6px; flex: none; flex-wrap: wrap; justify-content: flex-end; }
+.nb-preview { margin-top: 8px; padding: 8px 10px; background: var(--bg-soft); border-radius: var(--radius); border-left: 3px solid var(--accent); font-size: 13px; color: var(--text-2); line-height: 1.6; }
+.nb-preview.muted { border-left-color: var(--border); color: var(--text-3); }
+.nb-detail { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
+.note-item { padding: 8px 10px; background: var(--bg-soft); border-radius: var(--radius); }
+.note-excerpt { font-size: 13.5px; color: var(--text-2); line-height: 1.6; border-left: 2px solid var(--accent); padding-left: 8px; }
+.note-thought { margin-top: 5px; font-size: 13px; color: var(--text-1); line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+.note-meta { margin-top: 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
