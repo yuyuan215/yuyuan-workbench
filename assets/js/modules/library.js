@@ -1,15 +1,16 @@
 /* ============================================================
- * 板块5：个人图书馆
- * 书籍录入 / 待读·在读·已读完自动归档 / 读书笔记 / 重点标注 / 检索
+ * 板块5：图书馆
+ * 书籍录入 / 书架分类(商业·文学·心理学·中医·亲子教育) / 想读·在读·已读归档
+ * 每日热门书单（B站/抖音热点向，可链微信读书/番茄小说）/ 读书笔记入口
  * ============================================================ */
 var ModLibrary = (function () {
-  var filter = 'all', kw = '';
+  var filter = 'all', catFilter = 'all', kw = '';
   var recoOffset = 0;
-  var GENERIC_BOOKS = [
-    { book: '认知觉醒', author: '周岭', why: '通用成长类首选，适合任何想自我提升的热点' },
-    { book: '纳瓦尔宝典', author: '埃里克·乔根森', why: '财富与幸福底层逻辑，万能补充书单' }
-  ];
+  var CATS = ['商业', '文学', '心理学', '中医', '亲子教育', '其他'];
   var ST = { todo: { label: '想读', cls: '' }, reading: { label: '在读', cls: 'info' }, done: { label: '已读', cls: 'ok' } };
+
+  function wereadUrl(t) { return 'https://weread.qq.com/search?keyword=' + encodeURIComponent(t); }
+  function tomatoUrl(t) { return 'https://fanqienovel.com/search?query=' + encodeURIComponent(t); }
 
   function add() {
     var title = document.getElementById('bkTitle').value.trim();
@@ -28,7 +29,7 @@ var ModLibrary = (function () {
     });
     document.getElementById('bkTitle').value = '';
     document.getElementById('bkAuthor').value = '';
-    Toast.show('已加入书库并自动归档到「' + ST[status].label + '」', 'ok');
+    Toast.show('已加入书架并归档到「' + ST[status].label + '」', 'ok');
     render();
   }
 
@@ -67,9 +68,8 @@ var ModLibrary = (function () {
       });
       added++;
     });
-    var msg = '已导入 ' + added + ' 本' + (skipped ? '，跳过重复 ' + skipped + ' 本' : '');
     var m = document.getElementById('bkBatchMsg');
-    if (m) m.textContent = msg;
+    if (m) m.textContent = '已导入 ' + added + ' 本' + (skipped ? '，跳过重复 ' + skipped + ' 本' : '');
     Toast.show('批量导入完成：新增 ' + added + ' 本', 'ok');
     render();
   }
@@ -100,12 +100,14 @@ var ModLibrary = (function () {
       '<span class="tag">' + stars(b.rate) + '</span>' +
       (b.startAt ? '<span>开始 ' + b.startAt + '</span>' : '') +
       (b.finishAt ? '<span>读完 ' + b.finishAt + '</span>' : '') +
-      '<span>笔记 ' + (b.note ? b.note.length : 0) + ' 字 · 重点 ' + hl.length + ' 条</span>' +
+      (b.note ? '<span>笔记 ' + b.note.length + ' 字</span>' : '<span>笔记 0 字</span>') +
+      '<span>重点 ' + hl.length + ' 条</span>' +
       '</div>' +
 
       '<div style="margin-top:12px"><b class="small">读书笔记</b>' +
       '<textarea class="b-note" placeholder="记录你的思考、结构梳理与行动计划…" style="margin-top:6px">' + Util.esc(b.note || '') + '</textarea>' +
-      '<div class="row" style="margin-top:8px"><button class="btn btn-sm btn-primary" data-act="saveNote">保存笔记</button></div></div>' +
+      '<div class="row" style="margin-top:8px"><button class="btn btn-sm btn-primary" data-act="saveNote">保存笔记</button>' +
+      '<button class="btn btn-sm" data-act="note">➕ 添加精选读书笔记</button></div></div>' +
 
       '<div style="margin-top:14px"><b class="small">重点内容标注</b>' +
       '<div class="row" style="margin-top:6px"><input class="b-hl grow" type="text" placeholder="输入一句重点原文或摘要，回车添加" />' +
@@ -136,12 +138,10 @@ var ModLibrary = (function () {
     var noteWords = books.reduce(function (s, b) { return s + (b.note ? b.note.length : 0); }, 0);
     var hlCount = books.reduce(function (s, b) { return s + (b.highlights ? b.highlights.length : 0); }, 0);
     document.getElementById('libStats').innerHTML = [
-      { n: counts.all, l: '书库总量', x: '本' },
-      { n: counts.todo, l: '待读', x: '等待开启' },
+      { n: counts.all, l: '书架总量', x: '本' },
+      { n: counts.todo, l: '想读', x: '等待开启' },
       { n: counts.reading, l: '在读', x: '进行中' },
-      { n: counts.done, l: '已读完', x: '累计完成' },
-      { n: noteWords, l: '累计笔记（字）', x: '阅读思考沉淀' },
-      { n: hlCount, l: '重点标注（条）', x: '精华提取' }
+      { n: counts.done, l: '已读完', x: '累计完成' }
     ].map(function (s) {
       return '<div class="stat"><div class="n">' + s.n + '</div><div class="l">' + s.l + '</div><div class="x">' + s.x + '</div></div>';
     }).join('');
@@ -151,8 +151,14 @@ var ModLibrary = (function () {
         return '<button class="chip' + (filter === f[0] ? ' on' : '') + '" data-v="' + f[0] + '">' + f[1] + ' ' + (counts[f[0]] || 0) + '</button>';
       }).join('');
 
+    document.getElementById('bkCats').innerHTML = [['all', '全部']].concat(CATS.map(function (c) { return [c, c]; }))
+      .map(function (f) {
+        return '<button class="chip' + (catFilter === f[0] ? ' on' : '') + '" data-cat="' + f[0] + '">' + f[1] + '</button>';
+      }).join('');
+
     var list = books.filter(function (b) {
       if (filter !== 'all' && b.status !== filter) return false;
+      if (catFilter !== 'all' && (b.cat || '其他') !== catFilter) return false;
       if (kw) {
         var hay = (b.title + ' ' + (b.author || '') + ' ' + (b.cat || '') + ' ' + (b.note || '') + ' ' +
           (b.highlights || []).map(function (h) { return h.text; }).join(' ')).toLowerCase();
@@ -167,118 +173,65 @@ var ModLibrary = (function () {
 
     document.getElementById('bkCount').textContent = '当前显示 ' + list.length + ' 本';
     document.getElementById('bkList').innerHTML = list.length ? list.map(bookHTML).join('')
-      : '<div class="empty">' + (kw ? '未检索到匹配的书籍或笔记' : '书库为空，先在上方录入第一本书') + '</div>';
+      : '<div class="empty">' + (kw ? '未检索到匹配的书籍或笔记' : '书架为空，先在上方录入第一本书，或下方从每日书单加入') + '</div>';
 
     var badge = document.getElementById('badgeLib');
     if (badge) badge.textContent = counts.reading || counts.all;
     renderReco();
   }
 
-  /* ---------------- 抖音热点荐书 ---------------- */
-  function recoTopicHTML(tp, idx) {
-    var books = (tp.books && tp.books.length) ? tp.books : GENERIC_BOOKS;
+  /* ---------------- 每日热门书单 ---------------- */
+  function recoBookHTML(b, idx) {
     return '<div class="lib-reco">' +
       '<div class="lib-reco-hd">' +
         '<span class="lib-rank">' + (idx + 1) + '</span>' +
         '<div class="grow">' +
-          '<div class="lib-reco-t">' + Util.esc(tp.t) + '</div>' +
-          '<div class="item-meta"><span class="tag info">' + Util.esc(tp.tag || '热点') + '</span>' +
-          (tp.heat ? '<span>🔥 ' + Util.esc(tp.heat) + '</span>' : '') +
-          (tp.desc ? '<span>' + Util.esc(tp.desc) + '</span>' : '') + '</div>' +
+          '<div class="lib-reco-t">' + Util.esc(b.title) + '</div>' +
+          '<div class="item-meta"><span class="tag info">' + Util.esc(b.cat || '其他') + '</span>' +
+          (b.author ? '<span class="muted small">' + Util.esc(b.author) + '</span>' : '') + '</div>' +
+          (b.why ? '<div class="small muted">荐：' + Util.esc(b.why) + '</div>' : '') +
         '</div>' +
       '</div>' +
       '<div class="lib-reco-books">' +
-        books.map(function (b) {
-          return '<div class="lib-book">' +
-            '<div class="grow"><b>' + Util.esc(b.book) + '</b> <span class="muted small">' + Util.esc(b.author || '') + '</span>' +
-            '<div class="small muted">荐：' + Util.esc(b.why || '') + '</div></div>' +
-            '<button class="btn btn-sm btn-primary" data-reco="1" data-title="' + Util.esc(b.book) + '" data-author="' + Util.esc(b.author || '') + '" data-cat="' + Util.esc(tp.tag || '其他') + '" data-topic="' + Util.esc(tp.t) + '">加入书库</button>' +
-          '</div>';
-        }).join('') +
+        '<div class="lib-book">' +
+          '<div class="grow"></div>' +
+          '<div class="row" style="gap:8px;flex-wrap:wrap">' +
+            '<a class="btn btn-sm btn-primary" href="' + wereadUrl(b.title) + '" target="_blank" rel="noopener">📖 在微信读书打开</a>' +
+            '<a class="btn btn-sm" href="' + tomatoUrl(b.title) + '" target="_blank" rel="noopener">🍅 在番茄小说打开</a>' +
+            '<button class="btn btn-sm" data-reco="1" data-title="' + Util.esc(b.title) + '" data-author="' + Util.esc(b.author || '') + '" data-cat="' + Util.esc(b.cat || '其他') + '">加入书架</button>' +
+          '</div>' +
+        '</div>' +
       '</div></div>';
   }
 
   var recoWired = false;
   function renderReco() {
-    if (!window.CONTENT || !CONTENT.douyinHot) return;
-    var topics = Util.seededPick(CONTENT.douyinHot, Util.dayIndex() * 13 + recoOffset * 7, 4);
+    if (!window.CONTENT || !CONTENT.hotBooks) return;
+    var books = Util.seededPick(CONTENT.hotBooks, Util.dayIndex() * 13 + recoOffset * 7, 5);
     var box = document.getElementById('libReco');
-    if (box) box.innerHTML = topics.map(recoTopicHTML).join('');
+    if (box) box.innerHTML = books.map(recoBookHTML).join('');
     var note = document.getElementById('libRecoNote');
-    if (note) note.textContent = '根据抖音热点每日自动更新 · ' + Util.humanDate();
+    if (note) note.textContent = '每日根据热点推荐 · ' + Util.humanDate();
 
     if (recoWired) return;
     recoWired = true;
     var bShuffle = document.getElementById('libRecoShuffle');
-    if (bShuffle) bShuffle.addEventListener('click', shuffleReco);
-    var bLive = document.getElementById('libRecoLive');
-    if (bLive) bLive.addEventListener('click', refreshLive);
+    if (bShuffle) bShuffle.addEventListener('click', function () { recoOffset = (recoOffset + 1) % 97; renderReco(); Toast.show('已换一批书单', 'info'); });
     if (box) box.addEventListener('click', function (e) {
       var btn = e.target.closest('[data-reco]'); if (!btn) return;
-      addRecoBook(btn.dataset.title, btn.dataset.author, btn.dataset.cat, btn.dataset.topic);
+      addRecoBook(btn.dataset.title, btn.dataset.author, btn.dataset.cat);
     });
   }
 
-  function addRecoBook(title, author, cat, topic) {
+  function addRecoBook(title, author, cat) {
     var exist = DB.all('books').some(function (b) { return b.title === title; });
-    if (exist) { Toast.show('《' + title + '》已在书库中', 'warn'); return; }
+    if (exist) { Toast.show('《' + title + '》已在书架中', 'warn'); return; }
     DB.insert('books', {
       title: title, author: author || '', cat: cat || '其他', status: 'todo', rate: 0,
-      note: '来自抖音热点荐书：' + (topic || ''), highlights: [], startAt: '', finishAt: ''
+      note: '', highlights: [], startAt: '', finishAt: ''
     });
-    Toast.show('已加入书库并归档到「想读」', 'ok');
+    Toast.show('已加入书架并归档到「想读」', 'ok');
     render();
-  }
-
-  /* 联网获取实时抖音热点（失败自动回退内置榜单） */
-  function remoteHot(cb) {
-    var url = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.vvhan.com/api/hotlist/douyin');
-    var done = false, to = setTimeout(function () { if (!done) { done = true; cb(null); } }, 6000);
-    fetch(url).then(function (r) { return r.json(); }).then(function (j) {
-      if (done) return; done = true; clearTimeout(to);
-      var arr = (j && j.data) || (j && j.result) || (j && j.list) || null;
-      var topics = [];
-      if (Array.isArray(arr)) {
-        arr.slice(0, 8).forEach(function (it) {
-          var title = it.title || it.word || it.hotword || (it.query && it.query.title) || '';
-          var heat = it.hot || it.num || it.heat || '';
-          if (title) topics.push({ t: String(title).slice(0, 30), heat: heat ? String(heat) : '', tag: '实时', desc: '' });
-        });
-      }
-      cb(topics.length ? topics : null);
-    }).catch(function () { if (!done) { done = true; clearTimeout(to); cb(null); } });
-  }
-
-  function matchBooksForLive(tp) {
-    var hit = [];
-    var hay = tp.t.toLowerCase();
-    CONTENT.douyinHot.forEach(function (cat) {
-      if (hit.length >= 2) return;
-      var key = (cat.t || '').toLowerCase();
-      if (key && hay.indexOf(key.slice(0, Math.min(4, key.length))) >= 0) hit = cat.books.slice(0, 2);
-    });
-    return hit.length ? hit : GENERIC_BOOKS.slice(0, 2);
-  }
-
-  function refreshLive() {
-    Toast.show('正在获取实时抖音热点…', 'info');
-    remoteHot(function (live) {
-      if (!live) { Toast.show('联网获取失败，已保持内置热点榜', 'warn'); return; }
-      var box = document.getElementById('libReco');
-      if (box) box.innerHTML = live.map(function (tp, i) {
-        tp.books = matchBooksForLive(tp);
-        return recoTopicHTML(tp, i);
-      }).join('');
-      var note = document.getElementById('libRecoNote');
-      if (note) note.textContent = '已切换为实时热点榜 · 共 ' + live.length + ' 条';
-      Toast.show('已拉取实时抖音热点并完成荐书', 'ok');
-    });
-  }
-
-  function shuffleReco() {
-    recoOffset = (recoOffset + 1) % 97;
-    renderReco();
-    Toast.show('已换一批热点', 'info');
   }
 
   function init() {
@@ -299,6 +252,10 @@ var ModLibrary = (function () {
       var b = e.target.closest('.chip'); if (!b) return;
       filter = b.dataset.v; render();
     });
+    document.getElementById('bkCats').addEventListener('click', function (e) {
+      var b = e.target.closest('.chip'); if (!b) return;
+      catFilter = b.dataset.cat; render();
+    });
 
     var wrap = document.getElementById('bkList');
     wrap.addEventListener('click', function (e) {
@@ -310,6 +267,8 @@ var ModLibrary = (function () {
       if (act === 'saveNote') {
         DB.update('books', id, { note: box.querySelector('.b-note').value });
         Toast.show('笔记已保存', 'ok'); render();
+      } else if (act === 'note') {
+        if (window.ModNotes && ModNotes.addForBook) ModNotes.addForBook(book);
       } else if (act === 'addHl') {
         var input = box.querySelector('.b-hl');
         var v = input.value.trim();
@@ -343,6 +302,5 @@ var ModLibrary = (function () {
     });
   }
 
-
-  return { init: init, render: render, renderReco: renderReco, shuffleReco: shuffleReco, refreshLive: refreshLive };
+  return { init: init, render: render, renderReco: renderReco, shuffleReco: function () { recoOffset = (recoOffset + 1) % 97; renderReco(); } };
 })();

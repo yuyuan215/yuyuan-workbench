@@ -2,7 +2,7 @@
  * Service Worker —— 让工作台可「安装为 App」且离线可用
  * 策略：HTML 走网络优先（保证内容最新），静态资源走缓存优先
  * ============================================================ */
-const CACHE = 'wb-shell-v6';
+const CACHE = 'wb-shell-v10';
 const ASSETS = [
   './',
   './index.html',
@@ -22,9 +22,10 @@ const ASSETS = [
   './assets/js/modules/sport.js',
   './assets/js/modules/library.js',
   './assets/js/modules/beauty.js',
-  './assets/js/modules/ideas.js',
   './assets/js/modules/settings.js',
   './assets/js/modules/quotes.js',
+  './assets/js/modules/review.js',
+  './assets/js/modules/parent.js',
   './assets/icons/icon-512.png',
   './assets/icons/icon-192.png',
   './assets/icons/apple-touch-icon-180.png',

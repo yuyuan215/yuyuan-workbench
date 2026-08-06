@@ -141,4 +141,139 @@ window.CONTENT = window.CONTENT || {};
     { bvid: 'BV1JugX6VEmN', title: '曾仕强讲易经全集 150 集', speaker: '主讲：曾仕强', note: '人生智慧类，语速舒缓，适合精听。' },
     { bvid: 'BV19PPEzTEZS', title: '易中天品三国 52 集完整版', speaker: '主讲：易中天', note: '另一完整版本，挑选你熟悉的一段跟读。' }
   ];
+
+  /* ---------------- 每日运动：B站每日跟练（面部瑜伽 / 金刚功 / 瑜伽） ---------------- */
+  C.sportVideos = {
+    faceYoga: [
+      { title: '9分钟面部瑜伽！拯救面部下垂·抗老', up: 'Masumi_Channel', bvid: 'BV1Mc411E75D', url: 'https://www.bilibili.com/video/BV1Mc411E75D', dur: '约 9 分钟', note: '全脸提拉跟练，适合早晨唤醒。' },
+      { title: '【Mady Morrison】8分钟日常面部瑜伽', up: '草莓味鸡胸肉', bvid: 'BV1yC4y1J7R2', url: 'https://www.bilibili.com/video/BV1yC4y1J7R2', dur: '约 8 分钟', note: '早晚各一次，紧致线条。' },
+      { title: '改善脸颊凹陷 10分钟面部瑜伽', up: '逆零面部瑜伽Mao', bvid: 'BV1f5411V7Nh', url: 'https://www.bilibili.com/video/BV1f5411V7Nh', dur: '约 10 分钟', note: '防凹陷、练出少女脸。' },
+      { title: '【5分钟面部瑜伽】零成本面部抗衰', up: 'YoginiYue', bvid: 'BV1ma4y1T7Ys', url: 'https://www.bilibili.com/video/BV1ma4y1T7Ys', dur: '约 5 分钟', note: '时间紧时的快速版。' },
+      { title: '面部瑜伽中下面部提升跟练', up: '两木三水脸部瑜伽', bvid: 'BV1wU4y1f7Bg', url: 'https://www.bilibili.com/video/BV1wU4y1f7Bg', dur: '约 4 分钟', note: '法令纹、嘴角重点练习。' }
+    ],
+    jinGong: [
+      { title: '八部金刚功 初学者五遍镜像版（带口令）', up: '观法如是', bvid: 'BV1pd4y1E7Gt', url: 'https://www.bilibili.com/video/BV1pd4y1E7Gt', dur: '约 12 分钟', note: '新手首选，分左右、带遍数提醒。' },
+      { title: '张至顺道长亲自语音+动作带练《八部金刚功》', up: '昆仑青萝', bvid: 'BV1EW4y127nz', url: 'https://www.bilibili.com/video/BV1EW4y127nz', dur: '约 22 分钟', note: '道长完整讲解动作要领。' },
+      { title: '八部长寿功跟练版（张至顺原声）', up: '国风风起', bvid: 'BV1ev4y1M73L', url: 'https://www.bilibili.com/video/BV1ev4y1M73L', dur: '约 18 分钟', note: '与金刚功配合强身健体。' },
+      { title: '【九遍口令完美版】八部金刚功', up: '福临Z', bvid: 'BV1Wo4y1D7Kr', url: 'https://www.bilibili.com/video/BV1Wo4y1D7Kr', dur: '约 20 分钟', note: '熟练后跟练版。' },
+      { title: '八部金刚功九遍原速22分钟高清重制', up: '道爷张至顺传承', bvid: 'BV1cv4y147kE', url: 'https://www.bilibili.com/video/BV1cv4y147kE', dur: '约 22 分钟', note: '高清重制，强身健体。' }
+    ],
+    yoga: [
+      { title: '【50分钟初学者入门瑜伽】完整基础练习', up: 'YoginiYue', bvid: 'BV1xV411y7c2', url: 'https://www.bilibili.com/video/BV1xV411y7c2', dur: '约 50 分钟', note: '零基础全套，舒展全身。' },
+      { title: '30分钟基础瑜伽跟练（初级体式编排）', up: '墨菲瑜伽', bvid: 'BV1aR4y1X7Hc', url: 'https://www.bilibili.com/video/BV1aR4y1X7Hc', dur: '约 30 分钟', note: '居家练习首选。' },
+      { title: '初级瑜伽全套', up: '瓜非常甜', bvid: 'BV1mvTxe8En6', url: 'https://www.bilibili.com/video/BV1mvTxe8En6', dur: '约 9 分钟', note: '精炼跟练版。' },
+      { title: '瑜伽从初级到高级（1-80课）', up: '是孤島也被海水擁抱', bvid: 'BV1rF4m1A7KG', url: 'https://www.bilibili.com/video/BV1rF4m1A7KG', dur: '课程合集', note: '想系统进阶看这套。' },
+      { title: '一周自在瑜伽（第一课）在家超简单', up: 'Isen瑜伽', bvid: 'BV1ap4y1e7c2', url: 'https://www.bilibili.com/video/BV1ap4y1e7c2', dur: '约 57 分钟', note: '沉浸式放松练习。' }
+    ]
+  };
+
+  /* ---------------- 美商提升：B站每日热门（护肤 / 穿搭 / 艺术审美） ---------------- */
+  C.beautyRecos = {
+    skincare: [
+      { title: '美容基础班·护肤流程', up: '创世庭园', bvid: 'BV1J54y1775m', url: 'https://www.bilibili.com/video/BV1J54y1775m', dur: '约 51 分钟', note: '从原理到步骤的系统护肤。' },
+      { title: '学生党日常护肤步骤分享', up: 'SakullyL', bvid: 'BV1Qx411Y71E', url: 'https://www.bilibili.com/video/BV1Qx411Y71E', dur: '约 12 分钟', note: '平价实用，新手友好。' },
+      { title: '皮肤学博士教护肤：黑头改善', up: '冰寒哥', bvid: 'BV1nE411h7V9', url: 'https://www.bilibili.com/video/BV1nE411h7V9', dur: '约 10 分钟', note: '科学去黑头不伤肤。' },
+      { title: '全网最该学的新手护肤教程', up: '颜蛋爱美妆', bvid: 'BV19g1LYnEu6', url: 'https://www.bilibili.com/video/BV19g1LYnEu6', dur: '约 8 分钟', note: '不挑肤质保姆级。' },
+      { title: '【晚红护肤】日常基础护肤程序和原理', up: '晚红小拓', bvid: 'BV1Zs411e7TS', url: 'https://www.bilibili.com/video/BV1Zs411e7TS', dur: '约 16 分钟', note: '日常护肤底层逻辑。' }
+    ],
+    outfit: [
+      { title: '救命！微胖女生千万不要穿这些裤子！', up: '宝剑嫂', bvid: 'BV1LZ4y1R76v', url: 'https://www.bilibili.com/video/BV1LZ4y1R76v', dur: '约 10 分钟', note: '裤型选择避雷，显瘦显腿长。' },
+      { title: '秋冬毛衣避雷指南（显胖·胸大·脖子短必看）', up: '珂珂学姐', bvid: 'BV1hU4y1u74F', url: 'https://www.bilibili.com/video/BV1hU4y1u74F', dur: '约 5 分钟', note: '按身材挑毛衣，避开显胖款。' },
+      { title: '普通土气女生如何通过穿搭改变气质？', up: '王七四-', bvid: 'BV1yr421g7sE', url: 'https://www.bilibili.com/video/BV1yr421g7sE', dur: '约 4 分钟', note: '从土气到有气质的整体思路。' },
+      { title: '为什么法国女生收入不高，却没有廉价感？', up: '巴黎在逃凡凡', bvid: 'BV1vfd9YtEr1', url: 'https://www.bilibili.com/video/BV1vfd9YtEr1', dur: '约 1 分钟', note: '法式松弛感的穿衣哲学。' },
+      { title: '小个子女生早春穿搭思路，扬长避短显高 10cm', up: '怪力老陈', bvid: 'BV1TR4y1j7y1', url: 'https://www.bilibili.com/video/BV1TR4y1j7y1', dur: '约 9 分钟', note: '素人改造实战，可直接抄。' },
+      { title: '越简单越百搭 10套极简衬衫穿搭模板', up: 'Ace爱斯', bvid: 'BV1LyDgBbENx', url: 'https://www.bilibili.com/video/BV1LyDgBbENx', dur: '约 5 分钟', note: '极简通勤模板。' }
+    ],
+    art: [
+      { title: '【电影美学07】你的发型，早已经剧透了你的人生', up: '切片计划', bvid: 'BV1xVsHznEkn', url: 'https://www.bilibili.com/video/BV1xVsHznEkn', dur: '约 26 分钟', note: '从电影看造型语言。' },
+      { title: '"色感"好是种什么体验？如何提升色感', up: '模特徐', bvid: 'BV1Am421W76X', url: 'https://www.bilibili.com/video/BV1Am421W76X', dur: '约 12 分钟', note: '配色直觉训练。' },
+      { title: '【高级感】是人脸上欲望满足后的疲惫感？', up: '天才女友GG', bvid: 'BV11y4y187fZ', url: 'https://www.bilibili.com/video/BV11y4y187fZ', dur: '约 14 分钟', note: '高级感的底层解读。' },
+      { title: '私藏向丨6部极致美学电影 审美飙升篇', up: '深川漱Pengoss', bvid: 'BV1284y1m7vD', url: 'https://www.bilibili.com/video/BV1284y1m7vD', dur: '约 10 分钟', note: '拉片提升审美。' },
+      { title: '从远古到清末，一部美的历史【中式美学】', up: '米三汉', bvid: 'BV12m4y1574L', url: 'https://www.bilibili.com/video/BV12m4y1574L', dur: '约 44 分钟', note: '中式美学脉络。' },
+      { title: '宋代审美高级在哪', up: 'Grandpagu顾爷', bvid: 'BV17442197bn', url: 'https://www.bilibili.com/video/BV17442197bn', dur: '约 70 分钟', note: '极简美学典范。' }
+    ]
+  };
+
+  /* ---------------- 图书馆：每日热门书单（B站/抖音热点向，可链微信读书/番茄小说） ---------------- */
+  C.hotBooks = [
+    { title: '纳瓦尔宝典', author: '埃里克·乔根森', cat: '商业', why: '财富与幸福的底层逻辑，万能补充。' },
+    { title: '穷爸爸富爸爸', author: '罗伯特·清崎', cat: '商业', why: '重塑金钱观：分清资产与负债。' },
+    { title: '原则', author: '瑞·达利欧', cat: '商业', why: '桥水创始人的工作与生活准则。' },
+    { title: '高效能人士的七个习惯', author: '史蒂芬·柯维', cat: '商业', why: '个人管理与协作的经典。' },
+    { title: '定位', author: '艾·里斯 / 杰克·特劳特', cat: '商业', why: '商业与品牌心智的第一性原理。' },
+    { title: '金钱心理学', author: '摩根·豪泽尔', cat: '商业', why: '用故事讲透财富与心态。' },
+    { title: '百年孤独', author: '加西亚·马尔克斯', cat: '文学', why: '魔幻现实主义巅峰，文学必读。' },
+    { title: '活着', author: '余华', cat: '文学', why: '苦难与生命韧性的代表作。' },
+    { title: '围城', author: '钱钟书', cat: '文学', why: '幽默犀利，写尽人情世故。' },
+    { title: '小王子', author: '圣埃克苏佩里', cat: '文学', why: '写给大人的童话，常读常新。' },
+    { title: '平凡的世界', author: '路遥', cat: '文学', why: '时代变迁下的平凡奋斗。' },
+    { title: '三体', author: '刘慈欣', cat: '文学', why: '中国科幻里程碑。' },
+    { title: '被讨厌的勇气', author: '岸见一郎 / 古贺史健', cat: '心理学', why: '阿德勒心理学，课题分离入门。' },
+    { title: '思考，快与慢', author: '丹尼尔·卡尼曼', cat: '心理学', why: '认知偏差与决策科学经典。' },
+    { title: '非暴力沟通', author: '马歇尔·卢森堡', cat: '心理学', why: '改善关系的沟通方法。' },
+    { title: '心流', author: '米哈里·契克森米哈赖', cat: '心理学', why: '专注与幸福的状态科学。' },
+    { title: '乌合之众', author: '古斯塔夫·勒庞', cat: '心理学', why: '群体心理学的开山之作。' },
+    { title: '黄帝内经', author: '（佚名 / 整理）', cat: '中医', why: '中医养生与整体观根基。' },
+    { title: '伤寒论', author: '张仲景', cat: '中医', why: '辨证论治的中医经典。' },
+    { title: '本草纲目', author: '李时珍', cat: '中医', why: '药物学集大成之作。' },
+    { title: '求医不如求己', author: '中里巴人', cat: '中医', why: '通俗中医养生入门。' },
+    { title: '阴阳一调百病消', author: '薛钜夫', cat: '中医', why: '从阴阳平衡讲日常调养。' },
+    { title: '正面管教', author: '简·尼尔森', cat: '亲子教育', why: '不惩罚不娇纵的育儿法。' },
+    { title: '好妈妈胜过好老师', author: '尹建莉', cat: '亲子教育', why: '中国式家庭教育的反思与示范。' },
+    { title: '如何说孩子才会听', author: '阿黛尔·法伯', cat: '亲子教育', why: '亲子沟通实用话术。' },
+    { title: '童年的秘密', author: '蒙台梭利', cat: '亲子教育', why: '儿童发展与敏感期理论。' },
+    { title: '认知觉醒', author: '周岭', cat: '心理学', why: '看懂大脑运作规律，破解拖延与内耗。' },
+    { title: '人类简史', author: '尤瓦尔·赫拉利', cat: '其他', why: '宏大视角看人类发展。' },
+    { title: '万历十五年', author: '黄仁宇', cat: '其他', why: '大历史观的典范之作。' },
+    { title: '枪炮、病菌与钢铁', author: '贾雷德·戴蒙德', cat: '其他', why: '地理环境决定论的通俗巨著。' },
+    { title: '月亮与六便士', author: '毛姆', cat: '文学', why: '理想与现实的永恒追问。' },
+    { title: '读懂中国经济', author: '蔡昉', cat: '商业', why: '理解宏观经济的通俗读本。' },
+    { title: '心理类型', author: '荣格', cat: '心理学', why: '性格与潜意识的理论源头。' },
+    { title: '中医基础理论', author: '（教材）', cat: '中医', why: '系统学习中医的第一课。' },
+    { title: '养育男孩', author: '史蒂夫·比达尔夫', cat: '亲子教育', why: '针对男孩成长特点的养育指南。' }
+  ];
+
+  /* ---------------- 科学育儿：每日热门视频（5 条 B站 + 5 条抖音，按日轮换） ---------------- */
+  C.parentVideos = {
+    bili: [
+      { title: '崔玉涛育儿全集（科学养育百科）', up: '崔玉涛', bvid: 'BV1Z5411N796', url: 'https://www.bilibili.com/video/BV1Z5411N796', dur: '92 集合集', note: '新生儿到幼儿的常见病、喂养、护理一本通，家庭电子育儿手册。' },
+      { title: '新生儿护理 16 集全（禧月阁月子中心）', up: '禧月阁', bvid: 'BV1Rb411T7no', url: 'https://www.bilibili.com/video/BV1Rb411T7no', dur: '16 集', note: '脐带、黄疸、红屁股、洗澡、抱姿等新生儿实操。' },
+      { title: '李玫瑾：12 岁之前的培养决定孩子的一生（57P）', up: '李玫瑾', bvid: 'BV17sQHYoENe', url: 'https://www.bilibili.com/video/BV17sQHYoENe', dur: '57 集', note: '性格与心理抚养，犯罪心理学视角的育儿智慧。' },
+      { title: '0-6 岁育儿敏感期对照表：科学早教实操', up: '早教实操', bvid: 'BV1XFNE6XEcX', url: 'https://www.bilibili.com/video/BV1XFNE6XEcX', dur: '约 12 分钟', note: '秩序/语言/感官敏感期，零基础父母直接抄作业。' },
+      { title: '曾仕强：家庭教育 24 集全', up: '曾仕强', bvid: 'BV1964y1q7fo', url: 'https://www.bilibili.com/video/BV1964y1q7fo', dur: '24 集', note: '中国式家庭教育的道与术，亲子关系的底层逻辑。' },
+      { title: '父母教育子女必修课 1-100 集', up: '育儿女神蜜丝懂', bvid: 'BV1ha4y137dA', url: 'https://www.bilibili.com/video/BV1ha4y137dA', dur: '100 集', note: '亲子沟通、逆商培养、时间管理全覆盖。' },
+      { title: '1-36 个月宝宝各月养育指南（高级育婴师教材）', up: '高级育婴师', bvid: 'BV1Mb411s7Xc', url: 'https://www.bilibili.com/video/BV1Mb411s7Xc', dur: '持续更新', note: '按月龄对照的发育与照护要点，按月查更方便。' },
+      { title: '0-3 岁婴幼儿保育与教育 全 89 讲（国家级精品课）', up: '学前教育', bvid: 'BV1DnEC6pEru', url: 'https://www.bilibili.com/video/BV1DnEC6pEru', dur: '89 讲', note: '系统了解 0-3 岁发育规律与科学早教。' },
+      { title: '科学坐月子 32 集全（禧月阁）', up: '禧月阁', bvid: 'BV1Mb411M7fp', url: 'https://www.bilibili.com/video/BV1Mb411M7fp', dur: '32 集', note: '产后恢复与新生儿照护一本通。' },
+      { title: '曾仕强：适合 1-3 岁宝宝的早教方法', up: '曾仕强', bvid: 'BV1vD421L72t', url: 'https://www.bilibili.com/video/BV1vD421L72t', dur: '约 10 分钟', note: '1-3 岁早教怎么做不踩坑。' },
+      { title: '新手爸妈训练营', up: '新手爸妈', bvid: 'BV1B2Li6rEjM', url: 'https://www.bilibili.com/video/BV1B2Li6rEjM', dur: '训练营', note: '从抱娃到哄睡的入门实操。' }
+    ],
+    douyin: [
+      { title: '宝宝挑食厌食怎么办？营养师妈妈的替代喂养法', up: 'Kelly麻麻', note: '饭渣宝宝“隐性饥饿”怎么破，换个方式让娃爱上吃。' },
+      { title: '孩子出门总要抱抱？四个原因家长要知道', up: '稚子说育儿', note: '理解行为背后的需求，比硬扛更有用。' },
+      { title: '反向育儿三秘诀，轻松“驯服”熊孩子', up: '稚子说育儿', note: '不吼不叫的正面引导实战。' },
+      { title: '幼儿园接娃 4 问 4 不问，家长一定要牢记', up: '稚子说育儿', note: '沟通方式悄悄影响孩子的表达与自信。' },
+      { title: '宝宝吐奶第一时间正确处理方法', up: '北京阿袁', note: '新生儿护理高频问题，少走弯路。' },
+      { title: '0-3 月龄宝宝常用抱姿，新手爸妈必学', up: '颐美禾育儿小百科', note: '不伤脊柱的正确抱法。' },
+      { title: '三岁前别硬塞知识，大概率是坑了娃', up: '稚子说育儿', note: '拒绝超前学习，先玩中学。' },
+      { title: '孩子一不顺心就哭闹、输不起怎么引导', up: '育儿女神蜜丝懂', note: '逆商培养，越早越好。' }
+    ]
+  };
+
+  /* ---------------- 科学育儿：每周育儿书单（按周轮换，每次 2 本） ---------------- */
+  C.parentBooks = [
+    { title: '正面管教', author: '简·尼尔森', why: '不惩罚不娇纵，和善而坚定的育儿法。' },
+    { title: '好妈妈胜过好老师', author: '尹建莉', why: '中国式家庭教育的反思与示范。' },
+    { title: '如何说孩子才会听 怎么听孩子才肯说', author: '阿黛尔·法伯', why: '亲子沟通实用话术，化解对抗。' },
+    { title: '童年的秘密', author: '蒙台梭利', why: '儿童发展与敏感期理论奠基之作。' },
+    { title: '养育男孩', author: '史蒂夫·比达尔夫', why: '针对男孩成长特点的养育指南。' },
+    { title: '捕捉儿童敏感期', author: '孙瑞雪', why: '把握 0-6 岁关键发展窗口。' },
+    { title: '父母效能训练手册（P.E.T.）', author: '托马斯·戈登', why: '用沟通化解亲子冲突。' },
+    { title: '你就是孩子最好的玩具', author: '金伯莉·布雷恩', why: '情感引导式教育，告别吼叫。' },
+    { title: '全脑教养法', author: '丹尼尔·西格尔', why: '从脑科学理解孩子情绪与行为。' },
+    { title: '游戏力', author: '劳伦斯·科恩', why: '用游戏建立联结、治愈童年。' },
+    { title: '美国儿科学会育儿百科', author: '美国儿科学会', why: '0-5 岁养育的权威工具书。' },
+    { title: '西尔斯亲密育儿百科', author: '威廉·西尔斯', why: '依恋式育儿的经典。' }
+  ];
+
 })();

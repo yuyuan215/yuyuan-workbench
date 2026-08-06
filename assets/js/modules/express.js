@@ -123,7 +123,7 @@ var ModExpress = (function () {
       '<div class="readbox' + (zoomExp ? ' zoom' : '') + '" style="margin-top:14px"><b>二、好句提炼（可收藏）</b>' +
         '<div class="quote" style="margin-top:6px">' + Util.esc(e.goodLine) + '</div>' +
         '<div class="small muted">' + Util.esc(e.goodLineCn || '') + '</div>' +
-        '<div class="item-actions" style="margin-top:6px"><button class="btn btn-sm" id="expCollectGood">☆ 收藏这条好句到收藏夹</button></div></div>' +
+        '<div class="item-actions" style="margin-top:6px"><button class="btn btn-sm" id="expCollectGood">☆ 存为读书笔记</button></div></div>' +
 
       '<div class="readbox' + (zoomExp ? ' zoom' : '') + '" style="margin-top:14px"><b>三、跟读句（4 分钟 · 跟读三遍）</b>' +
         '<div style="margin:8px 0 4px">' + (e.shadow || []).map(function (s) { return '<div class="item" style="margin-bottom:8px;padding:9px 11px"><div>' + Util.esc(s) + '</div></div>'; }).join('') + '</div></div>' +
@@ -137,16 +137,12 @@ var ModExpress = (function () {
 
   function collectGood() {
     var e = todayPiece();
-    var text = e.goodLine;
-    window.App.pickFolder('文学', function (coll) {
-      ModQuotes.add({
-        key: 'expgood::' + e.title,
-        from: '表达练习',
-        title: text,
-        body: '出自《' + e.title + '》· ' + e.source + ' ' + (e.speaker || '') + '。\n' + (e.goodLineCn || ''),
-        source: e.source + ' · ' + (e.speaker || ''),
-        coll: coll
-      });
+    ModNotes.add({
+      book: '—',
+      excerpt: e.goodLine,
+      note: (e.goodLineCn || ''),
+      cat: '文学',
+      source: '表达练习 · ' + e.source
     });
   }
 

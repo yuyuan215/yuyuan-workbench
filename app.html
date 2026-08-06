@@ -58,23 +58,27 @@
       </button>
       <button class="nav-item" data-view="sport">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12"/></svg>
-        <span>每日运动打卡</span><span class="badge" id="badgeSport">0</span>
+        <span>每日运动</span><span class="badge" id="badgeSport">0</span>
       </button>
       <button class="nav-item" data-view="library">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6.5A2.5 2.5 0 0 0 4 19.5z"/><path d="M8 7h8M8 11h6"/></svg>
-        <span>亮灯自习室</span><span class="badge" id="badgeLib">0</span>
+        <span>图书馆</span><span class="badge" id="badgeLib">0</span>
       </button>
       <button class="nav-item" data-view="beauty">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/><path d="M19 14l.8 2.2L22 17l-2.2.8L19 20l-.8-2.2L16 17l2.2-.8L19 14z"/></svg>
         <span>美商提升</span><span class="badge" id="badgeBeauty">0</span>
       </button>
-      <button class="nav-item" data-view="ideas">
-        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></svg>
-        <span>账号运营</span><span class="badge" id="badgeIdeas">0</span>
+      <button class="nav-item" data-view="parent">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"/><path d="M8 13a3 3 0 1 0-3-3 3 3 0 0 0 3 3z"/><path d="M2 21v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/><path d="M15.5 13.5l-1 1 1 1M21 15l-1 1 1 1"/></svg>
+        <span>科学育儿</span><span class="badge" id="badgeParent">0</span>
       </button>
-      <button class="nav-item" data-view="quotes">
+      <button class="nav-item" data-view="notes">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 7h10v3a3 3 0 0 1-3 3H7z"/><path d="M7 17h10"/><path d="M4 7v10"/></svg>
-        <span>金句收藏夹</span><span class="badge" id="badgeQuotes">0</span>
+        <span>读书笔记</span><span class="badge" id="badgeNotes">0</span>
+      </button>
+      <button class="nav-item" data-view="review">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/></svg>
+        <span>复盘查看</span><span class="badge" id="badgeReview">0</span>
       </button>
 
       <div class="nav-label" style="margin-top:10px">系统</div>
@@ -283,57 +287,39 @@
         </div>
       </section>
 
-      <!-- ========== 板块4：每日运动打卡 ========== -->
+      <!-- ========== 板块4：每日运动（B站跟练视频） ========== -->
       <section class="view" id="view-sport">
-        <div class="grid g4" id="sportStats"></div>
+        <div class="card" style="margin-top:0">
+          <div class="card-head">
+            <h3>每日运动跟练 <span class="sub" id="spDate"></span></h3>
+            <div class="row"><button class="btn btn-sm" id="spRefresh">换一批</button></div>
+          </div>
+          <p class="small muted">每天为你从 B站精选 1 个面部瑜伽、1 个金刚功、1 个瑜伽视频，直接跟练。播放器若被禁嵌，点「在 B 站打开」即可。</p>
+          <div id="spVideos" class="grid g1" style="margin-top:12px"></div>
+        </div>
 
         <div class="card" style="margin-top:14px">
-          <div class="card-head">
-            <h3>今日运动计划（30 分钟）<span class="sub" id="spPlanName"></span></h3>
-            <button class="btn btn-sm" id="spRefresh">换一套计划</button>
-          </div>
-          <div id="spPlan"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-head"><h3>运动打卡录入</h3><span class="sub" id="spTodayState"></span></div>
+          <div class="card-head"><h3>添加我的运动收藏</h3><span class="sub">粘贴视频链接，或从手机 / 电脑上传</span></div>
           <div class="inline-form">
-            <label class="field" style="margin:0"><span>日期</span><input type="date" id="spDate" /></label>
-            <label class="field" style="margin:0"><span>运动类型</span>
-              <select id="spType">
-                <option>力量训练</option><option>有氧快走</option><option>跑步</option><option>骑行</option>
-                <option>瑜伽拉伸</option><option>HIIT 间歇</option><option>球类运动</option><option>游泳</option><option>其他</option>
-              </select>
-            </label>
-            <label class="field" style="margin:0"><span>实际时长（分钟）</span><input type="number" id="spMin" min="1" max="600" value="30" /></label>
-            <label class="field" style="margin:0"><span>强度感受</span>
-              <select id="spLevel"><option>轻松</option><option selected>适中</option><option>较累</option><option>力竭</option></select>
-            </label>
-            <div class="full"><input type="text" id="spNote" placeholder="备注（选填）：例如 完成计划的 80%" /></div>
-            <div class="full"><button class="btn btn-primary" id="spAdd">提交打卡</button></div>
+            <div class="full"><input type="text" id="spTitle" placeholder="标题 / 备注（选填，留空按链接或文件名自动命名）" /></div>
+            <div class="full"><input type="text" id="spLink" placeholder="视频链接（选填）：B站 / 抖音 / 优酷 等，例如 https://www.bilibili.com/video/BVxxxx" /></div>
+            <div class="full">
+              <label class="btn btn-primary" for="spFile" style="cursor:pointer;display:inline-block">📁 从手机 / 电脑上传视频</label>
+              <input type="file" id="spFile" accept="video/*" hidden />
+              <span id="spFileName" class="small muted"></span>
+            </div>
+            <div class="full"><button class="btn btn-primary" id="spAdd">添加到「我的运动收藏」</button></div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-head"><h3>本周运动统计报表</h3><span class="sub" id="spWeekRange"></span></div>
-          <div class="grid g4" id="spWeekStats"></div>
-          <div class="bar-wrap" id="spChart"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-head"><h3>本月运动打卡日历 <span class="sub" id="spMonthInfo"></span></h3></div>
-          <div id="spMonth"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-head"><h3>历史运动记录（永久保存）</h3>
-            <div class="row"><input type="search" id="spSearch" placeholder="按类型/备注检索…" style="width:170px" /><button class="btn btn-sm" id="spExport">导出</button></div>
-          </div>
-          <div class="tablewrap"><table class="tb" id="spTable"></table></div>
+        <div class="card" style="margin-top:14px">
+          <div class="card-head"><h3>我的运动收藏 <span class="sub" id="spFavCount"></span></h3></div>
+          <div class="small muted" style="margin-bottom:8px">收藏的视频与上传的本地视频都在这里；本地视频保存在本机，离线也能看。</div>
+          <div id="spFavList"></div>
         </div>
       </section>
 
-      <!-- ========== 板块5：亮灯自习室 ========== -->
+      <!-- ========== 板块5：图书馆 ========== -->
       <section class="view" id="view-library">
         <div class="grid g4" id="libStats"></div>
 
@@ -342,8 +328,8 @@
           <div class="inline-form">
             <div class="full"><input type="text" id="bkTitle" placeholder="书名（必填）" /></div>
             <label class="field" style="margin:0"><span>作者</span><input type="text" id="bkAuthor" placeholder="作者" /></label>
-            <label class="field" style="margin:0"><span>分类</span>
-              <select id="bkCat"><option>投资理财</option><option>管理经营</option><option>心理学</option><option>教育育儿</option><option>职场成长</option><option>人文历史</option><option>文学小说</option><option>其他</option></select>
+            <label class="field" style="margin:0"><span>书架分类</span>
+              <select id="bkCat"><option>商业</option><option>文学</option><option>心理学</option><option>中医</option><option>亲子教育</option><option>其他</option></select>
             </label>
             <label class="field" style="margin:0"><span>阅读状态</span>
               <select id="bkStatus"><option value="todo">想读</option><option value="reading">在读</option><option value="done">已读</option></select>
@@ -375,30 +361,41 @@
 
         <div class="card">
           <div class="card-head">
-            <h3>📢 抖音热点荐书 <span class="sub" id="libRecoNote"></span></h3>
+            <h3>📚 每日热门书单 <span class="sub" id="libRecoNote"></span></h3>
             <div class="row" style="gap:8px">
-              <button class="btn btn-sm" id="libRecoLive">联网实时热点</button>
               <button class="btn btn-sm" id="libRecoShuffle">换一批</button>
             </div>
           </div>
-          <div class="small muted" style="margin-bottom:10px">基于当前抖音热点话题，为你匹配契合主题的书籍；点击「加入书库」即归档到「待读」，可随时补充笔记与重点标注。</div>
+          <div class="small muted" style="margin-bottom:10px">根据 B站 / 抖音热点整理的书单，每天推荐 5 本；点「在微信读书打开 / 在番茄小说打开」可跳转对应 App 阅读（需登录）；「加入书架」即收藏到你的图书馆并按分类管理。</div>
           <div id="libReco"></div>
         </div>
 
         <div class="card">
           <div class="card-head">
-            <h3>书籍清单 <span class="sub" id="bkCount"></span></h3>
+            <h3>我的书架 <span class="sub" id="bkCount"></span></h3>
             <input type="search" id="bkSearch" placeholder="检索书名 / 作者 / 笔记关键词…" style="width:230px" />
           </div>
+          <div class="chips" id="bkCats"></div>
           <div class="chips" id="bkFilters"></div>
           <div class="divider"></div>
           <div id="bkList"></div>
         </div>
       </section>
 
-      <!-- ========== 板块5.5：美商提升（抖音美妆/穿搭/护肤/发型） ========== -->
+      <!-- ========== 板块5.5：美商提升（每日推荐 + 抖音收藏/本地上传） ========== -->
       <section class="view" id="view-beauty">
         <div class="grid g4" id="beautyStats"></div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head">
+            <h3>每日热门视频 <span class="sub" id="brDate"></span></h3>
+            <div class="row">
+              <button class="btn btn-sm" id="brRefresh">换一批</button>
+            </div>
+          </div>
+          <p class="small muted" style="margin:0 0 10px">每天 3 条：护肤 · 穿搭 · 艺术审美，来自 B 站高播放量内容，可直接在页面里看。</p>
+          <div id="beautyReco"></div>
+        </div>
 
         <div class="card" style="margin-top:14px">
           <div class="card-head"><h3>添加美商视频</h3><span class="sub">粘贴抖音链接，或从手机 / 电脑上传</span></div>
@@ -427,71 +424,94 @@
         </div>
       </section>
 
-      <!-- ========== 板块6：账号运营 ========== -->
-      <section class="view" id="view-ideas">
-        <div class="grid g4" id="ideaStats"></div>
+      <!-- ========== 板块5.6：科学育儿 ========== -->
+      <section class="view" id="view-parent">
+        <div class="grid g4" id="parentStats"></div>
 
         <div class="card" style="margin-top:14px">
           <div class="card-head">
-            <h3>今日热点选题推送 <span class="sub" id="ideaDate"></span></h3>
+            <h3>每日科学育儿视频 <span class="sub" id="prDate"></span></h3>
             <div class="row">
-              <button class="btn btn-sm" id="ideaRefresh">换一批选题</button>
-              <button class="btn btn-sm" id="ideaSaveAll">全部存入储备库</button>
+              <button class="btn btn-sm" id="prRefresh">换一批</button>
             </div>
           </div>
-          <div class="chips" id="ideaTrackFilter"></div>
-          <div class="divider"></div>
-          <div id="ideaDaily"></div>
+          <p class="small muted" style="margin:0 0 10px">每天 10 条：5 条 B站 + 5 条抖音，来自热门育儿内容，可直接在页面里看，点 ☆ 收藏。每周再推荐 2 本育儿书。</p>
+          <div id="parentDaily"></div>
         </div>
 
-        <div class="card">
-          <div class="card-head"><h3>每日脚本文案 <span class="sub" id="scriptDate"></span></h3><span class="sub">三赛道各一篇 · 可直接拍摄 / 口播</span></div>
-          <div id="ideaScripts"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-head"><h3>手动新增选题</h3></div>
-          <div class="inline-form">
-            <div class="full"><input type="text" id="idTitle" placeholder="选题标题" /></div>
-            <label class="field" style="margin:0"><span>赛道</span>
-              <select id="idTrack"><option value="psychology">职场成长</option><option value="parenting">副业变现</option><option value="career">个人提升</option></select>
-            </label>
-            <label class="field" style="margin:0"><span>形式</span>
-              <select id="idForm"><option>短视频</option><option>图文</option><option>长文</option><option>直播</option><option>系列专栏</option></select>
-            </label>
-            <label class="field" style="margin:0"><span>状态</span>
-              <select id="idStatus"><option value="todo">待创作</option><option value="done">已完成</option></select>
-            </label>
-            <div class="full"><input type="text" id="idDir" placeholder="内容方向建议" /></div>
-            <div class="full"><input type="text" id="idAud" placeholder="受众切入点参考" /></div>
-            <div class="full"><button class="btn btn-primary" id="idAdd">加入选题储备库</button></div>
-          </div>
-        </div>
-
-        <div class="card">
+        <div class="card" style="margin-top:14px">
           <div class="card-head">
-            <h3>长期选题储备库 <span class="sub" id="idCount"></span></h3>
+            <h3>每周育儿书单 <span class="sub" id="prWeekRange"></span></h3>
             <div class="row">
-              <input type="search" id="idSearch" placeholder="检索选题…" style="width:190px" />
-              <button class="btn btn-sm" id="idExport">导出选题</button>
+              <button class="btn btn-sm" id="prBookShuffle">换一批</button>
             </div>
           </div>
-          <div class="chips" id="idFilters"></div>
+          <p class="small muted" style="margin:0 0 10px">每周推荐 2 本育儿好书，可一键加入「图书馆」书架（归档为亲子教育·想读），并直达微信读书 / 番茄小说。</p>
+          <div id="parentBooks"></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head"><h3>添加育儿视频</h3><span class="sub">粘贴 B站 / 抖音 等视频链接收藏</span></div>
+          <div class="inline-form">
+            <label class="field" style="margin:0"><span>来源</span>
+              <select id="prPlat"><option value="bili">B站</option><option value="douyin">抖音</option><option value="link">其他</option></select>
+            </label>
+            <div class="full"><input type="text" id="prTitle" placeholder="标题 / 备注（选填）" /></div>
+            <div class="full"><input type="text" id="prLink" placeholder="视频链接：https://www.bilibili.com/video/BV... 或抖音链接" /></div>
+            <div class="full"><button class="btn btn-primary" id="prAdd">收藏到「我的育儿收藏」</button></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head">
+            <h3>我的育儿收藏 <span class="sub" id="parentCount"></span></h3>
+          </div>
           <div class="divider"></div>
-          <div id="idList"></div>
+          <div id="parentList"></div>
         </div>
       </section>
 
-      <!-- ========== 板块7：金句收藏夹 ========== -->
-      <section class="view" id="view-quotes">
+<!-- ========== 板块7：读书笔记 ========== -->
+      <section class="view" id="view-notes">
         <div class="card" style="margin-top:0">
-          <div class="card-head"><h3>金句收藏夹 <span class="sub" id="qtCount"></span></h3>
-            <div class="row"><input type="search" id="qtSearch" placeholder="搜索金句…" style="width:190px" /><button class="btn btn-sm" id="qtExport">导出收藏</button></div>
+          <div class="card-head"><h3>读书笔记 <span class="sub" id="ntCount"></span></h3>
+            <div class="row"><input type="search" id="ntSearch" placeholder="搜索笔记 / 书名 / 摘录…" style="width:190px" /><button class="btn btn-sm" id="ntExport">导出笔记</button></div>
           </div>
-          <div class="chips" id="qtFilters"></div>
+          <div class="chips" id="ntFilters"></div>
           <div class="divider"></div>
-          <div id="qtList"></div>
-          <p class="small muted" style="margin-top:10px">收藏来自「英语学习」「亮灯自习室」等板块的金句，可归入文学 / 心理学 / 教育 / 财经等收藏夹，随时整理复习。</p>
+          <div id="ntList"></div>
+          <p class="small muted" style="margin-top:10px">在「图书馆」点开某本书 →「➕ 添加精选读书笔记」，粘贴书中精华片段并写下你的思考，归入商业 / 文学 / 中医 / 亲子教育等笔记本。英语学习、表达练习里的好句也可一键存为笔记。</p>
+        </div>
+      </section>
+
+      <!-- ========== 设置中心 ========== -->
+      <section class="view" id="view-review">
+        <div class="card" style="margin-top:0">
+          <div class="card-head">
+            <h3>周复盘 <span class="sub" id="rvWeekRange"></span></h3>
+            <div class="row">
+              <button class="btn btn-sm" id="rvPrev">← 上一周</button>
+              <button class="btn btn-sm" id="rvThis">本周</button>
+              <button class="btn btn-sm" id="rvNext">下一周 →</button>
+              <button class="btn btn-sm btn-primary" id="rvExport">导出复盘</button>
+            </div>
+          </div>
+          <div class="grid g4" id="rvWeekStats"></div>
+          <div class="divider"></div>
+          <div id="rvWeekBar"></div>
+          <div id="rvWeekDetail"></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head"><h3>阅读复盘 <span class="sub" id="rvReadRange"></span></h3></div>
+          <div class="grid g4" id="rvReadStats"></div>
+          <div class="divider"></div>
+          <div id="rvShelfStat"></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <div class="card-head"><h3>本周小结 <span class="sub">系统根据你的数据自动生成</span></h3></div>
+          <div id="rvSummary"></div>
         </div>
       </section>
 
@@ -565,7 +585,7 @@
             <div><button class="btn btn-primary" id="stSave">保存偏好</button></div>
           </div>
           <div class="divider"></div>
-          <p class="small muted">版本 v1.0 · 纯静态部署，无服务器依赖 · 数据默认保存在本机浏览器，配置云端同步后可多端共用。</p>
+          <p class="small muted">版本 v3.0 · 纯静态部署，无服务器依赖 · 数据默认保存在本机浏览器，配置云端同步后可多端共用。</p>
         </div>
       </section>
 
@@ -595,11 +615,12 @@
 <script src="./assets/js/modules/lang.js"></script>
 <script src="./assets/js/modules/sport.js"></script>
 <script src="./assets/js/modules/library.js"></script>
-<script src="./assets/js/modules/ideas.js"></script>
 <script src="./assets/js/modules/express.js"></script>
 <script src="./assets/js/modules/beauty.js"></script>
 <script src="./assets/js/modules/settings.js"></script>
 <script src="./assets/js/modules/quotes.js"></script>
+<script src="./assets/js/modules/review.js"></script>
+<script src="./assets/js/modules/parent.js"></script>
 <script src="./assets/js/app.js"></script>
 </body>
 </html>

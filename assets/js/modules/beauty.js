@@ -1,10 +1,9 @@
 /* ============================================================
- * 板块：美商提升（抖音链接收藏 + 本地视频上传 · 化妆 / 穿搭）
- * 新增能力：
- *   - 粘贴抖音视频链接即可直接添加（链接类）
- *   - 从手机 / 电脑上传视频文件（本地类，存 IndexedDB，页面内可播放）
- *   - 按「化妆 / 穿搭」两个分类管理
- * 注：已移除原先的抖音每日推荐卡片（不再从网上抓取推荐）
+ * 板块：美商提升
+ *   A. 每日热门视频推荐（B站）：护肤 / 穿搭 / 艺术审美 各 1 条
+ *   B. 自己收藏：粘贴抖音视频链接即可直接添加（链接类）
+ *   C. 自己上传：从手机 / 电脑上传视频文件（存 IndexedDB，页面内可播放）
+ *   - 收藏区按「化妆 / 穿搭」两个分类管理
  * ============================================================ */
 var ModBeauty = (function () {
   var cat = 'all';
@@ -13,6 +12,59 @@ var ModBeauty = (function () {
   var CATCLS = { makeup: 'accent', outfit: 'ok' };
   var objUrls = {};      // blobKey -> objectURL（渲染上传视频时创建，重渲前回收）
   var filePending = null; // 待上传的视频文件
+
+  /* ---------------- 每日热门推荐（护肤 / 穿搭 / 艺术审美） ---------------- */
+  var RECO_OFF_KEY = 'paw.bt.offset';
+  var RECO_CATS = [
+    { key: 'skincare', label: '护肤', emoji: '🧴' },
+    { key: 'outfit', label: '穿搭', emoji: '👗' },
+    { key: 'art', label: '艺术审美', emoji: '🎨' }
+  ];
+
+  function recoOffset() { try { return parseInt(sessionStorage.getItem(RECO_OFF_KEY) || '0', 10) || 0; } catch (e) { return 0; } }
+  function recoBump() { try { sessionStorage.setItem(RECO_OFF_KEY, recoOffset() + 1); } catch (e) {} }
+
+  function todayReco(c) {
+    var arr = (typeof CONTENT !== 'undefined' && CONTENT.beautyRecos && CONTENT.beautyRecos[c.key]) || [];
+    if (!arr.length) return null;
+    return Util.seededPick(arr, Util.dayIndex() * 11 + c.key.length * 5 + recoOffset() * 3, 1)[0];
+  }
+
+  function recoHTML(c) {
+    var v = todayReco(c);
+    if (!v) return '<div class="empty">今日「' + c.label + '」推荐暂缺～</div>';
+    return '<div class="item beauty-card">' +
+      '<div class="item-title">' + c.emoji + ' ' + Util.esc(c.label) + ' · ' + Util.esc(v.title || '') + '</div>' +
+      '<div class="item-meta"><span class="tag accent">' + Util.esc(v.up || '') + '</span><span class="small muted">' + Util.esc(v.dur || '') + '</span></div>' +
+      '<div class="bili-wrap"><iframe class="bili-player" src="https://player.bilibili.com/player.html?bvid=' + v.bvid + '&page=1&high_quality=1&danmaku=0" allowfullscreen="true" scrolling="no" border="0" frameborder="no" framespacing="0" allow="autoplay; fullscreen"></iframe></div>' +
+      (v.note ? '<div class="item-note">' + Util.esc(v.note) + '</div>' : '') +
+      '<div class="item-actions">' +
+        '<a class="btn btn-sm btn-primary" href="' + v.url + '" target="_blank" rel="noopener">▶ 在 B 站打开</a>' +
+        '<button class="btn btn-sm" data-reco-save="' + c.key + '">☆ 收进我的美商库</button>' +
+      '</div></div>';
+  }
+
+  function renderReco() {
+    var box = document.getElementById('beautyReco');
+    if (box) box.innerHTML = RECO_CATS.map(recoHTML).join('');
+    var d = document.getElementById('brDate');
+    if (d) d.textContent = Util.humanDate();
+  }
+
+  function saveReco(key) {
+    var c = RECO_CATS.filter(function (x) { return x.key === key; })[0];
+    if (!c) return;
+    var v = todayReco(c);
+    if (!v) return;
+    var exists = items().some(function (x) { return x.url === v.url; });
+    if (exists) { Toast.show('这条已经在美商库里啦', 'info'); return; }
+    DB.insert('beautyItems', {
+      type: 'link', cat: (key === 'outfit' ? 'outfit' : 'makeup'),
+      url: v.url, title: '[' + c.label + '] ' + (v.title || 'B站视频'), addedAt: Date.now()
+    });
+    Toast.show('已收进「我的美商视频」', 'ok');
+    render();
+  }
 
   function items() { return DB.all('beautyItems'); }
   function byCat() {
@@ -86,15 +138,16 @@ var ModBeauty = (function () {
 
   function card(it) {
     var cls = CATCLS[it.cat] || '';
-    var typeLabel = it.type === 'upload' ? '本地视频' : '抖音链接';
+    var isBili = it.type === 'link' && /bilibili\.com/.test(it.url || '');
+    var typeLabel = it.type === 'upload' ? '本地视频' : (isBili ? 'B站视频' : '抖音链接');
     var meta = '<span class="tag ' + cls + '">' + (CATNAME[it.cat] || it.cat) + '</span><span class="small muted">' + typeLabel + '</span>';
     if (it.type === 'link') {
       return '<div class="item beauty-card">' +
-        '<div class="item-title">' + Util.esc(it.title || '抖音视频') + '</div>' +
+        '<div class="item-title">' + Util.esc(it.title || '收藏视频') + '</div>' +
         '<div class="item-meta">' + meta + '</div>' +
         '<div class="readbox" style="margin-top:8px;word-break:break-all">' + Util.esc(it.url) + '</div>' +
         '<div class="item-actions" style="margin-top:8px">' +
-          '<a class="btn btn-sm btn-primary" href="' + Util.esc(it.url) + '" target="_blank" rel="noopener">▶ 在抖音打开</a>' +
+          '<a class="btn btn-sm btn-primary" href="' + Util.esc(it.url) + '" target="_blank" rel="noopener">▶ ' + (isBili ? '在 B 站打开' : '在抖音打开') + '</a>' +
           '<button class="btn btn-sm btn-danger" data-del="' + it.id + '">删除</button>' +
         '</div></div>';
     }
@@ -108,7 +161,7 @@ var ModBeauty = (function () {
   }
 
   function render() {
-    renderStats(); renderCats();
+    renderReco(); renderStats(); renderCats();
     // 回收上一次渲染创建的 object URL，避免内存泄漏
     Object.keys(objUrls).forEach(function (k) { try { URL.revokeObjectURL(objUrls[k]); } catch (e) {} });
     objUrls = {};
@@ -177,6 +230,13 @@ var ModBeauty = (function () {
   }
 
   function init() {
+    var br = document.getElementById('brRefresh');
+    if (br) br.addEventListener('click', function () { recoBump(); renderReco(); Toast.show('已换一批今日推荐', 'info'); });
+    var rbox = document.getElementById('beautyReco');
+    if (rbox) rbox.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-reco-save]'); if (!b) return;
+      saveReco(b.dataset.recoSave);
+    });
     document.getElementById('beautyCats').addEventListener('click', function (e) {
       var b = e.target.closest('.chip'); if (!b) return;
       cat = b.dataset.v; renderCats(); render();

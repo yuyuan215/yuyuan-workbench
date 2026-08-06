@@ -128,7 +128,7 @@ var ModLang = (function () {
       '<div class="readbox' + (zoomEn ? ' zoom' : '') + '" style="margin-top:14px"><b>二、视频金句提炼（可收藏）</b>' +
         '<div class="quote" style="margin-top:6px">' + Util.esc(e.quote) + '</div>' +
         '<div class="small muted">' + Util.esc(e.quote ? '' : '') + '英文金句，建议加入收藏夹反复打磨。</div>' +
-        '<div class="item-actions" style="margin-top:6px"><button class="btn btn-sm" id="enCollectQuote">☆ 收藏这条金句到收藏夹</button></div></div>' +
+        '<div class="item-actions" style="margin-top:6px"><button class="btn btn-sm" id="enCollectQuote">☆ 存为读书笔记</button></div></div>' +
 
       '<div class="readbox' + (zoomEn ? ' zoom' : '') + '" style="margin-top:14px"><b>三、实用短句（4 分钟 · 跟读三遍）</b>' +
         '<div style="margin:8px 0 4px">' + e.sentences.map(function (s) { return '<div class="item" style="margin-bottom:8px;padding:9px 11px"><div>' + Util.esc(s.en) + '</div><div class="small muted">' + Util.esc(s.cn) + '</div></div>'; }).join('') + '</div></div>' +
@@ -141,16 +141,12 @@ var ModLang = (function () {
 
   function collectQuote() {
     var e = todayEn();
-    var text = e.quote;
-    window.App.pickFolder('财经', function (coll) {
-      ModQuotes.add({
-        key: 'enquote::' + e.title,
-        from: '英语学习',
-        title: text,
-        body: '出自 TED《' + e.title + '》· ' + e.speaker + '。' + (e.oral ? '\n口语练习：' + e.oral.q : ''),
-        source: e.speaker + ' · ' + e.theme,
-        coll: coll
-      });
+    ModNotes.add({
+      book: '—',
+      excerpt: e.quote,
+      note: (e.oral ? '口语练习：' + e.oral.q : ''),
+      cat: '文学',
+      source: '英语学习 · ' + e.speaker
     });
   }
 

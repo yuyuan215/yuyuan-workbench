@@ -327,6 +327,10 @@ details.acc .body { margin-top: 10px; padding-top: 10px; border-top: 1px dashed 
 .lib-book { display: flex; align-items: center; gap: 10px; padding: 9px 11px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel); }
 .lib-book .grow { min-width: 0; }
 
+/* ---------- 科学育儿：每日分组 ---------- */
+.reco-group-hd { font-weight: 600; font-size: 13px; margin: 4px 0 10px; color: var(--text); display: flex; align-items: center; gap: 6px; }
+.reco-group .item.parent-card { margin-bottom: 12px; }
+
 /* ---------- 投资关键词 / 案例网格 ---------- */
 .term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
 .term-grid .term-card { margin: 0; }
@@ -513,3 +517,14 @@ details.acc .body { margin-top: 10px; padding-top: 10px; border-top: 1px dashed 
   .deco .t1 { width: 42px; }
   .deco .t2 { width: 56px; }
 }
+
+/* ===== 复盘查看 ===== */
+.sec-title { font-size: 13.5px; font-weight: 620; color: var(--text-2); margin: 4px 0 10px; }
+.plist { display: flex; flex-direction: column; gap: 8px; }
+.prow { display: flex; align-items: center; gap: 10px; }
+.prow .plabel { width: 76px; flex: none; font-size: 13px; color: var(--text-2); }
+.prow .pbar { flex: 1; height: 10px; background: var(--bg-soft); border-radius: 99px; overflow: hidden; }
+.prow .pbar > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), #c9a7e8); border-radius: 99px; transition: width .4s ease; }
+.prow .pval { width: 60px; flex: none; text-align: right; font-size: 12.5px; color: var(--text-3); }
+.rv-ul { margin: 6px 0 0; padding-left: 20px; font-size: 13.5px; color: var(--text-2); line-height: 1.85; }
+.rv-ul li { margin: 2px 0; }

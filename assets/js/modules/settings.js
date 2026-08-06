@@ -47,8 +47,8 @@ var ModSettings = (function () {
     try { size = (localStorage.getItem(DB.KEY) || '').length; } catch (e) {}
     document.getElementById('dbStats').innerHTML = [
       { n: DB.all('todos').length, l: '待办记录' },
-      { n: DB.all('favs').length + DB.all('books').length, l: '知识库 + 书籍' },
-      { n: DB.all('langLogs').length + DB.all('sportLogs').length, l: '学习 + 运动打卡' },
+      { n: DB.all('books').length + DB.all('notes').length, l: '书籍 + 读书笔记' },
+      { n: DB.all('langLogs').length + DB.all('expLogs').length, l: '英语 + 表达打卡' },
       { n: (size / 1024).toFixed(1) + ' KB', l: '本地占用空间' }
     ].map(function (s) {
       return '<div class="stat"><div class="n" style="font-size:20px">' + s.n + '</div><div class="l">' + s.l + '</div></div>';

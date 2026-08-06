@@ -8,11 +8,12 @@ var App = (function () {
     invest: { title: '建立财商', sub: '每日商业人物视频 · 投资名词深度 · 创业案例长文', mod: 'ModInvest' },
     lang: { title: '英语学习', sub: '影子跟读法 · 每日英文视频 · 关键词与金句收藏', mod: 'ModLang' },
     express: { title: '表达练习', sub: '中文影子跟读 · 央视新闻 / 百家讲坛 · 好句收藏', mod: 'ModExpress' },
-    sport: { title: '每日运动打卡', sub: '30 分钟运动计划 · 打卡录入 · 周统计报表', mod: 'ModSport' },
-    library: { title: '亮灯自习室', sub: '热点荐书 · 读书笔记 · 重点标注 · 全库检索', mod: 'ModLibrary' },
-    beauty: { title: '美商提升', sub: '抖音链接收藏 / 本地视频上传 · 化妆 / 穿搭', mod: 'ModBeauty' },
-    ideas: { title: '账号运营', sub: '职场成长 / 副业变现 / 个人提升 · 每日选题与长期储备', mod: 'ModIdeas' },
-    quotes: { title: '金句收藏夹', sub: '跨板块金句沉淀 · 自定义收藏夹整理', mod: 'ModQuotes' },
+    sport: { title: '每日运动', sub: 'B站每日跟练 · 面部瑜伽 / 金刚功 / 瑜伽', mod: 'ModSport' },
+    library: { title: '图书馆', sub: '每日热门书单 · 书架分类 · 微信读书/番茄小说直读 · 读书笔记', mod: 'ModLibrary' },
+    beauty: { title: '美商提升', sub: '每日热门视频 / 抖音链接收藏 / 本地上传 · 护肤 / 穿搭 / 艺术审美', mod: 'ModBeauty' },
+    parent: { title: '科学育儿', sub: '每日10条热门视频（5 B站+5 抖音）· 视频收藏 · 每周2本育儿书', mod: 'ModParent' },
+    notes: { title: '读书笔记', sub: '从图书馆摘录精华 · 按商业/文学/中医/亲子教育建笔记本', mod: 'ModNotes' },
+    review: { title: '复盘查看', sub: '每周学习 · 阅读 · 笔记复盘', mod: 'ModReview' },
     settings: { title: '设置中心', sub: '账号权限 · 云端同步 · 数据备份 · 外观偏好', mod: 'ModSettings' }
   };
   var current = 'todo';
@@ -36,7 +37,7 @@ var App = (function () {
   }
 
   function refreshAll() {
-    ['ModTodo', 'ModInvest', 'ModLang', 'ModExpress', 'ModSport', 'ModLibrary', 'ModBeauty', 'ModIdeas', 'ModQuotes', 'ModSettings'].forEach(function (n) {
+    ['ModTodo', 'ModInvest', 'ModLang', 'ModExpress', 'ModSport', 'ModLibrary', 'ModBeauty', 'ModParent', 'ModNotes', 'ModReview', 'ModSettings'].forEach(function (n) {
       var m = mod(n);
       if (m && m.render) { try { m.render(); } catch (e) {} }
     });
@@ -98,7 +99,7 @@ var App = (function () {
 
     // 模块初始化
     ModTodo.init(); ModInvest.init(); ModLang.init(); ModExpress.init();
-    ModSport.init(); ModLibrary.init(); ModBeauty.init(); ModIdeas.init(); ModQuotes.init(); ModSettings.init();
+    ModSport.init(); ModLibrary.init(); ModBeauty.init(); ModParent.init(); ModNotes.init(); ModReview.init(); ModSettings.init();
 
     // 导航
     document.getElementById('nav').addEventListener('click', function (e) {
@@ -141,9 +142,9 @@ var App = (function () {
     // 键盘快捷键：1~6 快速切板块
     document.addEventListener('keydown', function (e) {
       if (e.target.matches('input, textarea, select')) return;
-      var keys = ['todo', 'invest', 'lang', 'express', 'library', 'beauty', 'sport', 'ideas'];
+      var keys = ['todo', 'invest', 'lang', 'express', 'sport', 'library', 'beauty', 'parent', 'notes', 'review'];
       var n = parseInt(e.key, 10);
-      if (n >= 1 && n <= 8) go(keys[n - 1]);
+      if (n >= 1 && n <= keys.length) go(keys[n - 1]);
     });
   }
 
