@@ -128,14 +128,19 @@ var App = (function () {
 
     // PWA 安装：捕获浏览器安装提示，显示「安装到本机」按钮；并提供图文安装指引
     function showInstallGuide() {
+      var url = location.href;
       var html =
         '<p>安装后，工作台会像原生 App 一样出现在桌面 / 主屏，<b>点开即用、可离线、电脑与手机数据云端同步</b>。</p>' +
         '<div class="install-steps">' +
-          '<div class="step"><b>电脑（Chrome / Edge）</b>：点浏览器右上角菜单（⋯）→「安装芋圆工作台 / Install app」。桌面出现图标，从此点开即用。</div>' +
-          '<div class="step"><b>安卓手机（Chrome）</b>：点右上角 ⋮ →「安装应用 / 添加到主屏幕」。</div>' +
-          '<div class="step"><b>苹果手机（Safari）</b>：点底部「分享」按钮 →「添加到主屏幕」。</div>' +
+          '<div class="step"><b>① 电脑 Chrome / Edge（最推荐）</b><br/>' +
+            '方法 A：点浏览器右上角 <b>⋮ 三个点 →「安装芋圆工作台 / Install app」</b>（有时显示「安装应用」）。<br/>' +
+            '方法 B：地址栏<b>最左侧</b>（锁图标旁边）若出现一个「安装 / 显示器」小图标，点它即可。<br/>' +
+            '方法 C（若上面都没有）：右上角 ⋮ →「更多工具 → 创建快捷方式」，<b>勾选「以窗口打开」</b>，确定后即生成桌面图标，点开就是全屏 App。</div>' +
+          '<div class="step"><b>② 安卓手机 Chrome</b>：右上角 ⋮ →「安装应用 / 添加到主屏幕」。</div>' +
+          '<div class="step"><b>③ 苹果手机 Safari</b>：底部「分享」按钮 →「添加到主屏幕」。</div>' +
+          '<div class="step"><b>④ Firefox 桌面版</b>：Firefox 桌面版<b>不支持安装成独立 PWA 窗口</b>。若要点开即用，请换 Chrome / Edge 按方式 ① 安装；或继续用 Firefox 时，把地址栏链接<b>拖到桌面</b>生成快捷方式。</div>' +
         '</div>' +
-        '<p class="small muted">若顶部出现「安装到本机」按钮，直接点它即可一键安装（电脑 / 安卓）。iOS 请用上面的分享方式。安装后建议先到「设置中心」配置云端同步，电脑与手机填同一份配置（或用「同步码」一键复制）。</p>';
+        '<p class="small muted">注意：地址栏右侧的<b>拼图图标 🧩 是「扩展程序」入口，不是安装按钮</b>，请用上面 ⋮ 菜单或地址栏最左侧图标。安装前请先按 <b>Ctrl+F5 硬刷新</b>，确保是最新版。当前地址：<code>' + Util.esc(url) + '</code></p>';
       App.openModal('把工作台安装到本机', html, [{ label: '知道了', primary: true, onClick: App.closeModal }]);
     }
     var deferredInstall = null;
@@ -152,6 +157,8 @@ var App = (function () {
     });
     var helpBtn = document.getElementById('btnInstallHelp');
     if (helpBtn) helpBtn.addEventListener('click', showInstallGuide);
+    var syInstallBtn = document.getElementById('syInstall');
+    if (syInstallBtn) syInstallBtn.addEventListener('click', showInstallGuide);
     var installBtn = document.getElementById('btnInstall');
     if (installBtn) installBtn.addEventListener('click', function () {
       if (deferredInstall) {
