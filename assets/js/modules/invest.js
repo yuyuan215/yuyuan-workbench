@@ -26,23 +26,28 @@ var ModInvest = (function () {
     renderFavs();
   }
 
-  /* ---------- 每日视频 ---------- */
+  /* ---------- 每日视频（B 站高赞财商视频，免费观看） ---------- */
   function renderVideo() {
     var v = Util.seededPick(CONTENT.financeVideos, seed(1), 1)[0];
     document.getElementById('invVideoDate').textContent = Util.humanDate();
     var key = 'fvideo::' + v.title;
+    var player = v.bvid
+      ? '<div class="bili-wrap"><iframe class="bili-player" title="B站视频：' + Util.esc(v.title) + '" src="https://player.bilibili.com/player.html?bvid=' + v.bvid + '&page=1&high_quality=1&danmaku=0&autoplay=0" scrolling="no" frameborder="no" allowfullscreen="true"></iframe></div>'
+      : '';
+    var openUrl = v.bvid ? ('https://www.bilibili.com/video/' + v.bvid + '/') : v.url;
     document.getElementById('invVideo').innerHTML =
       '<div class="video-card">' +
         '<div class="vc-top">' +
-          '<span class="vc-platform">' + Util.esc(v.platform) + '</span>' +
+          '<span class="vc-platform">B 站 · 财商</span>' +
           '<span class="tag info">' + Util.esc(v.tag || '商业') + '</span>' +
           '<span class="muted small">约 ' + Util.esc(v.duration || '—') + '</span>' +
         '</div>' +
         '<div class="vc-title">' + Util.esc(v.title) + '</div>' +
         '<div class="vc-person">' + Util.esc(v.person || '') + ' · ' + Util.esc(v.role || '') + '</div>' +
         '<div class="vc-desc">' + Util.esc(v.desc || '') + '</div>' +
+        player +
         '<div class="vc-actions">' +
-          '<a class="btn btn-sm btn-primary" href="' + Util.esc(v.url) + '" target="_blank" rel="noopener">▶ 观看视频</a>' +
+          '<a class="btn btn-sm btn-primary" href="' + Util.esc(openUrl) + '" target="_blank" rel="noopener">▶ 在 B 站打开</a>' +
           '<button class="btn btn-sm" data-fav="video" data-title="' + Util.esc(v.title) + '" data-person="' + Util.esc(v.person || '') + '">' + (isFav(key) ? '★ 已收藏' : '☆ 收藏') + '</button>' +
         '</div>' +
       '</div>';

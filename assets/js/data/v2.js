@@ -11,20 +11,22 @@ window.CONTENT = window.CONTENT || {};
 
   /* ---------------- 建立财商：每日商业人物 / 投资者视频 ---------------- */
   C.financeVideos = [
-    { title: '创业公司成功的头号原因', person: 'Bill Gross', role: 'IdeaLab 创始人', platform: 'TED', duration: '约 7 分钟', tag: '创业', url: 'https://www.ted.com/talks/bill_gross_the_single_biggest_reason_why_startups_succeed', desc: '他分析了上百个创业公司，得出“时机”比团队、创意、商业模式更决定成败，值得每个想创业的人反复看。' },
-    { title: '伟大领袖如何激励行动', person: 'Simon Sinek', role: '领导力思想家', platform: 'TED', duration: '约 18 分钟', tag: '领导力', url: 'https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action', desc: '“黄金圈”理论：人们不为你做什么买单，而为“你相信什么”买单。先讲 Why 才能激发追随。' },
-    { title: '好的领导者让你感到安全', person: 'Simon Sinek', role: '领导力思想家', platform: 'TED', duration: '约 11 分钟', tag: '管理', url: 'https://www.ted.com/talks/simon_sinek_why_good_leaders_make_you_feel_safe', desc: '信任圈理论：安全感带来合作与执行力，是组织长期竞争力的根。' },
-    { title: '伟大领导者具备什么特质', person: 'Roselinde Torres', role: '领导力顾问', platform: 'TED', duration: '约 11 分钟', tag: '领导力', url: 'https://www.ted.com/talks/roselinde_torres_what_it_takes_to_be_a_great_leader', desc: '用三个问题拆解“面向未来”的领导力：你舍弃了什么？你与谁对话？你如何看清趋势？' },
-    { title: '如何打造人人热爱的公司', person: 'Patty McCord', role: 'Netflix 前CHO', platform: 'TED', duration: '约 14 分钟', tag: '组织文化', url: 'https://www.ted.com/talks/patty_mccord_how_to_build_a_company_where_people_love_to_work', desc: '前 Netflix 文化负责人讲述“成年人契约”：高透明度、高自由度、极高的人才密度。' },
-    { title: '坚毅：激情与持久的力量', person: 'Angela Duckworth', role: '心理学家', platform: 'TED', duration: '约 6 分钟', tag: '认知', url: 'https://www.ted.com/talks/angela_lee_duckworth_grit_the_power_of_passion_and_perseverance', desc: '决定长期成就的不是天赋，而是“坚毅”——对长远目标持续的热情与坚持。' },
-    { title: '如何管理集体创造力', person: 'Linda Hill', role: '哈佛教授', platform: 'TED', duration: '约 17 分钟', tag: '创新', url: 'https://www.ted.com/talks/linda_hill_how_to_manage_for_collective_creativity', desc: '创新不是英雄式个人，而是“共创文化”：不同观点的碰撞与融合。' },
-    { title: '如何发起一场运动', person: 'Derek Sivers', role: '创业者', platform: 'TED', duration: '约 3 分钟', tag: '创业', url: 'https://www.ted.com/talks/derek_sivers_how_to_start_a_movement', desc: '最短的领导力课：第一个跟随者比发起者更关键，行动需要被“看见”。' },
-    { title: '马云：创业与坚持', person: '马云', role: '阿里巴巴创始人', platform: 'YouTube', duration: '合集', tag: '创业', url: 'https://www.youtube.com/results?search_query=马云+创业+演讲', desc: '搜索马云公开演讲合集，看他如何讲“相信未来”与组织文化。' },
-    { title: '雷军：小米与效率革命', person: '雷军', role: '小米创始人', platform: 'YouTube', duration: '合集', tag: '经营', url: 'https://www.youtube.com/results?search_query=雷军+小米+演讲', desc: '看雷军如何讲“极致性价比”与“用户参与感”的底层逻辑。' },
-    { title: '张一鸣：字节跳动的增长逻辑', person: '张一鸣', role: '字节跳动创始人', platform: 'YouTube', duration: '合集', tag: '增长', url: 'https://www.youtube.com/results?search_query=张一鸣+字节跳动+演讲', desc: '看“延迟满足”与“算法中立”如何支撑一家全球化产品公司。' },
-    { title: '王兴：美团的长期主义', person: '王兴', role: '美团创始人', platform: 'YouTube', duration: '合集', tag: '战略', url: 'https://www.youtube.com/results?search_query=王兴+美团+演讲', desc: '“太多人关注边界，很少人关注核心”——看王兴的战略定力。' },
-    { title: '巴菲特：价值投资与长期持有', person: 'Warren Buffett', role: '伯克希尔·哈撒韦', platform: 'YouTube', duration: '合集', tag: '投资', url: 'https://www.youtube.com/results?search_query=巴菲特+投资+演讲', desc: '搜索巴菲特股东信与访谈，理解“把股票当企业所有权”的复利哲学。' },
-    { title: '瑞·达利欧：原则与决策系统', person: 'Ray Dalio', role: '桥水基金创始人', platform: 'YouTube', duration: '合集', tag: '投资', url: 'https://www.youtube.com/results?search_query=瑞达利欧+原则+演讲', desc: '看“极度求真、极度透明”与把决策写成原则系统的思维方式。' }
+    { title: '【股票入门】新手小白炒股入门基础知识', person: '海螺复盘', role: '财经UP主', platform: 'B站', duration: '约 40 分钟', tag: '股票', bvid: 'BV1EuxTe3EB6', url: 'https://www.bilibili.com/video/BV1EuxTe3EB6', desc: '从开户到看盘、K线、仓位管理，系统讲清新手最该先弄懂的基础，避免一上来就追涨杀跌。' },
+    { title: '【中央财经大学】《投资学》全200课（国家级精品课）', person: '复利的奇迹', role: '财商科普', platform: 'B站', duration: '课程合集', tag: '投资', bvid: 'BV1qa411q7zV', url: 'https://www.bilibili.com/video/BV1qa411q7zV', desc: '高校体系化投资学课程，从资产定价到组合管理，想打地基看这套最稳。' },
+    { title: '基金投资入门必看合集（全部免费）', person: 'fire定投', role: '定投科普', platform: 'B站', duration: '合集', tag: '基金', bvid: 'BV1GK4y1U7v7', url: 'https://www.bilibili.com/video/BV1GK4y1U7v7', desc: '从基金概念到实用策略一网打尽，工薪族定投前先把这个合集看完。' },
+    { title: '15分钟讲透基金应该怎么买', person: '研究员雷牛牛', role: '基金研究', platform: 'B站', duration: '约 15 分钟', tag: '基金', bvid: 'BV1Eo4y197xL', url: 'https://www.bilibili.com/video/BV1Eo4y197xL', desc: '零基础新手必备，把买什么、怎么买、何时卖讲得特别透。' },
+    { title: '理财入门课，帮你改变财务理念', person: '是木子阳啊', role: '理财科普', platform: 'B站', duration: '约 30 分钟', tag: '理财', bvid: 'BV14V411Y7wm', url: 'https://www.bilibili.com/video/BV14V411Y7wm', desc: '把很多网课要收费的财务理念免费讲了一遍，先纠正观念再谈操作。' },
+    { title: '股票技术分析入门到精通20讲', person: '钱潮观澜', role: '技术派', platform: 'B站', duration: '20 讲', tag: '股票', bvid: 'BV1bW4y1877u', url: 'https://www.bilibili.com/video/BV1bW4y1877u', desc: '从零开始学看技术图形与量价关系，适合想做中短线的朋友打底。' },
+    { title: '《富爸爸穷爸爸》全集精读', person: '心心心心心水姐姐', role: '读书UP主', platform: 'B站', duration: '全集', tag: '财商读书', bvid: 'BV1Av411L7F6', url: 'https://www.bilibili.com/video/BV1Av411L7F6', desc: '改变无数人金钱观的经典，核心是分清资产与负债、让钱为你工作。' },
+    { title: '《小狗钱钱》金钱童话全集', person: '心心心心心水姐姐', role: '读书UP主', platform: 'B站', duration: '全集', tag: '财商读书', bvid: 'BV1WA411Y7cC', url: 'https://www.bilibili.com/video/BV1WA411Y7cC', desc: '用故事讲透储蓄、复利与自信，适合想建立基础财商观念的人。' },
+    { title: '查理·芒格：存下第一笔10万会改变你的人生', person: '复利的奇迹', role: '财商科普', platform: 'B站', duration: '约 12 分钟', tag: '投资认知', bvid: 'BV1K4ygBDEB4', url: 'https://www.bilibili.com/video/BV1K4ygBDEB4', desc: '把"先积累本金"这件事讲得很实在，复利的前提是先有第一桶可滚的雪。' },
+    { title: '螺丝钉带你读书：滚雪球——巴菲特和他的财富人生', person: '银行螺丝钉', role: '指数基金', platform: 'B站', duration: '约 25 分钟', tag: '投资', bvid: 'BV1bh411S7oV', url: 'https://www.bilibili.com/video/BV1bh411S7oV', desc: '用白话讲巴菲特的长期主义与价值投资，普通人最该借鉴的活法。' },
+    { title: '我们如何才能赚很多很多很多钱', person: '智能路障', role: '认知科普', platform: 'B站', duration: '约 20 分钟', tag: '认知', bvid: 'BV1gL4y1s7c7', url: 'https://www.bilibili.com/video/BV1gL4y1s7c7', desc: '从收入结构、杠杆与复利聊"变富"的真实路径，少鸡汤多逻辑。' },
+    { title: '普通人总是通过消灭财富来彰显财富，存款才是你的财富', person: '姜Dora在此', role: '财经访谈', platform: 'B站', duration: '约 18 分钟', tag: '认知', bvid: 'BV1Vs346cESs', url: 'https://www.bilibili.com/video/BV1Vs346cESs', desc: '聊消费主义与真实财富积累，帮你看清"看起来有钱"和"真有钱"的区别。' },
+    { title: '财富积累的最快方式：复制有钱人的脑子', person: '姜Dora在此', role: '财经访谈', platform: 'B站', duration: '约 22 分钟', tag: '认知', bvid: 'BV1neL36CEfZ', url: 'https://www.bilibili.com/video/BV1neL36CEfZ', desc: '大卫翁×姜Dora 对谈收入配置法，父母不教、学校不讲的钱该怎么安排。' },
+    { title: '【2026电商运营起店】零基础速成课', person: '杰伦开网店赚奶茶钱', role: '电商实操', platform: 'B站', duration: '约 60 分钟', tag: '创业', bvid: 'BV1dL411y71Y', url: 'https://www.bilibili.com/video/BV1dL411y71Y', desc: '从底层原理到实操的电商开店教程，想做副业/小生意的人可参考。' },
+    { title: '如何用底层逻辑搭建你的知识体系', person: '道长的思维铺子', role: '思维方法论', platform: 'B站', duration: '约 16 分钟', tag: '认知', bvid: 'BV13f421q72g', url: 'https://www.bilibili.com/video/BV13f421q72g', desc: '把"怎么思考"讲成可练习的方法，认知升级比记结论更有用。' },
+    { title: '采访100位基金经理后顿悟：这样理财不亏才怪', person: '全嘻嘻', role: '财经访谈', platform: 'B站', duration: '约 20 分钟', tag: '投资认知', bvid: 'BV1Rj421R7uH', url: 'https://www.bilibili.com/video/BV1Rj421R7uH', desc: '用真实采访拆掉常见理财误区，先少踩坑再谈赚钱。' }
   ];
 
 /* ---------------- 建立财商：10 个深度投资理财名词（每日 10 个） ---------------- */
