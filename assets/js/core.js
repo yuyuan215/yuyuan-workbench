@@ -581,3 +581,44 @@ var Auth = (function () {
   if (document.readyState === 'complete') reg();
   else window.addEventListener('load', reg);
 })();
+
+/* ---------------- B站视频「点击播放」懒加载 ----------------
+ * 所有板块默认不加载 B站播放器（避免打开工作台即自动播放/缓冲），
+ * 仅显示封面占位；用户点击封面后才注入 iframe 并播放。
+ */
+(function () {
+  // 生成封面占位 HTML（不加载任何播放器）
+  Util.biliCover = function (bvid) {
+    return '<div class="bili-cover" data-bvid="' + Util.esc(bvid) + '" role="button" tabindex="0" aria-label="点击播放 B站视频">' +
+      '<div class="bili-cover-inner"><span class="play-btn">▶</span></div></div>';
+  };
+  function loadBili(cover) {
+    var bvid = cover.getAttribute('data-bvid');
+    if (!bvid) return;
+    var iframe = document.createElement('iframe');
+    iframe.className = 'bili-player';
+    iframe.setAttribute('src', 'https://player.bilibili.com/player.html?bvid=' + encodeURIComponent(bvid) + '&page=1&high_quality=1&danmaku=0&autoplay=1');
+    iframe.setAttribute('allowfullscreen', 'true');
+    iframe.setAttribute('scrolling', 'no');
+    iframe.setAttribute('border', '0');
+    iframe.setAttribute('frameborder', 'no');
+    iframe.setAttribute('framespacing', '0');
+    iframe.setAttribute('allow', 'fullscreen; autoplay; encrypted-media');
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = '0';
+    if (cover.parentNode) cover.parentNode.replaceChild(iframe, cover);
+  }
+  function activate(e) {
+    if (!e || !e.target || !e.target.closest) return;
+    var cover = e.target.closest('.bili-cover');
+    if (cover) { e.preventDefault(); loadBili(cover); }
+  }
+  document.addEventListener('click', activate, true);
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    if (!e.target || !e.target.closest) return;
+    var cover = e.target.closest('.bili-cover');
+    if (cover) { e.preventDefault(); loadBili(cover); }
+  });
+})();

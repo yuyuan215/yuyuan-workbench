@@ -2,7 +2,7 @@
  * Service Worker —— 让工作台可「安装为 App」且离线可用
  * 策略：HTML 走网络优先（保证内容最新），静态资源走缓存优先
  * ============================================================ */
-const CACHE = 'wb-shell-v14';
+const CACHE = 'wb-shell-v15';
 const ASSETS = [
   './',
   './index.html',

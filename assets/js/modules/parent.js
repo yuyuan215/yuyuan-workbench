@@ -24,7 +24,7 @@ var ModParent = (function () {
     return '<div class="item parent-card">' +
       '<div class="item-title">📺 ' + Util.esc(v.title || '') + '</div>' +
       '<div class="item-meta"><span class="tag accent">B站</span><span class="small muted">' + Util.esc(v.up || '') + '</span><span class="small muted">' + Util.esc(v.dur || '') + '</span></div>' +
-      '<div class="bili-wrap"><iframe class="bili-player" src="https://player.bilibili.com/player.html?bvid=' + Util.esc(v.bvid) + '&page=1&high_quality=1&danmaku=0&autoplay=0" allowfullscreen="true" scrolling="no" border="0" frameborder="no" framespacing="0" allow="fullscreen"></iframe></div>' +
+      '<div class="bili-wrap">' + Util.biliCover(v.bvid) + '</div>' +
       (v.note ? '<div class="item-note">' + Util.esc(v.note) + '</div>' : '') +
       '<div class="item-actions">' +
         '<a class="btn btn-sm btn-primary" href="' + Util.esc(v.url) + '" target="_blank" rel="noopener">▶ 在 B 站打开</a>' +
@@ -79,7 +79,7 @@ var ModParent = (function () {
       return '<div class="item parent-card">' +
         '<div class="item-title">' + Util.esc(it.title || 'B站视频') + '</div>' +
         '<div class="item-meta"><span class="tag accent">B站</span><span class="small muted">' + Util.esc(it.up || '') + '</span></div>' +
-        '<div class="bili-wrap"><iframe class="bili-player" src="https://player.bilibili.com/player.html?bvid=' + Util.esc(it.bvid) + '&page=1&high_quality=1&danmaku=0&autoplay=0" allowfullscreen="true" scrolling="no" border="0" frameborder="no" framespacing="0" allow="fullscreen"></iframe></div>' +
+        '<div class="bili-wrap">' + Util.biliCover(it.bvid) + '</div>' +
         '<div class="item-actions" style="margin-top:8px"><a class="btn btn-sm btn-primary" href="' + Util.esc(it.url) + '" target="_blank" rel="noopener">▶ 在 B 站打开</a>' +
         '<button class="btn btn-sm btn-danger" data-del="' + it.id + '">删除</button></div></div>';
     }

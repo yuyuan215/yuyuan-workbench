@@ -36,7 +36,7 @@ var ModBeauty = (function () {
     return '<div class="item beauty-card">' +
       '<div class="item-title">' + c.emoji + ' ' + Util.esc(c.label) + ' · ' + Util.esc(v.title || '') + '</div>' +
       '<div class="item-meta"><span class="tag accent">' + Util.esc(v.up || '') + '</span><span class="small muted">' + Util.esc(v.dur || '') + '</span></div>' +
-      '<div class="bili-wrap"><iframe class="bili-player" src="https://player.bilibili.com/player.html?bvid=' + v.bvid + '&page=1&high_quality=1&danmaku=0&autoplay=0" allowfullscreen="true" scrolling="no" border="0" frameborder="no" framespacing="0" allow="fullscreen"></iframe></div>' +
+      '<div class="bili-wrap">' + Util.biliCover(v.bvid) + '</div>' +
       (v.note ? '<div class="item-note">' + Util.esc(v.note) + '</div>' : '') +
       '<div class="item-actions">' +
         '<a class="btn btn-sm btn-primary" href="' + v.url + '" target="_blank" rel="noopener">▶ 在 B 站打开</a>' +
