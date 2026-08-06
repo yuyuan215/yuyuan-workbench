@@ -233,32 +233,53 @@ window.CONTENT = window.CONTENT || {};
     { title: '养育男孩', author: '史蒂夫·比达尔夫', cat: '亲子教育', why: '针对男孩成长特点的养育指南。' }
   ];
 
-  /* ---------------- 科学育儿：每日热门视频（5 条 B站 + 5 条抖音，按日轮换） ---------------- */
+  /* ---------------- 科学育儿：每日热门视频（2~18 岁 · 5 条 B站 + 5 条抖音，按日轮换） ---------------- */
   C.parentVideos = {
     bili: [
-      { title: '崔玉涛育儿全集（科学养育百科）', up: '崔玉涛', bvid: 'BV1Z5411N796', url: 'https://www.bilibili.com/video/BV1Z5411N796', dur: '92 集合集', note: '新生儿到幼儿的常见病、喂养、护理一本通，家庭电子育儿手册。' },
-      { title: '新生儿护理 16 集全（禧月阁月子中心）', up: '禧月阁', bvid: 'BV1Rb411T7no', url: 'https://www.bilibili.com/video/BV1Rb411T7no', dur: '16 集', note: '脐带、黄疸、红屁股、洗澡、抱姿等新生儿实操。' },
-      { title: '李玫瑾：12 岁之前的培养决定孩子的一生（57P）', up: '李玫瑾', bvid: 'BV17sQHYoENe', url: 'https://www.bilibili.com/video/BV17sQHYoENe', dur: '57 集', note: '性格与心理抚养，犯罪心理学视角的育儿智慧。' },
-      { title: '0-6 岁育儿敏感期对照表：科学早教实操', up: '早教实操', bvid: 'BV1XFNE6XEcX', url: 'https://www.bilibili.com/video/BV1XFNE6XEcX', dur: '约 12 分钟', note: '秩序/语言/感官敏感期，零基础父母直接抄作业。' },
-      { title: '曾仕强：家庭教育 24 集全', up: '曾仕强', bvid: 'BV1964y1q7fo', url: 'https://www.bilibili.com/video/BV1964y1q7fo', dur: '24 集', note: '中国式家庭教育的道与术，亲子关系的底层逻辑。' },
-      { title: '父母教育子女必修课 1-100 集', up: '育儿女神蜜丝懂', bvid: 'BV1ha4y137dA', url: 'https://www.bilibili.com/video/BV1ha4y137dA', dur: '100 集', note: '亲子沟通、逆商培养、时间管理全覆盖。' },
-      { title: '1-36 个月宝宝各月养育指南（高级育婴师教材）', up: '高级育婴师', bvid: 'BV1Mb411s7Xc', url: 'https://www.bilibili.com/video/BV1Mb411s7Xc', dur: '持续更新', note: '按月龄对照的发育与照护要点，按月查更方便。' },
-      { title: '0-3 岁婴幼儿保育与教育 全 89 讲（国家级精品课）', up: '学前教育', bvid: 'BV1DnEC6pEru', url: 'https://www.bilibili.com/video/BV1DnEC6pEru', dur: '89 讲', note: '系统了解 0-3 岁发育规律与科学早教。' },
-      { title: '科学坐月子 32 集全（禧月阁）', up: '禧月阁', bvid: 'BV1Mb411M7fp', url: 'https://www.bilibili.com/video/BV1Mb411M7fp', dur: '32 集', note: '产后恢复与新生儿照护一本通。' },
-      { title: '曾仕强：适合 1-3 岁宝宝的早教方法', up: '曾仕强', bvid: 'BV1vD421L72t', url: 'https://www.bilibili.com/video/BV1vD421L72t', dur: '约 10 分钟', note: '1-3 岁早教怎么做不踩坑。' },
-      { title: '新手爸妈训练营', up: '新手爸妈', bvid: 'BV1B2Li6rEjM', url: 'https://www.bilibili.com/video/BV1B2Li6rEjM', dur: '训练营', note: '从抱娃到哄睡的入门实操。' }
+      /* —— 2~6 岁（幼儿 / 低龄） —— */
+      { title: '可怕的两岁', up: '', bvid: 'BV1jD42177gR', url: 'https://www.bilibili.com/video/BV1jD42177gR', dur: '约 8 分钟', note: '理解 2 岁叛逆期，平稳度过“可怕的两岁”。' },
+      { title: '【正面管教】宝宝经常崩溃发脾气？“可怕的两岁”怎么管？', up: '', bvid: 'BV1VU4y1J7HJ', url: 'https://www.bilibili.com/video/BV1VU4y1J7HJ', dur: '约 10 分钟', note: '蒙氏理论+具体步骤，应对情绪失控。' },
+      { title: '2岁6个月宝宝的一天｜一日三餐 习惯养成', up: '', bvid: 'BV1RX4y1o7V4', url: 'https://www.bilibili.com/video/BV1RX4y1o7V4', dur: '约 6 分钟', note: '一日作息示范，培养自理能力。' },
+      { title: '2-3岁一周早教安排✅玩出专注力', up: '都妈育儿记', bvid: 'BV13UGwzrEGH', url: 'https://www.bilibili.com/video/BV13UGwzrEGH', dur: '约 5 分钟', note: '附早教游戏计划表，玩出专注力。' },
+      { title: '幼儿好习惯启蒙动画合集（自理·懂礼貌·好品行）', up: '', bvid: 'BV1aVMn6YELm', url: 'https://www.bilibili.com/video/BV1aVMn6YELm', dur: '合集', note: '引导宝宝自理、懂礼貌、养品行。' },
+      { title: '【专注力训练】胡萝卜失踪案全集', up: '啷哩叽啷哩', bvid: 'BV1GYNc6MEwS', url: 'https://www.bilibili.com/video/BV1GYNc6MEwS', dur: '约 11 分钟', note: '5集带孩子练“火眼金睛”。' },
+      { title: '儿童习惯养成·如何培养孩子的阅读习惯', up: '北师大教育培训中心', bvid: 'BV11g411A7mg', url: 'https://www.bilibili.com/video/BV11g411A7mg', dur: '约 3 分钟', note: '从小建立阅读习惯。' },
+      { title: '孩子得了“上厕所恐惧症”，3个纠正方法', up: '', bvid: 'BV1i44y1i7TX', url: 'https://www.bilibili.com/video/BV1i44y1i7TX', dur: '约 7 分钟', note: '轻松搞定如厕训练。' },
+      { title: '宝宝不想上幼儿园，妈妈的回答与引导很关键', up: '', bvid: 'BV1Gg411r7fC', url: 'https://www.bilibili.com/video/BV1Gg411r7fC', dur: '约 3 分钟', note: '减缓分离焦虑的沟通话术。' },
+      /* —— 6~12 岁（小学 / 学龄） —— */
+      { title: '孩子不主动学习怎么办？自主学习力养成全攻略', up: '', bvid: 'BV1R2Vh6EEGX', url: 'https://www.bilibili.com/video/BV1R2Vh6EEGX', dur: '约 9 分钟', note: '家长必看：从被动到自主学习。' },
+      { title: '只用三招让孩子自觉写作业', up: '', bvid: 'BV1P84y1f7ry', url: 'https://www.bilibili.com/video/BV1P84y1f7ry', dur: '约 4 分钟', note: '告别催作业的日常拉锯。' },
+      { title: '二升三｜小学生自律学习的一天', up: '', bvid: 'BV1jHNc61E4v', url: 'https://www.bilibili.com/video/BV1jHNc61E4v', dur: '约 6 分钟', note: '小学阶段自律作息示范。' },
+      { title: '小学家长注意事项——小学分年级指导', up: '', bvid: 'BV1sqNb6uEF7', url: 'https://www.bilibili.com/video/BV1sqNb6uEF7', dur: '约 8 分钟', note: '一年级到六年级家长重点。' },
+      { title: '小升初后，准初一一定要知道的潜规则', up: '', bvid: 'BV1NK3M6hE4Z', url: 'https://www.bilibili.com/video/BV1NK3M6hE4Z', dur: '约 5 分钟', note: '平稳过渡到初中。' },
+      { title: '11分45秒彻底根治孩子拖拉磨蹭，引导为内驱力', up: '', bvid: 'BV1DV411X7wY', url: 'https://www.bilibili.com/video/BV1DV411X7wY', dur: '约 12 分钟', note: '直击拖拉本质，养出内驱力。' },
+      { title: '李玫瑾教授：孩子写作业拖拉磨蹭怎么办', up: '', bvid: 'BV1Zz4y1X7Lv', url: 'https://www.bilibili.com/video/BV1Zz4y1X7Lv', dur: '约 7 分钟', note: '知名专家谈作业习惯。' },
+      /* —— 12~18 岁（青春期 / 初高中） —— */
+      { title: '孩子青春期反常叛逆，根源其实是大脑还没长成熟', up: '', bvid: 'BV1tKuE6WEiL', url: 'https://www.bilibili.com/video/BV1tKuE6WEiL', dur: '约 8 分钟', note: '读懂青春期的大脑与情绪。' },
+      { title: '4步管理法，让孩子主动放下手机', up: '', bvid: 'BV1Ey411z74e', url: 'https://www.bilibili.com/video/BV1Ey411z74e', dur: '约 5 分钟', note: '电子产品不靠吼，靠规则。' },
+      { title: '【曾仕强】初中叛逆期的孩子，父母该如何教育', up: '', bvid: 'BV1HD42177Mg', url: 'https://www.bilibili.com/video/BV1HD42177Mg', dur: '约 9 分钟', note: '智慧应对初中叛逆期。' },
+      { title: '【92集全】青春期家长必修课', up: '', bvid: 'BV1mMuazzEwu', url: 'https://www.bilibili.com/video/BV1mMuazzEwu', dur: '合集', note: '系统解决青春期养育难题。' },
+      { title: '孩子半夜偷玩手机，如何管理电子产品', up: '', bvid: 'BV1om42177Pu', url: 'https://www.bilibili.com/video/BV1om42177Pu', dur: '约 6 分钟', note: '睡眠与屏幕时间管理。' }
     ],
     douyin: [
-      { title: '宝宝挑食厌食怎么办？营养师妈妈的替代喂养法', up: 'Kelly麻麻', note: '饭渣宝宝“隐性饥饿”怎么破，换个方式让娃爱上吃。' },
-      { title: '孩子出门总要抱抱？四个原因家长要知道', up: '稚子说育儿', note: '理解行为背后的需求，比硬扛更有用。' },
-      { title: '反向育儿三秘诀，轻松“驯服”熊孩子', up: '稚子说育儿', note: '不吼不叫的正面引导实战。' },
-      { title: '幼儿园接娃 4 问 4 不问，家长一定要牢记', up: '稚子说育儿', note: '沟通方式悄悄影响孩子的表达与自信。' },
-      { title: '宝宝吐奶第一时间正确处理方法', up: '北京阿袁', note: '新生儿护理高频问题，少走弯路。' },
-      { title: '0-3 月龄宝宝常用抱姿，新手爸妈必学', up: '颐美禾育儿小百科', note: '不伤脊柱的正确抱法。' },
-      { title: '三岁前别硬塞知识，大概率是坑了娃', up: '稚子说育儿', note: '拒绝超前学习，先玩中学。' },
-      { title: '孩子一不顺心就哭闹、输不起怎么引导', up: '育儿女神蜜丝懂', note: '逆商培养，越早越好。' }
+      { title: '可怕的两岁怎么平稳度过？不打不骂的正面引导', up: '抖音育儿', note: '读懂两岁行为，少吼少叫。' },
+      { title: '孩子一不顺心就哭闹、输不起怎么引导', up: '稚子说育儿', note: '逆商培养，越早越好。' },
+      { title: '反向育儿三秘诀，轻松驯服熊孩子', up: '稚子说育儿', note: '不吼不叫的正面引导实战。' },
+      { title: '幼儿园接娃 4 问 4 不问，家长一定要牢记', up: '稚子说育儿', note: '沟通方式影响表达与自信。' },
+      { title: '2岁宝宝挑食厌食怎么办？营养师妈妈的替代喂养法', up: 'Kelly麻麻', note: '饭渣宝宝换个方式爱上吃。' },
+      { title: '孩子发脾气时，父母第一句话很重要', up: '抖音育儿', note: '先接住情绪，再处理行为。' },
+      { title: '如厕训练黄金期，3招让宝宝爱上坐马桶', up: '抖音育儿', note: '抓住 2 岁如厕窗口期。' },
+      { title: '如何培养2岁宝宝的秩序感和规则意识', up: '抖音育儿', note: '立规矩不靠吼，讲方法。' },
+      { title: '孩子写作业拖拉磨蹭，三招让他主动学', up: '抖音育儿', note: '小学阶段告别催作业。' },
+      { title: '小学阶段如何培养良好学习习惯', up: '抖音育儿', note: '低年级打基础，受益整个学业。' },
+      { title: '青春期孩子叛逆，父母这样沟通不踩雷', up: '抖音育儿', note: '把对抗变成对话。' },
+      { title: '手机管理：如何让孩子主动放下手机', up: '抖音育儿', note: '规则清晰，比没收更有效。' },
+      { title: '亲子阅读从几岁开始？这样读绘本最有效', up: '抖音育儿', note: '绘本共读的正确打开方式。' },
+      { title: '孩子爱打人咬人怎么管？行为引导', up: '抖音育儿', note: '理解攻击行为，温柔而坚定。' }
     ]
   };
+
+
 
   /* ---------------- 科学育儿：每周育儿书单（按周轮换，每次 2 本） ---------------- */
   C.parentBooks = [
@@ -267,13 +288,23 @@ window.CONTENT = window.CONTENT || {};
     { title: '如何说孩子才会听 怎么听孩子才肯说', author: '阿黛尔·法伯', why: '亲子沟通实用话术，化解对抗。' },
     { title: '童年的秘密', author: '蒙台梭利', why: '儿童发展与敏感期理论奠基之作。' },
     { title: '养育男孩', author: '史蒂夫·比达尔夫', why: '针对男孩成长特点的养育指南。' },
+    { title: '养育女孩', author: '史蒂夫·比达尔夫', why: '陪伴女孩安然度过成长各阶段。' },
     { title: '捕捉儿童敏感期', author: '孙瑞雪', why: '把握 0-6 岁关键发展窗口。' },
     { title: '父母效能训练手册（P.E.T.）', author: '托马斯·戈登', why: '用沟通化解亲子冲突。' },
     { title: '你就是孩子最好的玩具', author: '金伯莉·布雷恩', why: '情感引导式教育，告别吼叫。' },
     { title: '全脑教养法', author: '丹尼尔·西格尔', why: '从脑科学理解孩子情绪与行为。' },
     { title: '游戏力', author: '劳伦斯·科恩', why: '用游戏建立联结、治愈童年。' },
     { title: '美国儿科学会育儿百科', author: '美国儿科学会', why: '0-5 岁养育的权威工具书。' },
-    { title: '西尔斯亲密育儿百科', author: '威廉·西尔斯', why: '依恋式育儿的经典。' }
+    { title: '西尔斯亲密育儿百科', author: '威廉·西尔斯', why: '依恋式育儿的经典。' },
+    { title: '孩子：挑战', author: '鲁道夫·德雷克斯', why: '儿童心理学经典，读懂孩子行为动机。' },
+    { title: '不管教的勇气', author: '岸见一郎', why: '面向青春期的自立养育。' },
+    { title: '自驱型成长', author: '威廉·斯蒂克斯鲁德', why: '帮孩子找到内驱力与自控力。' },
+    { title: '不吼不叫', author: '罗娜·雷纳', why: '缓解育儿焦虑与情绪失控。' },
+    { title: '非暴力沟通·亲子篇', author: '马歇尔·卢森堡', why: '用观察与需求改善亲子对话。' },
+    { title: '园丁与木匠', author: '艾莉森·高普尼克', why: '从发展心理学看爱与教养。' },
+    { title: '真希望我父母读过这本书', author: '菲利帕·佩里', why: '疗愈自己，更好地养育。' },
+    { title: '陪孩子终身成长', author: '樊登', why: '亲子关系与终身成长的三根支柱。' },
+    { title: '正面管教图解版（0-3岁）', author: '简·尼尔森', why: '低龄宝宝的的正面管教实例。' }
   ];
 
 })();
