@@ -77,25 +77,27 @@ var ModExpress = (function () {
         '<li><b>难点循环</b>：挑 3 个好句单独循环 5 遍，直到脱口而出。</li>' +
         '<li><b>复述输出</b>：关掉字幕/原声，用自己的话复述核心观点，才算真正吸收。</li>' +
       '</ol>' +
-      '<div class="small muted">建议每天 30 分钟：跟读 20 分钟 + 好句打磨 10 分钟。下方「每日素材」即今日跟读内容。</div>';
+      '<div class="small muted">建议每天 30 分钟：跟读 20 分钟 + 好句打磨 10 分钟。下方「每日跟读课」即今日跟读与精学内容。</div>';
   }
 
-  /* 每日中文素材（央视新闻 / 百家讲坛） */
+  /* 每日中文视频（百家讲坛，来自 B 站） */
   function renderVideo() {
-    var v = todayPiece();
-    document.getElementById('expVideoDate').textContent = Util.humanDate();
-    document.getElementById('expVideo').innerHTML =
+    var v = Util.seededPick(CONTENT.expressionBili, Util.dayIndex() * 5 + 4, 1)[0];
+    var box = document.getElementById('expVideo');
+    if (!box) return;
+    box.innerHTML =
       '<div class="video-card">' +
         '<div class="vc-top">' +
-          '<span class="vc-platform">' + Util.esc(v.source) + '</span>' +
-          '<span class="tag info">影子跟读</span>' +
-          '<span class="muted small">' + Util.esc(v.duration || '—') + '</span>' +
+          '<span class="vc-platform">B 站 · 百家讲坛</span>' +
+          '<span class="tag info">中文影子跟读</span>' +
+          '<span class="muted small">' + Util.esc(v.speaker) + '</span>' +
         '</div>' +
         '<div class="vc-title">' + Util.esc(v.title) + '</div>' +
-        '<div class="vc-person">' + Util.esc(v.speaker || '') + ' · ' + Util.esc(v.platform || '') + '</div>' +
-        '<div class="vc-desc">' + Util.esc(v.desc || '') + '</div>' +
-        '<div class="vc-shadow"><b>跟读提示</b><ul>' + (v.shadow || []).map(function (s) { return '<li>' + Util.esc(s) + '</li>'; }).join('') + '</ul></div>' +
-        '<div class="vc-actions"><a class="btn btn-sm btn-primary" href="' + Util.esc(v.url) + '" target="_blank" rel="noopener">▶ 观看并跟读</a></div>' +
+        '<div class="bili-wrap"><iframe class="bili-player" title="B站视频：' + Util.esc(v.title) + '" src="https://player.bilibili.com/player.html?bvid=' + v.bvid + '&page=1&high_quality=1&danmaku=0&autoplay=0" scrolling="no" frameborder="no" allowfullscreen="true"></iframe></div>' +
+        '<div class="vc-actions">' +
+          '<a class="btn btn-sm btn-primary" href="https://www.bilibili.com/video/' + v.bvid + '/" target="_blank" rel="noopener">▶ 在 B 站打开</a>' +
+          '<span class="muted small">' + Util.esc(v.note || '建议关闭弹幕，挑一段慢速跟读。') + '</span>' +
+        '</div>' +
       '</div>';
   }
 

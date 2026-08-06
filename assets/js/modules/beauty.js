@@ -1,119 +1,200 @@
 /* ============================================================
- * 板块：美商提升（抖音美妆 / 穿搭 / 护肤 / 发型教程收藏）
- * 每日按日轮换 curated 教程（卡片 + 跳链搜索）· 分类筛选 · 收藏 · 手动新增
+ * 板块：美商提升（抖音链接收藏 + 本地视频上传 · 化妆 / 穿搭）
+ * 新增能力：
+ *   - 粘贴抖音视频链接即可直接添加（链接类）
+ *   - 从手机 / 电脑上传视频文件（本地类，存 IndexedDB，页面内可播放）
+ *   - 按「化妆 / 穿搭」两个分类管理
+ * 注：已移除原先的抖音每日推荐卡片（不再从网上抓取推荐）
  * ============================================================ */
 var ModBeauty = (function () {
   var cat = 'all';
-  var CATS = [['all', '全部'], ['妆容', '妆容'], ['穿搭', '穿搭'], ['护肤', '护肤'], ['发型', '发型']];
-  var CATCLS = { '妆容': 'accent', '穿搭': 'ok', '护肤': 'info', '发型': '' };
+  var CATS = [['all', '全部'], ['makeup', '化妆'], ['outfit', '穿搭']];
+  var CATNAME = { makeup: '化妆', outfit: '穿搭' };
+  var CATCLS = { makeup: 'accent', outfit: 'ok' };
+  var objUrls = {};      // blobKey -> objectURL（渲染上传视频时创建，重渲前回收）
+  var filePending = null; // 待上传的视频文件
 
-  function seed() { return Util.dayIndex() * 7; }
-
-  function isFav(key) { return DB.all('beautyFavs').some(function (f) { return f.key === key; }); }
-  function toggleFav(tip) {
-    var exist = DB.all('beautyFavs').filter(function (f) { return f.key === tip.key; })[0];
-    if (exist) { DB.remove('beautyFavs', exist.id); Toast.show('已取消收藏', 'info'); }
-    else {
-      DB.insert('beautyFavs', { key: tip.key, title: tip.title, cat: tip.cat, creator: tip.creator || '', url: tip.url, desc: tip.desc || '', tags: tip.tags || [], source: tip.creator || '抖音' });
-      Toast.show('已收藏到「我的美商收藏」', 'ok');
-    }
-    renderFavs();
+  function items() { return DB.all('beautyItems'); }
+  function byCat() {
+    var arr = items();
+    if (cat !== 'all') arr = arr.filter(function (x) { return x.cat === cat; });
+    return arr.sort(function (a, b) { return b.addedAt - a.addedAt; });
   }
 
-  function tipCard(t, opts) {
-    opts = opts || {};
-    var key = 'btip::' + t.title;
-    var cls = CATCLS[t.cat] || '';
-    return '<div class="item beauty-card">' +
-      '<div class="item-title">' + Util.esc(t.title) + '</div>' +
-      '<div class="item-meta"><span class="tag ' + cls + '">' + Util.esc(t.cat) + '</span>' +
-        (t.creator ? '<span class="tag">' + Util.esc(t.creator) + '</span>' : '') +
-        (t.duration ? '<span class="muted small">约 ' + Util.esc(t.duration) + '</span>' : '') + '</div>' +
-      (t.desc ? '<div class="readbox" style="margin-top:8px">' + Util.esc(t.desc) + '</div>' : '') +
-      (t.tags && t.tags.length ? '<div class="item-meta" style="margin-top:6px">' + t.tags.map(function (x) { return '<span class="small muted"># ' + Util.esc(x) + '</span>'; }).join(' ') + '</div>' : '') +
-      '<div class="item-actions" style="margin-top:8px">' +
-        '<a class="btn btn-sm btn-primary" href="' + Util.esc(t.url) + '" target="_blank" rel="noopener">▶ 去抖音看教程</a>' +
-        '<button class="btn btn-sm" data-fav="' + (opts.from || 'daily') + '" data-title="' + Util.esc(t.title) + '" data-cat="' + Util.esc(t.cat) + '" data-creator="' + Util.esc(t.creator || '') + '" data-url="' + Util.esc(t.url) + '" data-desc="' + Util.esc(t.desc || '') + '">' + (isFav(key) ? '★ 已收藏' : '☆ 收藏') + '</button>' +
-      '</div></div>';
+  /* ---------------- IndexedDB（仅存上传的视频 blob） ---------------- */
+  var IDB = 'yuyuanBeauty', STORE = 'videos';
+  function openIDB() {
+    return new Promise(function (res, rej) {
+      var r = indexedDB.open(IDB, 1);
+      r.onupgradeneeded = function (e) { e.target.result.createObjectStore(STORE); };
+      r.onsuccess = function (e) { res(e.target.result); };
+      r.onerror = function () { rej(r.error); };
+    });
+  }
+  function putBlob(key, blob) {
+    return openIDB().then(function (db) {
+      return new Promise(function (res, rej) {
+        var tx = db.transaction(STORE, 'readwrite');
+        tx.objectStore(STORE).put(blob, key);
+        tx.oncomplete = function () { db.close(); res(); };
+        tx.onerror = function () { db.close(); rej(tx.error); };
+      });
+    });
+  }
+  function getBlob(key) {
+    return openIDB().then(function (db) {
+      return new Promise(function (res, rej) {
+        var tx = db.transaction(STORE, 'readonly');
+        var rq = tx.objectStore(STORE).get(key);
+        rq.onsuccess = function () { db.close(); res(rq.result); };
+        rq.onerror = function () { db.close(); rej(rq.error); };
+      });
+    });
+  }
+  function delBlob(key) {
+    return openIDB().then(function (db) {
+      return new Promise(function (res) {
+        var tx = db.transaction(STORE, 'readwrite');
+        tx.objectStore(STORE).delete(key);
+        tx.oncomplete = function () { db.close(); res(); };
+        tx.onerror = function () { db.close(); res(); };
+      });
+    });
   }
 
-  function renderDaily() {
-    document.getElementById('beautyDate').textContent = Util.humanDate() + ' · 每日轮换';
-    var list = Util.seededPick(CONTENT.beautyTips, seed(), 6);
-    if (cat !== 'all') list = list.filter(function (t) { return t.cat === cat; });
-    document.getElementById('beautyCats').innerHTML = CATS.map(function (c) {
-      return '<button class="chip' + (cat === c[0] ? ' on' : '') + '" data-v="' + c[0] + '">' + c[1] + '</button>';
-    }).join('');
-    document.getElementById('beautyList').innerHTML = list.length ? list.map(function (t) { return tipCard(t); }).join('')
-      : '<div class="empty">该分类今日暂无轮换内容，换个分类或点「换一批」</div>';
-  }
-
-  function renderFavs() {
-    var favs = DB.all('beautyFavs').sort(function (a, b) { return b.createdAt - a.createdAt; });
-    document.getElementById('beautyFavCount').textContent = '共 ' + favs.length + ' 条';
-    document.getElementById('beautyFavList').innerHTML = favs.length ? favs.map(function (f) {
-      return '<div class="item beauty-card">' +
-        '<div class="item-title">' + Util.esc(f.title) + '</div>' +
-        '<div class="item-meta"><span class="tag ' + (CATCLS[f.cat] || '') + '">' + Util.esc(f.cat) + '</span>' + (f.creator ? '<span class="tag">' + Util.esc(f.creator) + '</span>' : '') + '</div>' +
-        (f.desc ? '<div class="readbox" style="margin-top:8px">' + Util.esc(f.desc) + '</div>' : '') +
-        '<div class="item-actions" style="margin-top:8px">' +
-          (f.url ? '<a class="btn btn-sm btn-primary" href="' + Util.esc(f.url) + '" target="_blank" rel="noopener">▶ 去看教程</a>' : '') +
-          '<button class="btn btn-sm btn-danger" data-delfav="' + f.id + '">移出收藏</button>' +
-        '</div></div>';
-    }).join('') : '<div class="empty">还没有收藏，去上方「今日美商补给」点 ☆ 收藏，或手动添加你的私藏教程</div>';
-
-    var badge = document.getElementById('badgeBeauty');
-    if (badge) badge.textContent = favs.length;
-    renderStats(favs);
-  }
-
-  function renderStats(favs) {
-    var byCat = { '妆容': 0, '穿搭': 0, '护肤': 0, '发型': 0 };
-    favs.forEach(function (f) { if (byCat[f.cat] != null) byCat[f.cat]++; });
+  /* ---------------- 渲染 ---------------- */
+  function renderStats() {
+    var all = items();
+    var m = all.filter(function (x) { return x.cat === 'makeup'; }).length;
+    var o = all.filter(function (x) { return x.cat === 'outfit'; }).length;
+    var up = all.filter(function (x) { return x.type === 'upload'; }).length;
     document.getElementById('beautyStats').innerHTML = [
-      { n: favs.length, l: '收藏总数', x: '美商素材库' },
-      { n: byCat['妆容'], l: '妆容', x: '已收藏' },
-      { n: byCat['穿搭'], l: '穿搭', x: '已收藏' },
-      { n: byCat['护肤'] + byCat['发型'], l: '护肤 + 发型', x: '已收藏' }
+      { n: all.length, l: '视频总数', x: '我的美商库' },
+      { n: m, l: '化妆', x: '已添加' },
+      { n: o, l: '穿搭', x: '已添加' },
+      { n: up, l: '本地上传', x: '可离线播放' }
     ].map(function (s) {
       return '<div class="stat"><div class="n">' + s.n + '</div><div class="l">' + s.l + '</div><div class="x">' + s.x + '</div></div>';
     }).join('');
   }
 
-  function render() { renderDaily(); renderFavs(); }
+  function renderCats() {
+    document.getElementById('beautyCats').innerHTML = CATS.map(function (c) {
+      return '<button class="chip' + (cat === c[0] ? ' on' : '') + '" data-v="' + c[0] + '">' + c[1] + '</button>';
+    }).join('');
+  }
 
-  function addManual() {
-    var title = document.getElementById('bTitle').value.trim();
-    if (!title) { Toast.show('请填写教程标题', 'warn'); return; }
-    var catv = document.getElementById('bCat').value;
-    var creator = document.getElementById('bCreator').value.trim();
-    var url = document.getElementById('bUrl').value.trim() || ('https://www.douyin.com/search/' + encodeURIComponent(title));
-    var key = 'btip::' + title;
-    if (DB.all('beautyFavs').some(function (f) { return f.key === key; })) { Toast.show('该教程已在收藏中', 'warn'); return; }
-    DB.insert('beautyFavs', { key: key, title: title, cat: catv, creator: creator, url: url, desc: '手动添加', tags: [], source: creator || '抖音' });
-    document.getElementById('bTitle').value = '';
-    document.getElementById('bCreator').value = '';
-    document.getElementById('bUrl').value = '';
-    Toast.show('已加入「我的美商收藏」', 'ok');
-    renderFavs();
+  function card(it) {
+    var cls = CATCLS[it.cat] || '';
+    var typeLabel = it.type === 'upload' ? '本地视频' : '抖音链接';
+    var meta = '<span class="tag ' + cls + '">' + (CATNAME[it.cat] || it.cat) + '</span><span class="small muted">' + typeLabel + '</span>';
+    if (it.type === 'link') {
+      return '<div class="item beauty-card">' +
+        '<div class="item-title">' + Util.esc(it.title || '抖音视频') + '</div>' +
+        '<div class="item-meta">' + meta + '</div>' +
+        '<div class="readbox" style="margin-top:8px;word-break:break-all">' + Util.esc(it.url) + '</div>' +
+        '<div class="item-actions" style="margin-top:8px">' +
+          '<a class="btn btn-sm btn-primary" href="' + Util.esc(it.url) + '" target="_blank" rel="noopener">▶ 在抖音打开</a>' +
+          '<button class="btn btn-sm btn-danger" data-del="' + it.id + '">删除</button>' +
+        '</div></div>';
+    }
+    // 本地上传视频
+    return '<div class="item beauty-card">' +
+      '<div class="item-title">' + Util.esc(it.title || '本地视频') + '</div>' +
+      '<div class="item-meta">' + meta + '</div>' +
+      '<video class="bvideo" controls preload="metadata" data-bkey="' + Util.esc(it.blobKey) + '"></video>' +
+      '<div class="item-actions" style="margin-top:8px"><button class="btn btn-sm btn-danger" data-del="' + it.id + '">删除</button></div>' +
+      '</div>';
+  }
+
+  function render() {
+    renderStats(); renderCats();
+    // 回收上一次渲染创建的 object URL，避免内存泄漏
+    Object.keys(objUrls).forEach(function (k) { try { URL.revokeObjectURL(objUrls[k]); } catch (e) {} });
+    objUrls = {};
+    var list = byCat();
+    var box = document.getElementById('beautyList');
+    var total = items().length;
+    document.getElementById('beautyCount').textContent = '共 ' + total + ' 条'
+      + (cat !== 'all' ? ' · 当前「' + (CATNAME[cat] || '') + '」' + list.length + ' 条' : '');
+    box.innerHTML = list.length
+      ? list.map(card).join('')
+      : '<div class="empty">这里还没有美商视频～ 在上面粘贴抖音链接，或从手机上传一个吧 🍠</div>';
+    // 异步填充已上传视频的播放地址
+    list.filter(function (x) { return x.type === 'upload'; }).forEach(function (it) {
+      getBlob(it.blobKey).then(function (blob) {
+        if (!blob) return;
+        var u = URL.createObjectURL(blob);
+        objUrls[it.blobKey] = u;
+        var el = box.querySelector('video[data-bkey="' + cssEsc(it.blobKey) + '"]');
+        if (el) el.src = u;
+      }).catch(function () {});
+    });
+    var badge = document.getElementById('badgeBeauty');
+    if (badge) badge.textContent = total;
+  }
+
+  function cssEsc(s) { return String(s).replace(/["\\]/g, '\\$&'); }
+
+  /* ---------------- 添加 ---------------- */
+  function add() {
+    var catv = document.getElementById('bvCat').value;
+    var title = document.getElementById('bvTitle').value.trim();
+    var link = document.getElementById('bvLink').value.trim();
+    if (!link && !filePending) { Toast.show('请粘贴抖音链接，或选择要上传的视频', 'warn'); return; }
+    if (link) {
+      DB.insert('beautyItems', { type: 'link', cat: catv, url: link, title: title || '抖音视频', addedAt: Date.now() });
+      Toast.show('已添加抖音视频', 'ok');
+      finishAdd();
+    } else if (filePending) {
+      var f = filePending;
+      var rec = DB.insert('beautyItems', { type: 'upload', cat: catv, title: title || f.name, name: f.name, blobKey: 'bv_' + Util.uid('b'), addedAt: Date.now() });
+      putBlob(rec.blobKey, f).then(function () {
+        Toast.show('已上传并保存视频', 'ok');
+        finishAdd();
+      }).catch(function () {
+        DB.remove('beautyItems', rec.id);
+        Toast.show('视频保存失败（当前浏览器可能不支持本地存储）', 'err');
+      });
+    }
+  }
+
+  function finishAdd() {
+    document.getElementById('bvLink').value = '';
+    document.getElementById('bvTitle').value = '';
+    document.getElementById('bvFileName').textContent = '';
+    filePending = null;
+    render();
+  }
+
+  function del(id) {
+    var it = DB.find('beautyItems', id);
+    if (!it) return;
+    DB.remove('beautyItems', id);
+    if (it.type === 'upload' && it.blobKey) delBlob(it.blobKey);
+    Toast.show('已删除', 'info');
+    render();
   }
 
   function init() {
-    document.getElementById('beautyRefresh').addEventListener('click', function () { renderDaily(); Toast.show('已切换到另一批美商补给', 'info'); });
     document.getElementById('beautyCats').addEventListener('click', function (e) {
-      var b = e.target.closest('.chip'); if (!b) return; cat = b.dataset.v; renderDaily();
+      var b = e.target.closest('.chip'); if (!b) return;
+      cat = b.dataset.v; renderCats(); render();
     });
+    document.getElementById('bvFile').addEventListener('change', function (e) {
+      var f = e.target.files && e.target.files[0];
+      if (f) {
+        filePending = f;
+        var size = f.size > 1048576 ? (f.size / 1048576).toFixed(1) + ' MB' : (f.size / 1024).toFixed(0) + ' KB';
+        document.getElementById('bvFileName').textContent = '已选择：' + f.name + '（' + size + '）';
+      }
+    });
+    document.getElementById('bvAdd').addEventListener('click', add);
     document.getElementById('beautyList').addEventListener('click', function (e) {
-      var b = e.target.closest('button[data-fav="daily"]'); if (!b) return;
-      toggleFav({ key: 'btip::' + b.dataset.title, title: b.dataset.title, cat: b.dataset.cat, creator: b.dataset.creator, url: b.dataset.url, desc: b.dataset.desc });
+      var b = e.target.closest('button[data-del]'); if (!b) return;
+      del(b.dataset.del);
     });
-    document.getElementById('beautyFavList').addEventListener('click', function (e) {
-      var b = e.target.closest('button[data-delfav]'); if (!b) return;
-      DB.remove('beautyFavs', b.dataset.delfav); Toast.show('已移出收藏', 'info'); renderFavs();
-    });
-    document.getElementById('bAdd').addEventListener('click', addManual);
-    document.getElementById('bTitle').addEventListener('keydown', function (e) { if (e.key === 'Enter') addManual(); });
   }
 
-  return { init: init, render: render, renderFavs: renderFavs };
+  return { init: init, render: render };
 })();

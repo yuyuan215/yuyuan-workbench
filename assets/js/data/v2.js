@@ -2,7 +2,6 @@
  * V2 内容库（建立财商 / 英语学习 板块增强）
  * 通过 Object.assign 挂载到 window.CONTENT
  *   - financeVideos  建立财商每日视频
- *   - englishVideos  英语学习每日 30 分钟影子跟读视频
  *   - deepTerms      10 个深度投资理财名词（更深的解释）
  *   - deepCases      10 个深度创业知识 / 案例（可点开长文）
  * ============================================================ */
@@ -28,21 +27,7 @@ window.CONTENT = window.CONTENT || {};
     { title: '瑞·达利欧：原则与决策系统', person: 'Ray Dalio', role: '桥水基金创始人', platform: 'YouTube', duration: '合集', tag: '投资', url: 'https://www.youtube.com/results?search_query=瑞达利欧+原则+演讲', desc: '看“极度求真、极度透明”与把决策写成原则系统的思维方式。' }
   ];
 
-  /* ---------------- 英语学习：每日 30 分钟影子跟读视频 ---------------- */
-  C.englishVideos = [
-    { title: 'How to speak so that people want to listen', speaker: 'Julian Treasure', platform: 'TED', duration: '约 9 分钟', url: 'https://www.ted.com/talks/julian_treasure_how_to_speak_so_that_people_want_to_listen', desc: '发音清晰、语速适中，是练习“影子跟读”的绝佳素材：先听 3 遍，再延迟 0.5 秒跟读。', shadow: ['听第 1 遍：只抓大意，不跟读', '听第 2~3 遍：逐句暂停，模仿语调与重音', '影子跟读：播放同时小声跟，落后半句'], vocab: [{ w: 'articulate', ph: '/ɑːˈtɪkjuleɪt/', cn: '清晰表达' }, { w: 'harsh', ph: '/hɑːʃ/', cn: '刺耳的' }, { w: 'resonance', ph: '/ˈrezənəns/', cn: '共鸣' }], goldenQuote: 'The human voice is the most powerful sound in the world.', goldenCn: '人类的声音是世界上最有力的声音。' },
-    { title: 'Your body language may shape who you are', speaker: 'Amy Cuddy', platform: 'TED', duration: '约 21 分钟', url: 'https://www.ted.com/talks/amy_cuddy_your_body_language_may_shape_who_you_are', desc: '语速偏慢、句子结构清晰，适合中阶影子跟读。重点练“fake it till you become it”。', shadow: ['跟读前先做 2 分钟“高能量姿势”热身', '每段落后 1 秒跟读，注意连读', '难句单独循环 5 遍'], vocab: [{ w: 'posture', ph: '/ˈpɒstʃə/', cn: '姿势' }, { w: 'presence', ph: '/ˈprezns/', cn: '气场/临在' }, { w: 'hormone', ph: '/ˈhɔːməʊn/', cn: '激素' }], goldenQuote: 'Don’t fake it till you make it. Fake it till you become it.', goldenCn: '别“装到成功”，要“装到你真的成为它”。' },
-    { title: 'The power of vulnerability', speaker: 'Brené Brown', platform: 'TED', duration: '约 20 分钟', url: 'https://www.ted.com/talks/brene_brown_the_power_of_vulnerability', desc: '情感浓度高、用词高级，适合高阶影子跟读与积累演讲素材。', shadow: ['先通听 1 遍建立情绪线索', '选 3 个金句反复跟读至脱口', '用自己的话复述核心观点'], vocab: [{ w: 'vulnerability', ph: '/ˌvʌlnərəˈbɪləti/', cn: '脆弱' }, { w: 'belonging', ph: '/bɪˈlɒŋɪŋ/', cn: '归属感' }, { w: 'courage', ph: '/ˈkʌrɪdʒ/', cn: '勇气' }], goldenQuote: 'Vulnerability is the birthplace of innovation, creativity and change.', goldenCn: '脆弱，是创新、创造力与改变的发源地。' },
-    { title: 'Grit: the power of passion and perseverance', speaker: 'Angela Duckworth', platform: 'TED', duration: '约 6 分钟', url: 'https://www.ted.com/talks/angela_lee_duckworth_grit_the_power_of_passion_and_perseverance', desc: '短小精悍，适合初学者：语速稳定，句式简单，可整段反复跟读。', shadow: ['整段听 2 遍后整段跟读', '注意 effort / talent 的对比重音', '尝试 1.2 倍速再跟一次'], vocab: [{ w: 'grit', ph: '/ɡrɪt/', cn: '坚毅' }, { w: 'perseverance', ph: '/ˌpɜːsəˈvɪərəns/', cn: '毅力' }, { w: 'talent', ph: '/ˈtælənt/', cn: '天赋' }], goldenQuote: 'Grit is passion and perseverance for very long-term goals.', goldenCn: '坚毅，是对长远目标持续的热情与坚持。' },
-    { title: 'Do schools kill creativity?', speaker: 'Ken Robinson', platform: 'TED', duration: '约 19 分钟', url: 'https://www.ted.com/talks/ken_robinson_schools_kill_creativity', desc: '幽默、口语化，适合练“自然语流”与连读弱化。', shadow: ['抓笑点处的语调起伏', '模仿他讲故事的停顿节奏', '影子跟读时带一点表情'], vocab: [{ w: 'creativity', ph: '/ˌkriːeɪˈtɪvəti/', cn: '创造力' }, { w: 'original', ph: '/əˈrɪdʒənl/', cn: '原创的' }, { w: 'hierarchy', ph: '/ˈhaɪərɑːki/', cn: '等级' }], goldenQuote: 'If you are not prepared to be wrong, you will never come up with anything original.', goldenCn: '如果你没准备犯错，就永远想不出原创的东西。' },
-    { title: 'The power of believing that you can improve', speaker: 'Carol Dweck', platform: 'TED', duration: '约 10 分钟', url: 'https://www.ted.com/talks/carol_dweck_the_power_of_believing_that_you_can_improve', desc: '学术演讲风格，适合练“信息密度高”的正式表达。', shadow: ['注意“yet”的强调语气', '长难句先拆再跟', '跟读后用中文复述观点'], vocab: [{ w: 'mindset', ph: '/ˈmaɪndset/', cn: '思维模式' }, { w: 'feedback', ph: '/ˈfiːdbæk/', cn: '反馈' }, { w: 'potential', ph: '/pəˈtenʃl/', cn: '潜力' }], goldenQuote: 'Becoming is better than being.', goldenCn: '“正在成为”比“已然是”更好。' },
-    { title: 'Inside the mind of a master procrastinator', speaker: 'Tim Urban', platform: 'TED', duration: '约 14 分钟', url: 'https://www.ted.com/talks/tim_urban_inside_the_mind_of_a_master_procrastinator', desc: '段子式叙事，重音与节奏明显，适合练“讲故事的英语”。', shadow: ['跟读“猴子”比喻时的幽默语调', '长句分组跟读', '试着 1 分钟内讲出核心隐喻'], vocab: [{ w: 'procrastinate', ph: '/prəˈkræstɪneɪt/', cn: '拖延' }, { w: 'rational', ph: '/ˈræʃənl/', cn: '理性的' }, { w: 'deadline', ph: '/ˈdedlaɪn/', cn: '截止日' }], goldenQuote: 'The Panic Monster is the only thing that can scare the monkey.', goldenCn: '恐慌怪兽是唯一能吓跑猴子的东西。' },
-    { title: 'The happy secret to better work', speaker: 'Shawn Achor', platform: 'TED', duration: '约 12 分钟', url: 'https://www.ted.com/talks/shawn_achor_the_happy_secret_to_better_work', desc: '能量高、互动强，适合练“有感染力的口语”。', shadow: ['模仿他开场提问的语气', '跟读“20-second bursts”', '用 3 句话总结幸福公式'], vocab: [{ w: 'positive', ph: '/ˈpɒzətɪv/', cn: '积极的' }, { w: 'happiness', ph: '/ˈhæpinəs/', cn: '幸福' }, { w: 'performance', ph: '/pəˈfɔːməns/', cn: '表现' }], goldenQuote: 'Happiness precedes success, not the other way around.', goldenCn: '快乐在前，成功在后，而非相反。' },
-    { title: 'How great leaders inspire action', speaker: 'Simon Sinek', platform: 'TED', duration: '约 18 分钟', url: 'https://www.ted.com/talks/simon_sinek_how_great_leaders_inspire_action', desc: '逻辑严密、重复句式多（Start with why），非常适合影子跟读练语感。', shadow: ['反复跟读“People don’t buy what…”', '注意排比句的递进重音', '影子跟读整段开场'], vocab: [{ w: 'purpose', ph: '/ˈpɜːpəs/', cn: '目的' }, { w: 'inspire', ph: '/ɪnˈspaɪə/', cn: '激励' }, { w: 'loyalty', ph: '/ˈlɔɪəlti/', cn: '忠诚' }], goldenQuote: 'People don’t buy what you do; they buy why you do it.', goldenCn: '人们不为你做什么买单，而为“你为何而做”买单。' },
-    { title: 'The danger of a single story', speaker: 'Chimamanda Ngozi Adichie', platform: 'TED', duration: '约 18 分钟', url: 'https://www.ted.com/talks/chimamanda_adichie_the_danger_of_a_single_story', desc: '叙事性强、用词优美，高阶影子跟读与写作素材兼得。', shadow: ['跟读她讲故事的舒缓节奏', '积累“narrative / stereotype”等词', '跟读后用中文复述一个故事'], vocab: [{ w: 'narrative', ph: '/ˈnærətɪv/', cn: '叙事' }, { w: 'stereotype', ph: '/ˈsteriətaɪp/', cn: '刻板印象' }, { w: 'complexity', ph: '/kəmˈpleksəti/', cn: '复杂性' }], goldenQuote: 'Show a people as one thing, and that is what they become.', goldenCn: '把一群人只呈现为一种样子，他们就会变成那样。' }
-  ];
-
-  /* ---------------- 建立财商：10 个深度投资理财名词（每日 10 个） ---------------- */
+/* ---------------- 建立财商：10 个深度投资理财名词（每日 10 个） ---------------- */
   C.deepTerms = [
     { t: '复利', cat: '核心理念', def: '利息计入本金后继续生息，即“利滚利”。时间越长，增长曲线越陡，被称为“世界第八大奇迹”。', why: '为什么重要：它是普通人对抗通胀、实现财富滚雪球的核心引擎，越早开始、持有越久，威力越大。', example: '每月定投 1000 元，年化 8%，30 年后本金 36 万，终值可超 140 万，多出的部分几乎全是复利。', mistake: '常见误区：把复利当成“快速暴富”，忽略它依赖长期不动用本金，中途赎回会打断雪球。' },
     { t: '资产配置', cat: '组合管理', def: '把资金按目标与风险承受力，分散到股票、债券、现金、黄金等不相关类别，决定长期收益与波动的大部分。', why: '为什么重要：研究普遍认为，长期回报差异 90% 来自资产配置而非选股，是普通投资者最该花时间的决策。', example: '经典“60/40”：60% 股票 + 40% 债券，兼顾增长与波动缓冲；年轻人可上调权益比例。', mistake: '常见误区：买了多只“不同名字”的基金却高度同质（都重仓白酒/新能源），分散只是假象。' },
@@ -100,23 +85,6 @@ window.CONTENT = window.CONTENT || {};
     { title: '梁文道《一千零一夜》：把一本书讲透', source: '文化讲书', speaker: '梁文道', platform: '视频平台', duration: '约 20 分钟', url: 'https://www.bing.com/search?q=梁文道+一千零一夜+讲书', desc: '讲书语速平稳、逻辑缜密，适合练“读书分享式表达”。', shadow: ['跟读他由现象到本质的推演', '模仿不疾不徐的叙述节奏', '跟读后用 2 句概括一本书'], vocab: [{ w: '见地', m: '独到的见解' }, { w: '抽离', m: '跳出情绪、客观看待' }, { w: '思辨', m: '思考并辨析' }], goodLine: '读书，是为了遇见一个更开阔的自己。', goodLineCn: '讲阅读的意义：书把我们带向更远的地方。' }
   ];
 
-  /* ---------------- 美商提升：抖音美妆 / 穿搭 / 护肤 / 发型教程 ---------------- */
-  C.beautyTips = [
-    { title: '新手通勤淡妆 5 分钟教程', cat: '妆容', creator: '是阿刁呀', platform: '抖音', duration: '约 5 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('新手通勤淡妆5分钟教程'), desc: '底妆+眉+口红三步搞定，适合上班前快速出门。', tags: ['淡妆', '通勤', '新手'] },
-    { title: '单眼皮放大双眼妆容教程', cat: '妆容', creator: '程十安an', platform: '抖音', duration: '约 8 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('单眼皮放大双眼妆容'), desc: '用眼部打底与细眼线放大眼型，不显脏。', tags: ['单眼皮', '眼妆', '放大双眼'] },
-    { title: '伪素颜裸妆 step by step', cat: '妆容', creator: '唐毅', platform: '抖音', duration: '约 10 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('伪素颜裸妆教程'), desc: '讲究“像没化却更精致”，重点在底妆与唇色。', tags: ['裸妆', '伪素颜', '日常'] },
-    { title: '新手画眉不踩雷全攻略', cat: '妆容', creator: '程十安an', platform: '抖音', duration: '约 6 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('新手画眉教程不踩雷'), desc: '根据脸型定眉形，三步画出自然眉。', tags: ['画眉', '眉形', '新手'] },
-    { title: '小个子显高穿搭公式', cat: '穿搭', creator: '原来是西门大嫂', platform: '抖音', duration: '约 7 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('小个子显高穿搭公式'), desc: '高腰线、同色系、露脚踝三招拉长比例。', tags: ['小个子', '显高', '比例'] },
-    { title: '微胖女生遮肉穿搭', cat: '穿搭', creator: '原来是西门大嫂', platform: '抖音', duration: '约 8 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('微胖女生遮肉穿搭'), desc: '选对版型与深色分区，显瘦不紧绷。', tags: ['微胖', '遮肉', '显瘦'] },
-    { title: '通勤极简高级感穿搭', cat: '穿搭', creator: 'Miss年轻不忙', platform: '抖音', duration: '约 6 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('通勤极简高级感穿搭'), desc: '基础款 + 质感面料 + 同色系，低成本穿出质感。', tags: ['通勤', '极简', '高级感'] },
-    { title: '梨形身材穿搭避雷', cat: '穿搭', creator: '原来是西门大嫂', platform: '抖音', duration: '约 7 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('梨形身材穿搭避雷'), desc: '上紧下松、强调肩线，平衡上下身量感。', tags: ['梨形', '身材', '穿搭'] },
-    { title: '早 C 晚 A 护肤入门', cat: '护肤', creator: '骆王宇', platform: '抖音', duration: '约 9 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('早C晚A护肤入门'), desc: '早上维C抗氧化、晚上A醇抗老，建立耐受是关键。', tags: ['早C晚A', '护肤', '抗老'] },
-    { title: '敏感肌维稳护肤流程', cat: '护肤', creator: '骆王宇', platform: '抖音', duration: '约 8 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('敏感肌维稳护肤流程'), desc: '精简步骤、修护屏障，先稳后养。', tags: ['敏感肌', '维稳', '屏障'] },
-    { title: '熬夜急救补水护理', cat: '护肤', creator: '程十安an', platform: '抖音', duration: '约 5 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('熬夜急救补水护理'), desc: '面膜 + 精华 + 冷敷，快速回血暗沉肌。', tags: ['熬夜', '补水', '急救'] },
-    { title: '圆脸适配发型推荐', cat: '发型', creator: '山城小栗旬', platform: '抖音', duration: '约 6 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('圆脸适配发型推荐'), desc: '侧分、层次、露耳，视觉拉长脸型。', tags: ['圆脸', '发型', '显脸小'] },
-    { title: '发量少显发量发型', cat: '发型', creator: '山城小栗旬', platform: '抖音', duration: '约 7 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('发量少显发量发型'), desc: '纹理烫 + 头顶蓬松，告别贴头皮。', tags: ['发量少', '蓬松', '显发量'] },
-    { title: '三分钟通勤编发教程', cat: '发型', creator: '程十安an', platform: '抖音', duration: '约 4 分钟', url: 'https://www.douyin.com/search/' + encodeURIComponent('三分钟通勤编发教程'), desc: '低马尾三股辫，手残也能学会。', tags: ['编发', '通勤', '新手'] }
-  ];
 
   /* ---------------- 账号运营：三赛道每日口播脚本（职场成长 / 副业变现 / 个人提升） ---------------- */
   C.scripts = {
@@ -145,4 +113,30 @@ window.CONTENT = window.CONTENT || {};
       { t: '习惯养成的微步法', text: '总想养成好习惯却三分钟热度？问题常在“起点太高”。微习惯法：把目标缩到小到不可能失败——每天只读 1 页、只做 1 个俯卧撑。完成太容易，大脑不抗拒，坚持的惯性就建立起来。先低头进门，再慢慢加量，比雄心勃勃却放弃强十倍。' }
     ]
   };
+
+  C.englishVideos = [
+    { bvid: 'BV1sb411h7de', title: '2018 年 TED 英语演讲精选 67 篇（中英文对照）', speaker: '英语口语talks · 318万播放', note: '经典合集，建议挑 1 篇循环跟读，开启中英字幕。' },
+    { bvid: 'BV1h54y1C7MK', title: '2020 年精选 TED 英文演讲（双语字幕）', speaker: '英文演讲 · 152万播放', note: '语速适中，适合精听 + 影子跟读。' },
+    { bvid: 'BV1f9RPY9ERc', title: 'TED 演讲精读 30 篇高能精选（适合影子跟读）', speaker: 'YouTube口语听力 · 127万播放', note: '专为跟读设计，每段可单独循环。' },
+    { bvid: 'BV1UbyZB9ERb', title: '必看 100 场 TED 演讲合集（口语听力提升）', speaker: 'YouTube英语课堂 · 98万播放', note: '素材库，按需挑选主题跟读。' },
+    { bvid: 'BV1WVTkzFEkd', title: 'TED 演讲精读 100 集超长版（双语精读字幕）', speaker: 'YouTube英语在线 · 89万播放', note: '长合集，建议按目录定位单篇。' },
+    { bvid: 'BV1sw411Q7dr', title: 'TED 每日精讲：别让任何人打乱你的生活节奏', speaker: 'TED视频官方 · 133万播放', note: '单篇演讲，观点清晰，适合复述练习。' },
+    { bvid: 'BV1g7421d7jf', title: '震撼心灵的三分钟演讲（双语）', speaker: '官方TED · 13万播放', note: '短小精悍，适合快速跟读。' },
+    { bvid: 'BV1f44y1v7V9', title: 'TED 演讲精选大合集（英语中文字幕）', speaker: 'TED演讲英语 · 15万播放', note: '中文字幕辅助理解，再看英文字幕跟读。' },
+    { bvid: 'BV1Rr4y147Jv', title: '2021 年 TED 演讲视频精选合集（纯英文字幕）', speaker: 'CoderGK · 9万播放', note: '纯英文字幕，挑战无中文辅助跟读。' },
+    { bvid: 'BV1DwrsBpEHR', title: '2026 年不能错过的 100 篇精选 TED 演讲', speaker: 'Youtube英语学习 · 26万播放', note: '新近合集，题材贴近当下。' }
+  ];
+
+  C.expressionBili = [
+    { bvid: 'BV1Qb4y1p7DG', title: '王立群读史记之汉武帝【全集】', speaker: '主讲：王立群', note: '史实与人物剖析，跟读时留意文言与口语的转换。' },
+    { bvid: 'BV1ATPQz5EVd', title: '易中天《品三国》52 集全', speaker: '主讲：易中天', note: '平民视角讲三国，节奏明快，适合跟读练语感。' },
+    { bvid: 'BV1iTPpzDEiH', title: '易中天品三国全集', speaker: '主讲：易中天', note: '同上合集的另一版本，任选其一跟读。' },
+    { bvid: 'BV1TnSTBdEdc', title: '《易中天品三国》01 大江东去（全52集）', speaker: '主讲：易中天', note: '从第一集听起，建立历史叙事节奏。' },
+    { bvid: 'BV1qt421G7YC', title: '百家讲坛全集（开播到 2024）', speaker: '百家讲坛 · 合集', note: '总合集，可按目录定位感兴趣的系列。' },
+    { bvid: 'BV1bbjd6UErQ', title: '百家讲坛·先秦诸子百家争鸣（第四部）', speaker: '主讲：百家讲坛', note: '思想史脉络，长句多，适合慢速跟读。' },
+    { bvid: 'BV1Tejd6LExY', title: '百家讲坛·先秦诸子百家争鸣（第五部）前因后果', speaker: '主讲：百家讲坛', note: '延续上部，注意因果论证的表达。' },
+    { bvid: 'BV124jQ6eEd9', title: '百家讲坛·先秦诸子百家争鸣（第二部）儒墨之争', speaker: '主讲：百家讲坛', note: '观点交锋，练习不同立场的表述。' },
+    { bvid: 'BV1JugX6VEmN', title: '曾仕强讲易经全集 150 集', speaker: '主讲：曾仕强', note: '人生智慧类，语速舒缓，适合精听。' },
+    { bvid: 'BV19PPEzTEZS', title: '易中天品三国 52 集完整版', speaker: '主讲：易中天', note: '另一完整版本，挑选你熟悉的一段跟读。' }
+  ];
 })();

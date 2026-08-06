@@ -6,7 +6,6 @@ var ModLang = (function () {
   var zoomEn = false;
 
   function todayEn() { return Util.seededPick(CONTENT.tedTalks, Util.dayIndex() * 7 + 1, 1)[0]; }
-  function todayVideo() { return Util.seededPick(CONTENT.englishVideos, Util.dayIndex() * 5 + 2, 1)[0]; }
 
   function logOf(date) {
     return DB.all('langLogs').filter(function (l) { return l.date === date; })[0] || null;
@@ -15,15 +14,15 @@ var ModLang = (function () {
   function check(kind) {
     var d = Util.today();
     var log = logOf(d);
-    var en = todayEn(), v = todayVideo();
+    var en = todayEn();
     if (!log) {
-      log = DB.insert('langLogs', { date: d, en: false, minutes: 0, enTheme: en.title, videoTitle: v.title });
+      log = DB.insert('langLogs', { date: d, en: false, minutes: 0, enTheme: en.title });
     }
     if (log[kind]) { Toast.show('今日英语已打卡', 'info'); return; }
     var patch = {};
     patch[kind] = true;
     patch.minutes = (log.minutes || 0) + 30;
-    patch.enTheme = en.title; patch.videoTitle = v.title;
+    patch.enTheme = en.title;
     DB.update('langLogs', log.id, patch);
     Toast.show('英语学习打卡成功，+30 分钟', 'ok');
     render();
@@ -83,25 +82,27 @@ var ModLang = (function () {
         '<li><b>难点循环</b>：挑 3 个金句单独循环 5 遍，直到脱口而出。</li>' +
         '<li><b>复述输出</b>：关掉字幕，用中文/英文复述核心观点，才算真正吸收。</li>' +
       '</ol>' +
-      '<div class="small muted">建议每天 30 分钟：视频跟读 20 分钟 + 金句打磨 10 分钟。下方「视频」即今日跟读素材。</div>';
+      '<div class="small muted">建议每天 30 分钟：跟读 20 分钟 + 金句打磨 10 分钟。下方「每日英文课」即今日跟读与精学素材。</div>';
   }
 
-  /* 每日 30 分钟英文视频 */
+  /* 每日英文演讲视频（来自 B 站，页面内可观看 / 可跳转 B 站） */
   function renderEnVideo() {
-    var v = todayVideo();
-    document.getElementById('enVideoDate').textContent = Util.humanDate();
-    document.getElementById('enVideo').innerHTML =
+    var v = Util.seededPick(CONTENT.englishVideos, Util.dayIndex() * 7 + 3, 1)[0];
+    var box = document.getElementById('enVideo');
+    if (!box) return;
+    box.innerHTML =
       '<div class="video-card">' +
         '<div class="vc-top">' +
-          '<span class="vc-platform">' + Util.esc(v.platform) + '</span>' +
-          '<span class="tag info">影子跟读</span>' +
-          '<span class="muted small">' + Util.esc(v.duration || '—') + '</span>' +
+          '<span class="vc-platform">B 站 · 英文演讲</span>' +
+          '<span class="tag info">影子跟读素材</span>' +
+          '<span class="muted small">' + Util.esc(v.speaker) + '</span>' +
         '</div>' +
         '<div class="vc-title">' + Util.esc(v.title) + '</div>' +
-        '<div class="vc-person">' + Util.esc(v.speaker || '') + '</div>' +
-        '<div class="vc-desc">' + Util.esc(v.desc || '') + '</div>' +
-        '<div class="vc-shadow"><b>跟读提示</b><ul>' + (v.shadow || []).map(function (s) { return '<li>' + Util.esc(s) + '</li>'; }).join('') + '</ul></div>' +
-        '<div class="vc-actions"><a class="btn btn-sm btn-primary" href="' + Util.esc(v.url) + '" target="_blank" rel="noopener">▶ 观看并跟读</a></div>' +
+        '<div class="bili-wrap"><iframe class="bili-player" title="B站视频：' + Util.esc(v.title) + '" src="https://player.bilibili.com/player.html?bvid=' + v.bvid + '&page=1&high_quality=1&danmaku=0&autoplay=0" scrolling="no" frameborder="no" allowfullscreen="true"></iframe></div>' +
+        '<div class="vc-actions">' +
+          '<a class="btn btn-sm btn-primary" href="https://www.bilibili.com/video/' + v.bvid + '/" target="_blank" rel="noopener">▶ 在 B 站打开</a>' +
+          '<span class="muted small">' + Util.esc(v.note || '建议开启字幕，挑选 1 段循环影子跟读。') + '</span>' +
+        '</div>' +
       '</div>';
   }
 
@@ -167,12 +168,12 @@ var ModLang = (function () {
 
   function renderTable() {
     var logs = DB.all('langLogs').sort(function (a, b) { return a.date < b.date ? 1 : -1; }).slice(0, 30);
-    var head = '<thead><tr><th>日期</th><th>英语</th><th>时长</th><th>视频素材</th></tr></thead>';
+    var head = '<thead><tr><th>日期</th><th>英语</th><th>时长</th><th>今日主题</th></tr></thead>';
     var body = logs.length ? logs.map(function (l) {
       return '<tr><td>' + l.date + '</td>' +
         '<td>' + (l.en ? '<span class="tag ok">已完成</span>' : '<span class="tag">未完成</span>') + '</td>' +
         '<td>' + (l.minutes || 0) + ' 分钟</td>' +
-        '<td class="small muted">' + Util.esc((l.videoTitle || '') + (l.enTheme ? ' / ' + l.enTheme : '')) + '</td></tr>';
+        '<td class="small muted">' + Util.esc(l.enTheme || '') + '</td></tr>';
     }).join('') : '<tr><td colspan="4" class="muted">暂无学习记录</td></tr>';
     document.getElementById('langTable').innerHTML = head + '<tbody>' + body + '</tbody>';
   }
@@ -195,8 +196,8 @@ var ModLang = (function () {
     document.getElementById('langExport').addEventListener('click', function () {
       var logs = DB.all('langLogs').sort(function (a, b) { return a.date < b.date ? 1 : -1; });
       if (!logs.length) { Toast.show('暂无记录可导出', 'warn'); return; }
-      var csv = '日期,英语,学习分钟,视频素材\n' + logs.map(function (l) {
-        return [l.date, l.en ? '已完成' : '未完成', l.minutes || 0, '"' + ((l.videoTitle || '') + ' / ' + (l.enTheme || '')) + '"'].join(',');
+      var csv = '日期,英语,学习分钟,今日主题\n' + logs.map(function (l) {
+        return [l.date, l.en ? '已完成' : '未完成', l.minutes || 0, '"' + (l.enTheme || '') + '"'].join(',');
       }).join('\n');
       Util.download('英语学习台账_' + Util.today() + '.csv', '﻿' + csv);
       Toast.show('已导出学习台账', 'ok');

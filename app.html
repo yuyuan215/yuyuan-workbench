@@ -3,16 +3,21 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#3f8fd6" />
+<meta name="theme-color" content="#9b6fd4" />
 <title>芋圆工作台</title>
 <link rel="manifest" href="./manifest.json" />
-<link rel="icon" type="image/png" href="./assets/icons/icon-192.png" />
-<link rel="apple-touch-icon" href="./assets/icons/icon-512.png" />
+
+
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="芋圆工作台" />
 <link rel="stylesheet" href="./assets/css/style.css" />
+
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/icons/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-touch-icon-180.png" />
+<link rel="apple-touch-icon" sizes="512x512" href="./assets/icons/icon-512.png" />
 </head>
 <body>
 
@@ -210,7 +215,7 @@
         </div>
 
         <div class="card" style="margin-top:14px">
-          <div class="card-head"><h3>每日英文视频（30 分钟跟读） <span class="sub" id="enVideoDate"></span></h3></div>
+          <div class="card-head"><h3>每日英文演讲 <span class="sub">来自 B 站 · 页面内观看或跳转</span></h3></div>
           <div id="enVideo"></div>
         </div>
 
@@ -250,7 +255,7 @@
         </div>
 
         <div class="card" style="margin-top:14px">
-          <div class="card-head"><h3>每日中文素材（央视新闻 / 百家讲坛） <span class="sub" id="expVideoDate"></span></h3></div>
+          <div class="card-head"><h3>每日中文视频 <span class="sub">百家讲坛 · 来自 B 站</span></h3></div>
           <div id="expVideo"></div>
         </div>
 
@@ -396,33 +401,29 @@
         <div class="grid g4" id="beautyStats"></div>
 
         <div class="card" style="margin-top:14px">
+          <div class="card-head"><h3>添加美商视频</h3><span class="sub">粘贴抖音链接，或从手机 / 电脑上传</span></div>
+          <div class="inline-form">
+            <label class="field" style="margin:0"><span>分类</span>
+              <select id="bvCat"><option value="makeup">化妆</option><option value="outfit">穿搭</option></select>
+            </label>
+            <div class="full"><input type="text" id="bvTitle" placeholder="标题 / 备注（选填，留空则用文件名或「抖音视频」）" /></div>
+            <div class="full"><input type="text" id="bvLink" placeholder="抖音视频链接（选填）：https://v.douyin.com/xxxx/ 或 https://www.douyin.com/video/xxxx" /></div>
+            <div class="full">
+              <label class="btn btn-primary" for="bvFile" style="cursor:pointer;display:inline-block">📁 从手机 / 电脑上传视频</label>
+              <input type="file" id="bvFile" accept="video/*" hidden />
+              <span id="bvFileName" class="small muted"></span>
+            </div>
+            <div class="full"><button class="btn btn-primary" id="bvAdd">添加到「我的美商视频」</button></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
           <div class="card-head">
-            <h3>今日美商补给（抖音精选教程） <span class="sub" id="beautyDate"></span></h3>
-            <div class="row"><button class="btn btn-sm" id="beautyRefresh">换一批</button></div>
+            <h3>我的美商视频 <span class="sub" id="beautyCount"></span></h3>
           </div>
           <div class="chips" id="beautyCats"></div>
           <div class="divider"></div>
           <div id="beautyList"></div>
-        </div>
-
-        <div class="card" style="margin-top:14px">
-          <div class="card-head"><h3>手动添加私藏教程</h3></div>
-          <div class="inline-form">
-            <div class="full"><input type="text" id="bTitle" placeholder="教程标题（必填），例如：通勤气垫伪素颜妆" /></div>
-            <label class="field" style="margin:0"><span>分类</span>
-              <select id="bCat"><option>妆容</option><option>穿搭</option><option>护肤</option><option>发型</option></select>
-            </label>
-            <label class="field" style="margin:0"><span>创作者 / 账号</span><input type="text" id="bCreator" placeholder="抖音账号（选填）" /></label>
-            <div class="full"><input type="text" id="bUrl" placeholder="教程链接（选填，留空则按标题搜索抖音）" /></div>
-            <div class="full"><button class="btn btn-primary" id="bAdd">加入「我的美商收藏」</button></div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top:14px">
-          <div class="card-head">
-            <h3>我的美商收藏 <span class="sub" id="beautyFavCount"></span></h3>
-          </div>
-          <div id="beautyFavList"></div>
         </div>
       </section>
 
