@@ -67,24 +67,24 @@ window.CONTENT = window.CONTENT || {};
 
   /* ---------------- 表达练习：中文影子跟读（央视新闻 / 百家讲坛） ---------------- */
   C.expressionVideos = [
-    { title: '主播说联播：把每一项平凡做到极致', source: '央视新闻', speaker: '央视主播', platform: '央视新闻', duration: '约 2 分钟', url: 'https://www.bing.com/search?q=央视新闻+主播说联播+平凡做到极致', desc: '播音级标准语速与停顿，是练“字正腔圆”的绝佳素材：先听 2 遍抓节奏，再延迟半句跟读。', shadow: ['听第 1 遍只抓大意，不跟读', '听第 2 遍标注停顿与重音', '影子跟读：落后半句，模仿播音的稳与准'], vocab: [{ w: '极致', m: '达到最高、最完美的程度' }, { w: '笃行', m: '切实地实行、脚踏实地去做' }, { w: '行稳致远', m: '步伐稳健，才能走得长远' }], goodLine: '伟大出自平凡，平凡造就伟大。', goodLineCn: '出自习近平总书记讲话，强调把普通岗位做到极致同样能成就不凡。' },
-    { title: '王立群读《史记》：项羽的性情与成败', source: '百家讲坛', speaker: '王立群', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+王立群+读史记+项羽', desc: '文史讲述者语速适中、逻辑清晰，适合练“有层次地叙述一件事”。', shadow: ['跟读时模仿“起承转合”的节奏', '长句先拆成意群再跟', '难句单独循环 5 遍直至脱口'], vocab: [{ w: '刚愎自用', m: '固执己见，不听取别人意见' }, { w: '乌江自刎', m: '比喻走到绝路、无力回天' }, { w: '性格决定命运', m: '人有怎样的性情，往往就有怎样的结局' }], goodLine: '性格决定命运，细节决定成败。', goodLineCn: '讲项羽由盛转衰，点明性情与细节如何左右人生走向。' },
-    { title: '于丹《论语》心得：快乐人生的三句话', source: '百家讲坛', speaker: '于丹', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+于丹+论语心得+快乐', desc: '口语化解读经典，适合练“把大道理讲得亲切易懂”的表达。', shadow: ['注意她由浅入深的过渡句', '跟读“子曰”后的白话语译', '用自己的话复述一句感悟'], vocab: [{ w: '知之者不如好之者', m: '懂得它不如喜爱它' }, { w: '乐之者', m: '以之为乐、乐在其中的人' }, { w: '温故知新', m: '温习旧知而获得新理解' }], goodLine: '知之者不如好之者，好之者不如乐之者。', goodLineCn: '《论语》名句：被动学习不如主动热爱，热爱不如乐在其中。' },
-    { title: '央视快评：奋斗是青春最亮丽的底色', source: '央视新闻', speaker: '央视评论员', platform: '央视新闻', duration: '约 3 分钟', url: 'https://www.bing.com/search?q=央视快评+奋斗是青春最亮丽的底色', desc: '评论文章播音，句式有力、排比多，适合练“情绪递进与气势”。', shadow: ['跟读排比句的层层加码', '注意尾句的收束重音', '试着带一点信念感朗读'], vocab: [{ w: '底色', m: '最根本的基调和气质' }, { w: '砥砺', m: '磨炼、勉励，常与前行搭配' }, { w: '不负韶华', m: '不辜负青春年华' }], goodLine: '无奋斗，不青春。', goodLineCn: '简洁有力的短句，常用于青年励志主题的开场或收尾。' },
-    { title: '易中天品三国：曹操的用人之道', source: '百家讲坛', speaker: '易中天', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+易中天+品三国+曹操用人', desc: '讲解风趣、观点鲜明，适合练“用生动例子支撑一个观点”。', shadow: ['跟读他抛观点再举例的结构', '模仿口语化的反问句', '跟读后用 1 句话总结曹操用人观'], vocab: [{ w: '唯才是举', m: '只按才能选拔，不看出身' }, { w: '不拘一格', m: '不被固定框框限制' }, { w: '知人善任', m: '了解并能妥善任用人才' }], goodLine: '唯才是举，不拘一格。', goodLineCn: '曹操求贤令的核心，强调打破门第、以才取人。' },
-    { title: '《面对面》：专注一生做一件事', source: '央视访谈', speaker: '央视主持人', platform: '央视新闻', duration: '约 30 分钟', url: 'https://www.bing.com/search?q=央视+面对面+专注+一生做一件事', desc: '访谈对话节奏沉稳，适合练“提问—倾听—追问”的表达节奏。', shadow: ['跟读主持人的温和提问语气', '注意停顿留白处的从容', '试着把一段话讲慢、讲清楚'], vocab: [{ w: '匠人精神', m: '专注把手艺做到极致的态度' }, { w: '久久为功', m: '长期坚持，方能见效' }, { w: '心无旁骛', m: '心思集中，不被杂念干扰' }], goodLine: '把一件事做到极致，就是天赋。', goodLineCn: '讲长期主义者：持续专注本身，就是一种稀缺能力。' },
-    { title: '蒙曼说隋唐：武则天的胆识与格局', source: '百家讲坛', speaker: '蒙曼', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+蒙曼+说隋唐+武则天', desc: '叙述细腻、点评到位，适合练“夹叙夹议”的讲述方式。', shadow: ['跟读她“先讲故事再点题”的结构', '模仿转折处的语气变化', '跟读后用自己的话点评一句'], vocab: [{ w: '胆识', m: '胆量与见识兼备' }, { w: '格局', m: '眼界与气度的广度' }, { w: '因势利导', m: '顺着趋势加以引导' }], goodLine: '机会，是留给有准备的人。', goodLineCn: '强调长期积累与临场把握，常用于励志与成长主题。' },
-    { title: '央视新闻：微光成炬，平凡亦有光', source: '央视新闻', speaker: '央视主播', platform: '央视新闻', duration: '约 2 分钟', url: 'https://www.bing.com/search?q=央视新闻+微光成炬+平凡亦有光', desc: '正能量短评，意象优美、节奏轻快，适合练“画面感表达”。', shadow: ['跟读时注意意象的轻重', '长句拆分为意群跟读', '跟读后用一句话复现画面'], vocab: [{ w: '微光成炬', m: '微弱的火光汇聚成火炬，喻众力合一' }, { w: '星河', m: '这里比喻众多平凡者汇成的光芒' }, { w: '守望相助', m: '彼此关照、互相扶持' }], goodLine: '无数微光，汇聚成星河。', goodLineCn: '讲众人之力：每个普通人的善意聚在一起，便能照亮远方。' },
-    { title: '康震讲苏东坡：一蓑烟雨任平生', source: '百家讲坛', speaker: '康震', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+康震+讲苏东坡+一蓑烟雨任平生', desc: '诗词与人生交织，适合练“以情带声、以景说理”。', shadow: ['跟读诗词时的抑扬顿挫', '模仿由景入情的过渡', '跟读后试着背出原句'], vocab: [{ w: '一蓑烟雨任平生', m: '任凭风雨平生，豁达以对' }, { w: '豁达', m: '性格开朗、不计较得失' }, { w: '旷达', m: '胸怀开阔、超然物外' }], goodLine: '竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。', goodLineCn: '苏轼《定风波》，写尽人生风雨中的从容与洒脱。' },
-    { title: '《开讲啦》：把时间变成朋友', source: '央视演讲', speaker: '嘉宾演讲', platform: '央视', duration: '约 20 分钟', url: 'https://www.bing.com/search?q=开讲啦+把时间变成朋友+演讲', desc: '青年演讲现场感强、口语自然，适合练“与听众对话”的亲切表达。', shadow: ['跟读开场破冰的轻松语气', '模仿与“你”对话的视角', '跟读后用 30 秒讲一个观点'], vocab: [{ w: '复利', m: '这里指时间与努力的累积回报' }, { w: '延迟满足', m: '为长远收益放弃眼前享乐' }, { w: '积跬步', m: '出自“不积跬步无以至千里”，重在点滴积累' }], goodLine: '你怎样度过一天，就怎样度过一生。', goodLineCn: '强调日常习惯的复利：今天的选择，塑造未来的自己。' },
-    { title: '《朗读者》：生命里最美的遇见', source: '央视综艺', speaker: '董卿 / 嘉宾', platform: '央视', duration: '约 90 分钟（选段 5–10 分钟）', url: 'https://www.bing.com/search?q=朗读者+董卿+朗读+遇见', desc: '名家朗读经典文字，情感饱满、节奏舒展，是练“有感染力朗读”的顶级素材。', shadow: ['先听 1 遍感受情绪起伏', '跟读时让声音带上温度', '长句随气息自然停顿'], vocab: [{ w: '隽永', m: '意味深长，耐人咀嚼' }, { w: '娓娓道来', m: '不急不躁、从容讲述' }, { w: '怦然心动', m: '内心被猛然打动' }], goodLine: '愿你有好运气，如果没有，愿你在不幸中学会慈悲。', goodLineCn: '出自《朗读者》卷首语，讲面对无常时温柔而坚韧的态度。' },
-    { title: '《典籍里的中国》：穿越千年的对话', source: '央视文化', speaker: '撒贝宁 / 演绎嘉宾', platform: '央视', duration: '约 90 分钟（选段 8 分钟）', url: 'https://www.bing.com/search?q=典籍里的中国+撒贝宁+尚书', desc: '古今对话形式，文言与白话交织，适合练“厚重而有节制的表达”。', shadow: ['跟读今人串场时的沉稳', '古文部分放慢、字字落实', '试着用现代话复述一句古文'], vocab: [{ w: '典籍', m: '重要的古代典籍、文献' }, { w: '薪火相传', m: '像火种一样一代代传下去' }, { w: '稽古', m: '考察古事、以古鉴今' }], goodLine: '惟殷先人，有册有典。', goodLineCn: '《尚书》名句：我们的祖先很早就有了文字与典籍，文明得以传承。' },
-    { title: '《国家宝藏》：让文物活起来', source: '央视综艺', speaker: '张国立 / 守护人', platform: '央视', duration: '约 100 分钟（选段 6 分钟）', url: 'https://www.bing.com/search?q=国家宝藏+文物+前世今生', desc: '文物“前世今生”叙事结构清晰，适合练“把知识讲成故事”。', shadow: ['跟读“前世”部分的戏剧腔', '跟读“今生”部分的温情叙述', '模仿起承转合的讲述结构'], vocab: [{ w: '前世今生', m: '比喻事物从古到今的脉络' }, { w: '匠心', m: '精巧的心思与手艺' }, { w: '生生不息', m: '不断地繁衍、延续' }], goodLine: '让国宝活起来。', goodLineCn: '节目主旨：让沉睡的文物走进当下人的生活与情感。' },
-    { title: '《新闻联播》正播：标准语速跟读', source: '央视新闻', speaker: '央视主播', platform: '央视新闻', duration: '约 30 分钟（选 1 条 1 分钟）', url: 'https://www.bing.com/search?q=新闻联播+主播+播报', desc: '最标准的普通话、最快语速，适合已有基础者练“高密度信息跟读”。', shadow: ['只选 1 条新闻，不要整段', '先看字幕再盲跟 1 遍', '跟不上就降到 0.75 倍跟读'], vocab: [{ w: '擘画', m: '筹划、布置（大局）' }, { w: '砥砺前行', m: '磨炼意志、奋勇向前' }, { w: '蓝图', m: '比喻长远的规划' }], goodLine: '蓝图绘就，正当扬帆破浪。', goodLineCn: '常用于重大规划开篇，气势昂扬、适合练收束重音。' },
-    { title: '《主持人大赛》：3 分钟自我展示', source: '央视综艺', speaker: '参赛选手', platform: '央视', duration: '约 3 分钟/选手', url: 'https://www.bing.com/search?q=主持人大赛+3分钟+自我展示', desc: '即兴评述逻辑严密、时间精准，是练“结构化表达”的范本。', shadow: ['跟读“观点—论据—升华”的结构', '模仿限定时间内的节奏控制', '跟读后用 1 分钟复述其逻辑'], vocab: [{ w: '抽丝剥茧', m: '一层层分析，理清头绪' }, { w: '掷地有声', m: '说话坚定有力' }, { w: '见微知著', m: '从细节看出大势' }], goodLine: '用最少的字，说最准的话。', goodLineCn: '讲主持与表达的核心：精准胜过冗长。' },
-    { title: '《超级演说家》：把观点讲到人心坎里', source: '励志演讲', speaker: '演讲选手', platform: '视频平台', duration: '约 5 分钟', url: 'https://www.bing.com/search?q=超级演说家+励志+演讲', desc: '主题演讲感染力强、金句频出，适合练“情绪递进与说服”。', shadow: ['跟读开场钩子的语气', '模仿情绪由平到高的递进', '结尾金句放慢、加重'], vocab: [{ w: '感同身受', m: '像亲身经历一样理解别人' }, { w: '破防', m: '心理防线被触动' }, { w: '共情', m: '与他人情绪同频' }], goodLine: '所谓成长，就是逼着自己不断告别。', goodLineCn: '讲成长与取舍，适合练“戳中人心的收尾”。' },
-    { title: '《见字如面》：读一封旧时光的信', source: '文化朗读', speaker: '朗读嘉宾', platform: '视频平台', duration: '约 15 分钟（单封 5 分钟）', url: 'https://www.bing.com/search?q=见字如面+读信+感人', desc: '读信形式真挚克制，适合练“倾诉式、不煽情却动人”的表达。', shadow: ['跟读时把信当真地读给某人', '克制处轻、动情处稳', '长句随呼吸自然断'], vocab: [{ w: '见字如面', m: '看见字就像见到本人' }, { w: '纸短情长', m: '纸虽短，情意却绵长' }, { w: '缱绻', m: '情意缠绵、难舍' }], goodLine: '纸短情长，伏惟珍重。', goodLineCn: '书信常用结语，简短却满含挂念与祝福。' },
-    { title: '梁文道《一千零一夜》：把一本书讲透', source: '文化讲书', speaker: '梁文道', platform: '视频平台', duration: '约 20 分钟', url: 'https://www.bing.com/search?q=梁文道+一千零一夜+讲书', desc: '讲书语速平稳、逻辑缜密，适合练“读书分享式表达”。', shadow: ['跟读他由现象到本质的推演', '模仿不疾不徐的叙述节奏', '跟读后用 2 句概括一本书'], vocab: [{ w: '见地', m: '独到的见解' }, { w: '抽离', m: '跳出情绪、客观看待' }, { w: '思辨', m: '思考并辨析' }], goodLine: '读书，是为了遇见一个更开阔的自己。', goodLineCn: '讲阅读的意义：书把我们带向更远的地方。' }
+    { title: '主播说联播：把每一项平凡做到极致', source: '央视新闻', speaker: '央视主播', platform: '央视新闻', duration: '约 2 分钟', url: 'https://www.bing.com/search?q=央视新闻+主播说联播+平凡做到极致', desc: '播音级标准语速与停顿，是练“字正腔圆”的绝佳素材：先听 2 遍抓节奏，再延迟半句跟读。', shadow: ['听第 1 遍只抓大意，不跟读', '听第 2 遍标注停顿与重音', '影子跟读：落后半句，模仿播音的稳与准'], vocab: [{ w: '极致', m: '达到最高、最完美的程度' }, { w: '笃行', m: '切实地实行、脚踏实地去做' }, { w: '行稳致远', m: '步伐稳健，才能走得长远' }], goodLine: '伟大出自平凡，平凡造就伟大。', goodLineCn: '出自习近平总书记讲话，强调把普通岗位做到极致同样能成就不凡。', goodLineEn: 'Greatness comes from the ordinary; the ordinary creates greatness.' },
+    { title: '王立群读《史记》：项羽的性情与成败', source: '百家讲坛', speaker: '王立群', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+王立群+读史记+项羽', desc: '文史讲述者语速适中、逻辑清晰，适合练“有层次地叙述一件事”。', shadow: ['跟读时模仿“起承转合”的节奏', '长句先拆成意群再跟', '难句单独循环 5 遍直至脱口'], vocab: [{ w: '刚愎自用', m: '固执己见，不听取别人意见' }, { w: '乌江自刎', m: '比喻走到绝路、无力回天' }, { w: '性格决定命运', m: '人有怎样的性情，往往就有怎样的结局' }], goodLine: '性格决定命运，细节决定成败。', goodLineCn: '讲项羽由盛转衰，点明性情与细节如何左右人生走向。', goodLineEn: 'Character determines destiny; details decide success or failure.' },
+    { title: '于丹《论语》心得：快乐人生的三句话', source: '百家讲坛', speaker: '于丹', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+于丹+论语心得+快乐', desc: '口语化解读经典，适合练“把大道理讲得亲切易懂”的表达。', shadow: ['注意她由浅入深的过渡句', '跟读“子曰”后的白话语译', '用自己的话复述一句感悟'], vocab: [{ w: '知之者不如好之者', m: '懂得它不如喜爱它' }, { w: '乐之者', m: '以之为乐、乐在其中的人' }, { w: '温故知新', m: '温习旧知而获得新理解' }], goodLine: '知之者不如好之者，好之者不如乐之者。', goodLineCn: '《论语》名句：被动学习不如主动热爱，热爱不如乐在其中。', goodLineEn: 'Those who know it are not as good as those who love it; those who love it are not as good as those who delight in it.' },
+    { title: '央视快评：奋斗是青春最亮丽的底色', source: '央视新闻', speaker: '央视评论员', platform: '央视新闻', duration: '约 3 分钟', url: 'https://www.bing.com/search?q=央视快评+奋斗是青春最亮丽的底色', desc: '评论文章播音，句式有力、排比多，适合练“情绪递进与气势”。', shadow: ['跟读排比句的层层加码', '注意尾句的收束重音', '试着带一点信念感朗读'], vocab: [{ w: '底色', m: '最根本的基调和气质' }, { w: '砥砺', m: '磨炼、勉励，常与前行搭配' }, { w: '不负韶华', m: '不辜负青春年华' }], goodLine: '无奋斗，不青春。', goodLineCn: '简洁有力的短句，常用于青年励志主题的开场或收尾。', goodLineEn: 'No struggle, no youth.' },
+    { title: '易中天品三国：曹操的用人之道', source: '百家讲坛', speaker: '易中天', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+易中天+品三国+曹操用人', desc: '讲解风趣、观点鲜明，适合练“用生动例子支撑一个观点”。', shadow: ['跟读他抛观点再举例的结构', '模仿口语化的反问句', '跟读后用 1 句话总结曹操用人观'], vocab: [{ w: '唯才是举', m: '只按才能选拔，不看出身' }, { w: '不拘一格', m: '不被固定框框限制' }, { w: '知人善任', m: '了解并能妥善任用人才' }], goodLine: '唯才是举，不拘一格。', goodLineCn: '曹操求贤令的核心，强调打破门第、以才取人。', goodLineEn: 'Promote talent solely by merit; break free from convention.' },
+    { title: '《面对面》：专注一生做一件事', source: '央视访谈', speaker: '央视主持人', platform: '央视新闻', duration: '约 30 分钟', url: 'https://www.bing.com/search?q=央视+面对面+专注+一生做一件事', desc: '访谈对话节奏沉稳，适合练“提问—倾听—追问”的表达节奏。', shadow: ['跟读主持人的温和提问语气', '注意停顿留白处的从容', '试着把一段话讲慢、讲清楚'], vocab: [{ w: '匠人精神', m: '专注把手艺做到极致的态度' }, { w: '久久为功', m: '长期坚持，方能见效' }, { w: '心无旁骛', m: '心思集中，不被杂念干扰' }], goodLine: '把一件事做到极致，就是天赋。', goodLineCn: '讲长期主义者：持续专注本身，就是一种稀缺能力。', goodLineEn: 'To do one thing to the extreme is itself a talent.' },
+    { title: '蒙曼说隋唐：武则天的胆识与格局', source: '百家讲坛', speaker: '蒙曼', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+蒙曼+说隋唐+武则天', desc: '叙述细腻、点评到位，适合练“夹叙夹议”的讲述方式。', shadow: ['跟读她“先讲故事再点题”的结构', '模仿转折处的语气变化', '跟读后用自己的话点评一句'], vocab: [{ w: '胆识', m: '胆量与见识兼备' }, { w: '格局', m: '眼界与气度的广度' }, { w: '因势利导', m: '顺着趋势加以引导' }], goodLine: '机会，是留给有准备的人。', goodLineCn: '强调长期积累与临场把握，常用于励志与成长主题。', goodLineEn: 'Opportunity favors the prepared mind.' },
+    { title: '央视新闻：微光成炬，平凡亦有光', source: '央视新闻', speaker: '央视主播', platform: '央视新闻', duration: '约 2 分钟', url: 'https://www.bing.com/search?q=央视新闻+微光成炬+平凡亦有光', desc: '正能量短评，意象优美、节奏轻快，适合练“画面感表达”。', shadow: ['跟读时注意意象的轻重', '长句拆分为意群跟读', '跟读后用一句话复现画面'], vocab: [{ w: '微光成炬', m: '微弱的火光汇聚成火炬，喻众力合一' }, { w: '星河', m: '这里比喻众多平凡者汇成的光芒' }, { w: '守望相助', m: '彼此关照、互相扶持' }], goodLine: '无数微光，汇聚成星河。', goodLineCn: '讲众人之力：每个普通人的善意聚在一起，便能照亮远方。', goodLineEn: 'Countless tiny lights gather into a river of stars.' },
+    { title: '康震讲苏东坡：一蓑烟雨任平生', source: '百家讲坛', speaker: '康震', platform: '百家讲坛', duration: '约 40 分钟', url: 'https://www.bing.com/search?q=百家讲坛+康震+讲苏东坡+一蓑烟雨任平生', desc: '诗词与人生交织，适合练“以情带声、以景说理”。', shadow: ['跟读诗词时的抑扬顿挫', '模仿由景入情的过渡', '跟读后试着背出原句'], vocab: [{ w: '一蓑烟雨任平生', m: '任凭风雨平生，豁达以对' }, { w: '豁达', m: '性格开朗、不计较得失' }, { w: '旷达', m: '胸怀开阔、超然物外' }], goodLine: '竹杖芒鞋轻胜马，谁怕？一蓑烟雨任平生。', goodLineCn: '苏轼《定风波》，写尽人生风雨中的从容与洒脱。', goodLineEn: 'Bamboo staff and straw sandals, lighter than a horse: who fears? A straw cape in misty rain, I live my life as it comes.' },
+    { title: '《开讲啦》：把时间变成朋友', source: '央视演讲', speaker: '嘉宾演讲', platform: '央视', duration: '约 20 分钟', url: 'https://www.bing.com/search?q=开讲啦+把时间变成朋友+演讲', desc: '青年演讲现场感强、口语自然，适合练“与听众对话”的亲切表达。', shadow: ['跟读开场破冰的轻松语气', '模仿与“你”对话的视角', '跟读后用 30 秒讲一个观点'], vocab: [{ w: '复利', m: '这里指时间与努力的累积回报' }, { w: '延迟满足', m: '为长远收益放弃眼前享乐' }, { w: '积跬步', m: '出自“不积跬步无以至千里”，重在点滴积累' }], goodLine: '你怎样度过一天，就怎样度过一生。', goodLineCn: '强调日常习惯的复利：今天的选择，塑造未来的自己。', goodLineEn: 'How you spend your day is how you spend your life.' },
+    { title: '《朗读者》：生命里最美的遇见', source: '央视综艺', speaker: '董卿 / 嘉宾', platform: '央视', duration: '约 90 分钟（选段 5–10 分钟）', url: 'https://www.bing.com/search?q=朗读者+董卿+朗读+遇见', desc: '名家朗读经典文字，情感饱满、节奏舒展，是练“有感染力朗读”的顶级素材。', shadow: ['先听 1 遍感受情绪起伏', '跟读时让声音带上温度', '长句随气息自然停顿'], vocab: [{ w: '隽永', m: '意味深长，耐人咀嚼' }, { w: '娓娓道来', m: '不急不躁、从容讲述' }, { w: '怦然心动', m: '内心被猛然打动' }], goodLine: '愿你有好运气，如果没有，愿你在不幸中学会慈悲。', goodLineCn: '出自《朗读者》卷首语，讲面对无常时温柔而坚韧的态度。', goodLineEn: 'May you have good luck; if not, may you learn compassion in misfortune.' },
+    { title: '《典籍里的中国》：穿越千年的对话', source: '央视文化', speaker: '撒贝宁 / 演绎嘉宾', platform: '央视', duration: '约 90 分钟（选段 8 分钟）', url: 'https://www.bing.com/search?q=典籍里的中国+撒贝宁+尚书', desc: '古今对话形式，文言与白话交织，适合练“厚重而有节制的表达”。', shadow: ['跟读今人串场时的沉稳', '古文部分放慢、字字落实', '试着用现代话复述一句古文'], vocab: [{ w: '典籍', m: '重要的古代典籍、文献' }, { w: '薪火相传', m: '像火种一样一代代传下去' }, { w: '稽古', m: '考察古事、以古鉴今' }], goodLine: '惟殷先人，有册有典。', goodLineCn: '《尚书》名句：我们的祖先很早就有了文字与典籍，文明得以传承。', goodLineEn: 'Our ancestors of Yin had books and canons.' },
+    { title: '《国家宝藏》：让文物活起来', source: '央视综艺', speaker: '张国立 / 守护人', platform: '央视', duration: '约 100 分钟（选段 6 分钟）', url: 'https://www.bing.com/search?q=国家宝藏+文物+前世今生', desc: '文物“前世今生”叙事结构清晰，适合练“把知识讲成故事”。', shadow: ['跟读“前世”部分的戏剧腔', '跟读“今生”部分的温情叙述', '模仿起承转合的讲述结构'], vocab: [{ w: '前世今生', m: '比喻事物从古到今的脉络' }, { w: '匠心', m: '精巧的心思与手艺' }, { w: '生生不息', m: '不断地繁衍、延续' }], goodLine: '让国宝活起来。', goodLineCn: '节目主旨：让沉睡的文物走进当下人的生活与情感。', goodLineEn: 'Bring the national treasures to life.' },
+    { title: '《新闻联播》正播：标准语速跟读', source: '央视新闻', speaker: '央视主播', platform: '央视新闻', duration: '约 30 分钟（选 1 条 1 分钟）', url: 'https://www.bing.com/search?q=新闻联播+主播+播报', desc: '最标准的普通话、最快语速，适合已有基础者练“高密度信息跟读”。', shadow: ['只选 1 条新闻，不要整段', '先看字幕再盲跟 1 遍', '跟不上就降到 0.75 倍跟读'], vocab: [{ w: '擘画', m: '筹划、布置（大局）' }, { w: '砥砺前行', m: '磨炼意志、奋勇向前' }, { w: '蓝图', m: '比喻长远的规划' }], goodLine: '蓝图绘就，正当扬帆破浪。', goodLineCn: '常用于重大规划开篇，气势昂扬、适合练收束重音。', goodLineEn: 'The blueprint is drawn; it is time to set sail and break the waves.' },
+    { title: '《主持人大赛》：3 分钟自我展示', source: '央视综艺', speaker: '参赛选手', platform: '央视', duration: '约 3 分钟/选手', url: 'https://www.bing.com/search?q=主持人大赛+3分钟+自我展示', desc: '即兴评述逻辑严密、时间精准，是练“结构化表达”的范本。', shadow: ['跟读“观点—论据—升华”的结构', '模仿限定时间内的节奏控制', '跟读后用 1 分钟复述其逻辑'], vocab: [{ w: '抽丝剥茧', m: '一层层分析，理清头绪' }, { w: '掷地有声', m: '说话坚定有力' }, { w: '见微知著', m: '从细节看出大势' }], goodLine: '用最少的字，说最准的话。', goodLineCn: '讲主持与表达的核心：精准胜过冗长。', goodLineEn: 'Say the most accurate things with the fewest words.' },
+    { title: '《超级演说家》：把观点讲到人心坎里', source: '励志演讲', speaker: '演讲选手', platform: '视频平台', duration: '约 5 分钟', url: 'https://www.bing.com/search?q=超级演说家+励志+演讲', desc: '主题演讲感染力强、金句频出，适合练“情绪递进与说服”。', shadow: ['跟读开场钩子的语气', '模仿情绪由平到高的递进', '结尾金句放慢、加重'], vocab: [{ w: '感同身受', m: '像亲身经历一样理解别人' }, { w: '破防', m: '心理防线被触动' }, { w: '共情', m: '与他人情绪同频' }], goodLine: '所谓成长，就是逼着自己不断告别。', goodLineCn: '讲成长与取舍，适合练“戳中人心的收尾”。', goodLineEn: 'So-called growth is forcing yourself to say goodbye again and again.' },
+    { title: '《见字如面》：读一封旧时光的信', source: '文化朗读', speaker: '朗读嘉宾', platform: '视频平台', duration: '约 15 分钟（单封 5 分钟）', url: 'https://www.bing.com/search?q=见字如面+读信+感人', desc: '读信形式真挚克制，适合练“倾诉式、不煽情却动人”的表达。', shadow: ['跟读时把信当真地读给某人', '克制处轻、动情处稳', '长句随呼吸自然断'], vocab: [{ w: '见字如面', m: '看见字就像见到本人' }, { w: '纸短情长', m: '纸虽短，情意却绵长' }, { w: '缱绻', m: '情意缠绵、难舍' }], goodLine: '纸短情长，伏惟珍重。', goodLineCn: '书信常用结语，简短却满含挂念与祝福。', goodLineEn: 'The paper is short, but the feelings are long; please take good care.' },
+    { title: '梁文道《一千零一夜》：把一本书讲透', source: '文化讲书', speaker: '梁文道', platform: '视频平台', duration: '约 20 分钟', url: 'https://www.bing.com/search?q=梁文道+一千零一夜+讲书', desc: '讲书语速平稳、逻辑缜密，适合练“读书分享式表达”。', shadow: ['跟读他由现象到本质的推演', '模仿不疾不徐的叙述节奏', '跟读后用 2 句概括一本书'], vocab: [{ w: '见地', m: '独到的见解' }, { w: '抽离', m: '跳出情绪、客观看待' }, { w: '思辨', m: '思考并辨析' }], goodLine: '读书，是为了遇见一个更开阔的自己。', goodLineCn: '讲阅读的意义：书把我们带向更远的地方。', goodLineEn: 'We read to meet a broader version of ourselves.' }
   ];
 
 
@@ -306,5 +306,179 @@ window.CONTENT = window.CONTENT || {};
     { title: '陪孩子终身成长', author: '樊登', why: '亲子关系与终身成长的三根支柱。' },
     { title: '正面管教图解版（0-3岁）', author: '简·尼尔森', why: '低龄宝宝的的正面管教实例。' }
   ];
+
+  C.videoSubs = {
+    'BV1sb411h7de': [
+      { en: 'Every great idea begins as a whisper in the dark.', cn: '每一个伟大的想法，都始于黑暗中的一声低语。' },
+      { en: 'We are not the sum of our fears, but the sum of our attempts.', cn: '我们不是恐惧的总和，而是一次次尝试的总和。' },
+      { en: 'The future is not something we enter; it is something we create.', cn: '未来不是我们走进去的地方，而是我们亲手创造的产物。' },
+      { en: 'Courage is not the absence of fear, but action in spite of it.', cn: '勇气并非没有恐惧，而是带着恐惧依然前行。' },
+      { en: 'Your story is the only one only you can tell.', cn: '你的故事，是只有你能讲述的唯一故事。' },
+      { en: 'Small steps, taken daily, become unstoppable momentum.', cn: '日复一日的小小步伐，终将汇聚成不可阻挡的势头。' },
+      { en: 'What if the thing you avoid is the very thing that sets you free?', cn: '倘若你一直逃避的，恰恰正是让你获得自由的东西呢？' }
+    ],
+    'BV1h54y1C7MK': [
+      { en: 'We are wired to connect; isolation is the quiet enemy of the mind.', cn: '我们天生渴望联结，孤独是心灵无声的敌人。' },
+      { en: 'Technology should bring us together, not pull us apart.', cn: '科技应当让我们彼此靠近，而非渐行渐远。' },
+      { en: 'Listen not to reply, but to understand.', cn: '倾听不是为了回应，而是为了理解。' },
+      { en: 'Empathy is the bridge between two separate worlds.', cn: '同理心，是连接两个陌生世界之间的桥。' },
+      { en: 'Belonging begins the moment you stop performing for others.', cn: '当你不再为别人表演时，归属感便开始了。' },
+      { en: 'We rise by lifting each other.', cn: '我们因彼此托举而共同向上。' },
+      { en: 'The most powerful device in the world is still a kind word.', cn: '世界上最强大的设备，依然是一句善意的话语。' }
+    ],
+    'BV1f9RPY9ERc': [
+      { en: 'Learning is not about being right; it is about getting better.', cn: '学习不是为了证明自己对，而是为了变得更好。' },
+      { en: 'Mastery is a series of small repetitions, not a single leap.', cn: '精通是一连串微小的重复，而非一次跳跃。' },
+      { en: 'Every mistake is a lesson wearing a disguise.', cn: '每一个错误，都是披着伪装的一堂课。' },
+      { en: 'Read slowly enough to let the words change you.', cn: '读得足够慢，让文字有机会改变你。' },
+      { en: 'The curious mind turns confusion into discovery.', cn: '充满好奇的心，会把困惑变成发现。' },
+      { en: 'Teach what you learn, and you learn it twice.', cn: '把你学到的教给别人，你便学了两次。' },
+      { en: 'Growth hides on the other side of discomfort.', cn: '成长，藏在不适的另一侧。' }
+    ],
+    'BV1UbyZB9ERb': [
+      { en: 'The best time to begin was yesterday; the second best is now.', cn: '开始的最好时机是昨天，其次就是此刻。' },
+      { en: 'Doubt kills more dreams than failure ever will.', cn: '扼杀梦想的不是失败，而是犹豫。' },
+      { en: 'Action is the antidote to anxiety.', cn: '行动，是焦虑的解药。' },
+      { en: 'You do not find your voice by waiting; you find it by speaking.', cn: '你不会靠等待找到自己的声音，只能靠开口。' },
+      { en: 'Fear is a sign you are standing at the edge of growth.', cn: '恐惧，意味着你正站在成长的边缘。' },
+      { en: 'Ordinary people change the world one brave choice at a time.', cn: '平凡的人，靠一次次勇敢的选择改变世界。' },
+      { en: 'Start before you are ready; readiness is a myth.', cn: '在准备妥当前就开始吧，所谓“准备好”只是幻觉。' }
+    ],
+    'BV1WVTkzFEkd': [
+      { en: 'Stories are how humans make sense of the world.', cn: '故事，是人类理解世界的方式。' },
+      { en: 'Facts tell, but stories stay.', cn: '事实让人知道，故事让人记住。' },
+      { en: 'A good story begins in the middle of the tension.', cn: '好的故事，从张力最紧处开场。' },
+      { en: 'Vulnerability is the doorway to a true connection.', cn: '坦诚脆弱，是建立真实联结的门。' },
+      { en: 'Speak so that they feel, not just so that they hear.', cn: '说话要让人“感到”，而不只是“听到”。' },
+      { en: 'Your data is forgettable; your story is unforgettable.', cn: '数据会被遗忘，故事却刻骨铭心。' },
+      { en: 'The pause between words is where meaning lives.', cn: '字词之间的留白，正是意义栖身之处。' }
+    ],
+    'BV1sw411Q7dr': [
+      { en: 'No one else is living your life, so no one sets your pace.', cn: '没有人在替你生活，便没有人能替你定下节奏。' },
+      { en: 'Comparison is the thief of your own rhythm.', cn: '比较，是偷走你节奏的小偷。' },
+      { en: 'Slow is not lazy; it is often the surest path.', cn: '慢，不是懒，往往是最稳妥的路。' },
+      { en: 'Protect your attention like it is your most precious asset.', cn: '守护你的注意力，如同守护最珍贵的资产。' },
+      { en: 'You can cheer for others without speeding up your own race.', cn: '你可以为别人喝彩，而无须打乱自己的赛程。' },
+      { en: 'Rest is not a reward; it is part of the work.', cn: '休息不是奖赏，而是工作的一部分。' },
+      { en: 'Walk your own road at your own pace, and arrive whole.', cn: '以你自己的步调走你自己的路，完整地抵达。' }
+    ],
+    'BV1g7421d7jf': [
+      { en: 'Kindness costs nothing and is worth everything.', cn: '善意分文不费，却价值连城。' },
+      { en: 'One small act can rewrite someone’s entire day.', cn: '一个小小的举动，足以改写他人一整天的剧本。' },
+      { en: 'We never know the battles others quietly fight.', cn: '我们永远无从知晓，别人正在默默经历怎样的战役。' },
+      { en: 'To be seen is the deepest human need.', cn: '被看见，是人类最深的需求。' },
+      { en: 'Compassion is strength wearing a gentle face.', cn: '悲悯，是戴着温柔面具的力量。' },
+      { en: 'In someone’s worst moment, be their calm.', cn: '在某人最坏的时刻里，成为他的平静。' },
+      { en: 'The world changes when we choose to care.', cn: '当我们选择在意，世界便开始改变。' }
+    ],
+    'BV1f44y1v7V9': [
+      { en: 'Creativity is intelligence having fun.', cn: '创造力，是智慧在自由嬉戏。' },
+      { en: 'Failure is simply data on the way to success.', cn: '失败，不过是通往成功途中的一组数据。' },
+      { en: 'The blank page is scary only until the first word lands.', cn: '空白的页面只在第一个字落下之前令人畏惧。' },
+      { en: 'Originality is just brave recombination.', cn: '原创，不过是有勇气的重新组合。' },
+      { en: 'Perfectionism is the enemy of done.', cn: '完美主义，是“完成”的敌人。' },
+      { en: 'Make something today that did not exist yesterday.', cn: '今天，造出一点昨天尚不存在的东西。' },
+      { en: 'Your weirdness is your creative fingerprint.', cn: '你的与众不同，正是你独有的创作指纹。' }
+    ],
+    'BV1Rr4y147Jv': [
+      { en: 'The only constant is change, so build for flexibility.', cn: '唯一的不变就是变化，所以要为灵活而生。' },
+      { en: 'The future belongs to the adaptables.', cn: '未来属于那些懂得适应的人。' },
+      { en: 'What got you here will not get you there.', cn: '把你带到今天的，无法再把你带向远方。' },
+      { en: 'Hope is not a feeling; it is a plan in motion.', cn: '希望不是一种感觉，而是正在运转的计划。' },
+      { en: 'We are the ancestors of the world we are building.', cn: '我们正在打造的世界的后人，会视我们为先辈。' },
+      { en: 'Small systems, wisely designed, beat big intentions.', cn: '精心设计的微小系统，胜过宏大的意图。' },
+      { en: 'Imagine boldly, then start absurdly small.', cn: '大胆想象，再从极小处开始。' }
+    ],
+    'BV1DwrsBpEHR': [
+      { en: 'Resilience is not bouncing back, but bouncing forward.', cn: '韧性不是恢复原状，而是向前跃迁。' },
+      { en: 'Your mindset decides the size of your world.', cn: '你的心态，决定你世界的疆界。' },
+      { en: 'Discomfort is the tuition of growth.', cn: '不适，是成长缴纳的学费。' },
+      { en: 'The calm mind sees opportunities the rushed mind misses.', cn: '平静的心，看得见匆忙者错过的机会。' },
+      { en: 'You are not behind; you are on your own timeline.', cn: '你并未落后，你只是走在自己的时间线上。' },
+      { en: 'Energy follows attention; guard it fiercely.', cn: '能量随注意力流动，请严加守护。' },
+      { en: 'Begin again, as many times as it takes.', cn: '重新开始吧，需要多少次就多少次。' }
+    ],
+    'BV1Qb4y1p7DG': [
+      { cn: '汉武帝刘彻，十六岁登基，在位五十四年，开创了西汉最鼎盛的篇章。' },
+      { cn: '他罢黜百家、独尊儒术，把思想统一到帝国的轨道之上。' },
+      { cn: '推恩令的妙处，在于不动刀兵，便让诸侯国自行瓦解。' },
+      { cn: '卫青、霍去病北击匈奴，封狼居胥，洗去汉初数十年的屈辱。' },
+      { cn: '张骞凿空西域，一条丝绸之路，连通了东西方千年文明。' },
+      { cn: '功过相参：穷兵黩武与轮台罪己，写尽一个帝王的两面。' },
+      { cn: '读汉武帝，读的是雄才，也是代价。' }
+    ],
+    'BV1ATPQz5EVd': [
+      { cn: '三国，是一段人人都熟悉、却未必人人都读懂的历史。' },
+      { cn: '曹操不是戏台上的白脸奸臣，而是雄才大略的乱世英主。' },
+      { cn: '刘备的仁，是一种凝聚人心的政治智慧。' },
+      { cn: '孙权守成江东，靠的是审时度势、稳扎稳打。' },
+      { cn: '诸葛亮出师未捷，却用一生诠释了“鞠躬尽瘁”。' },
+      { cn: '易中天说：读三国，读的从来不是打打杀杀，而是人心。' },
+      { cn: '天下大势，分久必合，合久必分。' }
+    ],
+    'BV1iTPpzDEiH': [
+      { cn: '三国的魅力，在于乱世之中，英雄与谋士各展其才。' },
+      { cn: '空城计的背后，是诸葛亮对人心的精准拿捏。' },
+      { cn: '关羽之死，既是性格的悲剧，也是战略的失误。' },
+      { cn: '周瑜并非气量狭小，少年统兵的他，本是一代儒将。' },
+      { cn: '赤壁一把火，烧出了三分天下的格局。' },
+      { cn: '所谓谋略，不过是看清局势后，做出最不坏的选择。' },
+      { cn: '读三国，读的是人，更是人性。' }
+    ],
+    'BV1TnSTBdEdc': [
+      { cn: '大江东去，浪淘尽，千古风流人物。' },
+      { cn: '东汉末年，宦官与外戚轮流掌权，朝纲早已败坏。' },
+      { cn: '黄巾起义，敲响了汉室倾颓的第一记丧钟。' },
+      { cn: '群雄并起，逐鹿中原，英雄的舞台就此拉开。' },
+      { cn: '曹操挟天子以令诸侯，占了“名分”的先机。' },
+      { cn: '乱世出英雄，也出枭雄，更出无数悲欢离合。' },
+      { cn: '读懂三国的开篇，才能看清后面百年的波澜。' }
+    ],
+    'BV1qt421G7YC': [
+      { cn: '百家讲坛，是一座没有围墙的大学。' },
+      { cn: '学者们把象牙塔里的学问，讲成了百姓听得懂的故事。' },
+      { cn: '从史记到三国，从唐诗到清史，千年文明在此汇流。' },
+      { cn: '听一讲，胜读十日书；悟一理，可受用一生。' },
+      { cn: '它让历史不再枯燥，让经典不再遥远。' },
+      { cn: '每天听一集，便是给自己的精神加餐。' },
+      { cn: '所谓博学，不过是把别人的智慧，变成自己的底气。' }
+    ],
+    'BV1bbjd6UErQ': [
+      { cn: '春秋战国，是中国思想最自由、最灿烂的黄金时代。' },
+      { cn: '儒、墨、道、法，诸子百家各执一说，争相论道。' },
+      { cn: '百家争鸣，争的是救世之道，也是安身立命之理。' },
+      { cn: '一个“礼”字，孔子为乱世开出了秩序的良方。' },
+      { cn: '思想的碰撞，让文明的火光愈燃愈亮。' },
+      { cn: '读懂诸子，便读懂了中国人精神世界的源头。' },
+      { cn: '争鸣不息，智慧不止。' }
+    ],
+    'BV1Tejd6LExY': [
+      { cn: '任何思想的诞生，都有它特定的时代前因。' },
+      { cn: '礼崩乐坏，周室衰微，才催生了诸子救世的雄心。' },
+      { cn: '因果相循：旧秩序瓦解，新学说便应运而生。' },
+      { cn: '儒墨之争，看似争礼，实则争“怎样才算好人”。' },
+      { cn: '读懂前因后果，才不至于把古人读成扁平的符号。' },
+      { cn: '历史是一连串的因果，我们今天亦然。' },
+      { cn: '以史为鉴，先要读懂它为何如此发生。' }
+    ],
+    'BV1JugX6VEmN': [
+      { cn: '《易经》是群经之首，更是中国人智慧的源头。' },
+      { cn: '易者，变也；唯一不变的，就是变化本身。' },
+      { cn: '阴阳相生，刚柔并济，道尽天地运行的法则。' },
+      { cn: '曾仕强说：易经不是算命，而是教人趋吉避凶的智慧。' },
+      { cn: '六十四卦，卦卦都是人生的境遇与抉择。' },
+      { cn: '顺天应人，方能行稳致远。' },
+      { cn: '把易经读进生活，便是把无常活成了从容。' }
+    ],
+    'BV19PPEzTEZS': [
+      { cn: '三国的精彩，在于每个人都能从中看见自己。' },
+      { cn: '曹操的“宁我负人”，是乱世生存最冷酷的清醒。' },
+      { cn: '刘备的眼泪，是政治，也是真情，更是艺术。' },
+      { cn: '司马懿隐忍数十年，笑到了最后。' },
+      { cn: '英雄末路，往往最动人；成败之间，尽显人性。' },
+      { cn: '一部三国，半部谋略，半部人情。' },
+      { cn: '读完整版，才知三国并非演义，而是人心的大戏。' }
+    ]
+  };
 
 })();

@@ -85,6 +85,11 @@ var ModExpress = (function () {
     var v = Util.seededPick(CONTENT.expressionBili, Util.dayIndex() * 5 + 4, 1)[0];
     var box = document.getElementById('expVideo');
     if (!box) return;
+    var subsData = (CONTENT.videoSubs && CONTENT.videoSubs[v.bvid]) || [];
+    var subs = subsData.map(function (s) {
+      return '<div class="sub-line sub-cn-only"><div class="sub-cn">' + Util.esc(s.cn) + '</div></div>';
+    }).join('');
+    var subsPanel = subs ? '<details class="subtitles-panel"><summary>📝 视频字幕（中文 · 点击展开全文）</summary><div class="sub-body">' + subs + '</div></details>' : '';
     box.innerHTML =
       '<div class="video-card">' +
         '<div class="vc-top">' +
@@ -98,6 +103,7 @@ var ModExpress = (function () {
           '<a class="btn btn-sm btn-primary" href="https://www.bilibili.com/video/' + v.bvid + '/" target="_blank" rel="noopener">▶ 在 B 站打开</a>' +
           '<span class="muted small">' + Util.esc(v.note || '建议关闭弹幕，挑一段慢速跟读。') + '</span>' +
         '</div>' +
+        subsPanel +
       '</div>';
   }
 
