@@ -485,12 +485,18 @@ var Sync = (function () {
   /* ---- GitHub 加密同步：仓库存密文，客户端 AES-GCM 解密，无需第三方服务 ---- */
   var _ghSha = '';
   function b64u(str) { return btoa(unescape(encodeURIComponent(str))); }
+  function ghErrMsg(r, fallback) {
+    return r.json().catch(function () { return {}; }).then(function (b) {
+      var m = (b && b.message) || (b && b.errors && b.errors[0] && b.errors[0].message) || fallback;
+      return 'HTTP ' + r.status + ' · ' + m;
+    });
+  }
   function pullGitHub(c) {
     var e = endpoints();
     return fetch(e.get.url, { method: 'GET', headers: e.get.headers, cache: 'no-store' })
       .then(function (r) {
         if (r.status === 404) return null;
-        if (!r.ok) throw new Error('拉取失败 HTTP ' + r.status);
+        if (!r.ok) return ghErrMsg(r, '拉取失败').then(function (msg) { throw new Error(msg); });
         return r.json();
       })
       .then(function (data) {
@@ -503,17 +509,22 @@ var Sync = (function () {
         } catch (err2) { throw new Error('解密失败：请确认同步密码与配置一致'); }
       });
   }
-  function pushGitHub(c, payload, depth) {
-    depth = depth || 0;
+  function pushGitHub(c, payload, depth, triedNoBranch) {
+    depth = depth || 0; triedNoBranch = !!triedNoBranch;
     var e = endpoints();
     return Cipher.encrypt(payload, c.pass).then(function (pkg) {
-      var body = { message: 'workbench sync ' + new Date().toISOString(), content: b64u(JSON.stringify(pkg)), branch: c.branch || 'main' };
+      var body = { message: 'workbench sync ' + new Date().toISOString(), content: b64u(JSON.stringify(pkg)) };
+      if (!triedNoBranch && c.branch) body.branch = c.branch; // 不指定则使用仓库默认分支（兼容 master/main）
       if (_ghSha) body.sha = _ghSha;
       return fetch(e.put.url, { method: 'PUT', headers: e.put.headers, body: JSON.stringify(body) })
         .then(function (r) {
-          if (r.status === 409 && depth < 2) { return pullGitHub(c).then(function () { return pushGitHub(c, payload, depth + 1); }); }
-          if (!r.ok) throw new Error('上传失败 HTTP ' + r.status);
-          return r.json();
+          if (r.status === 409 && depth < 2) { return pullGitHub(c).then(function () { return pushGitHub(c, payload, depth + 1, triedNoBranch); }); }
+          if (r.ok) return r.json();
+          return ghErrMsg(r, '上传失败').then(function (msg) {
+            // 分支不存在时，自动重试一次「使用仓库默认分支」
+            if (!triedNoBranch && c.branch && /branch|ref/i.test(msg)) return pushGitHub(c, payload, depth, true);
+            throw new Error(msg);
+          });
         })
         .then(function (d) { if (d && d.content && d.content.sha) _ghSha = d.content.sha; return true; });
     });
